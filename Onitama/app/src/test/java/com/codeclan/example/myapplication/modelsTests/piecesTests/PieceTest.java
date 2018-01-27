@@ -3,7 +3,9 @@ package com.codeclan.example.myapplication.modelsTests.piecesTests;
 import com.codeclan.example.myapplication.R;
 import com.codeclan.example.myapplication.constants.PieceColour;
 import com.codeclan.example.myapplication.constants.PieceType;
+import com.codeclan.example.myapplication.models.pieces.BlueSensei;
 import com.codeclan.example.myapplication.models.pieces.Piece;
+import com.codeclan.example.myapplication.models.pieces.RedStudent;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,20 +19,31 @@ import static org.junit.Assert.assertEquals;
 public class PieceTest {
 
 
-    Piece piece;
+    Piece blueSensei;
+    Piece redStudent;
 
 
     @Before
     public void before(){
 
-        piece = new Piece(PieceColour.RED, PieceType.STUDENT, R.drawable.small_rock);
+        blueSensei = new BlueSensei();
+        redStudent = new RedStudent();
 
     }
 
     @Test
     public void canGetColour(){
-        assertEquals(PieceColour.RED, piece.getColour());
+        assertEquals(PieceColour.RED, redStudent.getColour());
     }
 
+    @Test
+    public void canGetType(){
+        assertEquals(PieceType.SENSEI, blueSensei.getType());
+    }
+
+    @Test
+    public void canGetImageInt(){
+        assertEquals(R.drawable.small_rock, redStudent.getImageInt());
+    }
 
 }

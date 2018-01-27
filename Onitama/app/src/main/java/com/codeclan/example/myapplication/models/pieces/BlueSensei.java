@@ -1,0 +1,17 @@
+package com.codeclan.example.myapplication.models.pieces;
+
+import com.codeclan.example.myapplication.R;
+import com.codeclan.example.myapplication.constants.PieceColour;
+import com.codeclan.example.myapplication.constants.PieceType;
+
+/**
+ * Created by user on 27/01/2018.
+ */
+
+public class BlueSensei extends Piece {
+
+    public BlueSensei() {
+        super(PieceColour.BLUE, PieceType.SENSEI, R.drawable.small_rock);
+    }
+
+}
