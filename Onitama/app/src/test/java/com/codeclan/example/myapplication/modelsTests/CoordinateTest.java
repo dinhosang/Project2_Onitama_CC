@@ -1,6 +1,7 @@
 package com.codeclan.example.myapplication.modelsTests;
 
 import com.codeclan.example.myapplication.models.Coordinate;
+import com.codeclan.example.myapplication.models.moves.Down;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,24 +15,24 @@ import static org.junit.Assert.assertEquals;
 public class CoordinateTest {
 
 
-    Coordinate coord;
+    Coordinate down;
 
 
     @Before
     public void before(){
 
-        coord = new Coordinate(2,3);
+        down = new Down();
 
     }
 
 
     @Test
     public void canGetXCoord(){
-        assertEquals(2, coord.getXCoord());
+        assertEquals(0, down.getXCoord());
     }
 
     @Test
     public void canGetYCoord(){
-        assertEquals(3, coord.getYCoord());
+        assertEquals(-1, down.getYCoord());
     }
 }

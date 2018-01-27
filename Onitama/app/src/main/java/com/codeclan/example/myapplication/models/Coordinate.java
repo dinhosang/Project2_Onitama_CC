@@ -4,7 +4,7 @@ package com.codeclan.example.myapplication.models;
  * Created by user on 27/01/2018.
  */
 
-public class Coordinate {
+public abstract class Coordinate {
 
 
     int xCoord;
