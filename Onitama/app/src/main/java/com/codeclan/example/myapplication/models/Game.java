@@ -1,8 +1,10 @@
 package com.codeclan.example.myapplication.models;
 
 import com.codeclan.example.myapplication.constants.FactionColour;
+import com.codeclan.example.myapplication.constants.PieceType;
 import com.codeclan.example.myapplication.models.cards.Card;
 import com.codeclan.example.myapplication.models.cards.Deck;
+import com.codeclan.example.myapplication.models.pieces.Piece;
 import com.codeclan.example.myapplication.models.squares.Board;
 import com.codeclan.example.myapplication.models.squares.Square;
 
@@ -15,15 +17,20 @@ import java.util.ArrayList;
 public class Game {
     
     
-    private String          name;
-    private Board           board;
-    private Deck            deck;
-    private ArrayList<Card> blueHand;
-    private ArrayList<Card> redHand;
-    private Card            floatingCardForRed;
-    private Card            floatingCardForBlue;
-    private FactionColour   activeFaction;
-    private FactionColour   gameWinner;
+    private String              name;
+    private Board               board;
+    private Deck                deck;
+
+    private ArrayList<Card>     blueHand;
+    private ArrayList<Card>     redHand;
+    private Card                floatingCardForRed;
+    private Card                floatingCardForBlue;
+
+    private ArrayList<Piece>    capturedBluePieces;
+    private ArrayList<Piece>    capturedRedPieces;
+
+    private FactionColour       activeFaction;
+    private FactionColour       gameWinner;
     
     public Game(){
         
@@ -37,6 +44,9 @@ public class Game {
         this.floatingCardForRed     = null;
         this.floatingCardForBlue    = null;
         this.gameWinner             = null;
+
+        this.capturedBluePieces     = new ArrayList<>();
+        this.capturedRedPieces      = new ArrayList<>();
 
         setupCards();
         
@@ -97,8 +107,31 @@ public class Game {
         return board;
     }
 
+    public ArrayList<Piece> getCapturedBluePieces() {
+        ArrayList<Piece> copyCapturedBluePieces = new ArrayList<>(this.capturedBluePieces);
+        return copyCapturedBluePieces;
+    }
+
+    public ArrayList<Piece> getCapturedRedPieces() {
+        ArrayList<Piece> copyCapturedRedPieces = new ArrayList<>(this.capturedRedPieces);
+        return copyCapturedRedPieces;
+    }
+
+    public FactionColour getGameWinner() {
+        return gameWinner;
+    }
+
     public boolean checkMovesExistWhichKeepActiveFactionsPieceOnBoard(Square square, Card card) {
+
+        if (this.gameWinner != null){
+            return false;
+        }
+
         if (!square.containsPiece()){
+            return false;
+        }
+
+        if (!cardInActivePlayersHand(card)){
             return false;
         }
 
@@ -133,6 +166,24 @@ public class Game {
         } else {
             return checkPieceCanReachSquareRed(startSquare, card, endSquare);
         }
+    }
+
+    public void movePiece(Square startSquare, Card card, Square endSquare) {
+        if (checkPieceMayMoveToSquare(startSquare, card, endSquare)){
+            Piece movingPiece = startSquare.removePiece();
+
+            if (endSquare.containsPiece()){
+                Piece removedPiece = endSquare.removePiece();
+                capturePiece(removedPiece);
+            }
+
+            endSquare.addPiece(movingPiece);
+            if(movingPiece.getType().equals(PieceType.SENSEI)) {
+                setWinnerIfEndSquareIsOpposingGate(endSquare);
+            }
+            endOfTurnProcedure(card);
+        }
+
     }
 
 
@@ -257,6 +308,70 @@ public class Game {
         }
 
         return false;
+    }
+
+    private void setWinnerIfEndSquareIsOpposingGate(Square square) {
+
+        int squareXCoord = square.getXCoord();
+        int squareYCoord = square.getYCoord();
+
+        if (this.activeFaction.equals(FactionColour.BLUE) && squareXCoord == 2 && squareYCoord == 4){
+            this.gameWinner = this.activeFaction;
+        } else if (this.activeFaction.equals(FactionColour.RED) && squareXCoord == 2 && squareYCoord == 0) {
+            this.gameWinner = this.activeFaction;
+        }
+
+    }
+
+    private void capturePiece(Piece piece) {
+        if (piece.getPieceColour().equals(FactionColour.BLUE)){
+            this.capturedBluePieces.add(piece);
+        } else {
+            this.capturedRedPieces.add(piece);
+        }
+
+        if (piece.getType().equals(PieceType.SENSEI)){
+            this.gameWinner = this.activeFaction;
+        }
+    }
+
+    private boolean cardInActivePlayersHand(Card card) {
+        if (this.activeFaction.equals(FactionColour.BLUE)){
+            return this.blueHand.contains(card);
+        } else {
+            return this.redHand.contains(card);
+        }
+    }
+
+    private void endOfTurnProcedure(Card card) {
+        if (this.activeFaction.equals(FactionColour.BLUE)){
+            this.blueHand.remove(card);
+            this.floatingCardForRed = card;
+        } else {
+            this.redHand.remove(card);
+            this.floatingCardForBlue = card;
+        }
+
+        if(this.gameWinner == null){
+            if (this.activeFaction.equals(FactionColour.BLUE)){
+                this.blueHand.add(this.floatingCardForBlue);
+                this.floatingCardForBlue = null;
+            } else {
+                this.redHand.add(this.floatingCardForRed);
+                this.floatingCardForRed = null;
+            }
+
+            changeActiveFaction();
+        }
+
+    }
+
+    private void changeActiveFaction() {
+        if (this.activeFaction.equals(FactionColour.BLUE)){
+            this.activeFaction = FactionColour.RED;
+        } else {
+            this.activeFaction = FactionColour.BLUE;
+        }
     }
 
 }

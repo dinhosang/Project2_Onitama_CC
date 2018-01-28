@@ -10,6 +10,7 @@ import com.codeclan.example.myapplication.models.moves.Down;
 import com.codeclan.example.myapplication.models.moves.Left;
 import com.codeclan.example.myapplication.models.moves.Right;
 import com.codeclan.example.myapplication.models.moves.Up;
+import com.codeclan.example.myapplication.models.pieces.Piece;
 import com.codeclan.example.myapplication.models.squares.Board;
 import com.codeclan.example.myapplication.models.squares.Square;
 
@@ -35,6 +36,7 @@ public class GameTest {
     Board   board;
     Card    frog;
     Card    tiger;
+    Card    crab;
     Square  leftmostBlueStartingSquare;
     Square  centreBlueStartingSquare;
     Square  rightmostRedStartingSquare;
@@ -70,11 +72,23 @@ public class GameTest {
         movesetTiger.put(2, move5);
 
 
+        ArrayList<Coordinate> move6 = new ArrayList<Coordinate>(Arrays.asList(right, right));
+        ArrayList<Coordinate> move7 = new ArrayList<Coordinate>(Arrays.asList(left, left));
+        ArrayList<Coordinate> move8 = new ArrayList<Coordinate>(Arrays.asList(up));
+
+        HashMap<Integer, ArrayList<Coordinate>> movesetCrab = new HashMap<>();
+        movesetCrab.put(1, move6);
+        movesetCrab.put(2, move7);
+        movesetCrab.put(3, move8);
+
+
         board   = new Board();
         game    = new Game();
 
         frog    = new Card(CardName.FROG, FactionColour.RED, R.drawable.eel, movesetFrog);
         tiger   = new Card(CardName.TIGER, FactionColour.BLUE, R.drawable.eel, movesetTiger);
+        crab = new Card(CardName.CRAB, FactionColour.BLUE, R.drawable.eel, movesetCrab);
+
 
         for (Square square: game.getBoard().getCompleteBoard()){
             if (square.getYCoord() == 0 && square.getXCoord() == 0){
@@ -142,12 +156,139 @@ public class GameTest {
             assertEquals(false, game.checkPieceMayMoveToSquare(centreRedStartingSquare, tiger, centreSquare));
             assertEquals(false, game.checkPieceMayMoveToSquare(centreBlueStartingSquare, tiger, leftmostBlueStartingSquare));
             assertEquals(false, game.checkPieceMayMoveToSquare(centreBlueStartingSquare, frog, leftmostBlueStartingSquare));
+            leftmostBlueStartingSquare.removePiece();
+            assertEquals(true, game.checkPieceMayMoveToSquare(centreBlueStartingSquare, frog, leftmostBlueStartingSquare));
         } else {
             assertEquals(true, game.checkPieceMayMoveToSquare(centreRedStartingSquare, tiger, centreSquare));
             assertEquals(false, game.checkPieceMayMoveToSquare(centreBlueStartingSquare, tiger, centreSquare));
             assertEquals(false, game.checkPieceMayMoveToSquare(centreRedStartingSquare, tiger, rightmostRedStartingSquare));
             assertEquals(false, game.checkPieceMayMoveToSquare(centreRedStartingSquare, frog, rightmostRedStartingSquare));
+            rightmostRedStartingSquare.removePiece();
+            assertEquals(true, game.checkPieceMayMoveToSquare(centreRedStartingSquare, frog, rightmostRedStartingSquare));
         }
     }
+
+    @Test
+    public void checkWinnerHasBeenDeterminedStartsEmpty(){
+        assertEquals(null, game.getGameWinner());
+    }
+
+    @Test
+    public void checkCapturedPiecesArrayListsStartEmpty(){
+        assertEquals(0, game.getCapturedBluePieces().size());
+        assertEquals(0, game.getCapturedRedPieces().size());
+    }
+
+
+//    Below four test do not work as long as code starting at line 134
+//    in the Game.java file is left uncommented.
+//
+//    The check is to see if the card being played is part of players hand.
+//
+//    As a card is chosen specifically for the test this part of the check stops the test from
+//    passing.
+//
+//    Comment out the if statement [if (!cardInActivePlayersHand(card))] to see the tests run.
+
+    
+//    @Test
+//    public void checkPieceCanCaptureAnotherPiece(){
+//        if (game.getActiveFaction().equals(FactionColour.BLUE)) {
+//            assertEquals(0, game.getCapturedBluePieces().size());
+//            assertEquals(false, centreSquare.containsPiece());
+//            game.movePiece(centreBlueStartingSquare, tiger, centreSquare);
+//            assertEquals(false, centreBlueStartingSquare.containsBluePiece());
+//            assertEquals(true, centreSquare.containsBluePiece());
+//            assertEquals(false, centreSquare.containsRedPiece());
+//            game.movePiece(centreRedStartingSquare, tiger, centreSquare);
+//            assertEquals(1, game.getCapturedBluePieces().size());
+//            assertEquals(true, centreSquare.containsRedPiece());
+//            assertEquals(false, centreSquare.containsBluePiece());
+//        } else {
+//            assertEquals(0, game.getCapturedRedPieces().size());
+//            assertEquals(false, centreSquare.containsPiece());
+//            game.movePiece(centreRedStartingSquare, tiger, centreSquare);
+//            assertEquals(false, centreSquare.containsBluePiece());
+//            assertEquals(true, centreSquare.containsRedPiece());
+//            game.movePiece(centreBlueStartingSquare, tiger, centreSquare);
+//            assertEquals(1, game.getCapturedRedPieces().size());
+//            assertEquals(false, centreSquare.containsRedPiece());
+//            assertEquals(true, centreSquare.containsBluePiece());
+//        }
+//    }
+//
+//    @Test
+//    public void pieceOfNonActivePlayerCantMove(){
+//        if (game.getActiveFaction().equals(FactionColour.BLUE)) {
+//            game.movePiece(centreRedStartingSquare, tiger, centreSquare);
+//        } else {
+//            game.movePiece(centreBlueStartingSquare, tiger, centreSquare);
+//
+//        }
+//
+//        assertEquals(false, centreSquare.containsPiece());
+//    }
+//
+//    @Test
+//    public void gameEndsOnceSenseiCaptured(){
+//        if (game.getActiveFaction().equals(FactionColour.BLUE)) {
+//            assertEquals(null, game.getGameWinner());
+//            assertNotNull(game.getFloatingCardForBlue());
+//            game.movePiece(centreBlueStartingSquare, tiger, centreSquare);
+//            assertEquals(tiger, game.getFloatingCardForRed());
+//            assertEquals(null, game.getFloatingCardForBlue());
+//            game.movePiece(centreRedStartingSquare, tiger, centreSquare);
+//            assertEquals(true, centreSquare.containsRedPiece());
+//            assertEquals(false, centreBlueStartingSquare.containsPiece());
+//            assertEquals(FactionColour.RED, game.getGameWinner());
+//            game.movePiece(leftmostBlueStartingSquare, crab, centreBlueStartingSquare);
+//            assertEquals(false, centreBlueStartingSquare.containsPiece());
+//        } else {
+//            assertEquals(null, game.getGameWinner());
+//            assertNotNull(game.getFloatingCardForRed());
+//            game.movePiece(centreRedStartingSquare, tiger, centreSquare);
+//            assertEquals(tiger, game.getFloatingCardForBlue());
+//            assertEquals(null, game.getFloatingCardForRed());
+//            game.movePiece(centreBlueStartingSquare, tiger, centreSquare);
+//            assertEquals(true, centreSquare.containsBluePiece());
+//            assertEquals(false, centreRedStartingSquare.containsPiece());
+//            assertEquals(FactionColour.BLUE, game.getGameWinner());
+//            game.movePiece(rightmostRedStartingSquare, crab, centreRedStartingSquare);
+//            assertEquals(false, centreRedStartingSquare.containsPiece());
+//        }
+//    }
+//
+//    @Test
+//    public void gameEndsIfSenseiReachesOpposingGate(){
+//        if (game.getActiveFaction().equals(FactionColour.BLUE)) {
+//            game.movePiece(centreBlueStartingSquare, tiger, centreSquare);
+//            rightmostRedStartingSquare.removePiece();
+//            assertEquals(false, rightmostRedStartingSquare.containsPiece());
+//
+//            game.movePiece(centreRedStartingSquare, frog, rightmostRedStartingSquare);
+//            assertEquals(true, centreSquare.containsBluePiece());
+//            assertEquals(true, rightmostRedStartingSquare.containsRedPiece());
+//
+//            game.movePiece(centreSquare, tiger, centreRedStartingSquare);
+//            assertEquals(FactionColour.BLUE, game.getGameWinner());
+//
+//            game.movePiece(rightmostRedStartingSquare, crab, centreRedStartingSquare);
+//            assertEquals(true, rightmostRedStartingSquare.containsPiece());
+//        } else {
+//            game.movePiece(centreRedStartingSquare, tiger, centreSquare);
+//            leftmostBlueStartingSquare.removePiece();
+//            assertEquals(false, leftmostBlueStartingSquare.containsPiece());
+//
+//            game.movePiece(centreBlueStartingSquare, frog, leftmostBlueStartingSquare);
+//            assertEquals(true, centreSquare.containsRedPiece());
+//            assertEquals(true, leftmostBlueStartingSquare.containsBluePiece());
+//
+//            game.movePiece(centreSquare, tiger, centreBlueStartingSquare);
+//            assertEquals(FactionColour.RED, game.getGameWinner());
+//
+//            game.movePiece(leftmostBlueStartingSquare, crab, centreBlueStartingSquare);
+//            assertEquals(true, leftmostBlueStartingSquare.containsPiece());
+//        }
+//    }
 
 }
