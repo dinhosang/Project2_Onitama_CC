@@ -1,6 +1,7 @@
 package com.codeclan.example.myapplication.models.squares;
 
 import com.codeclan.example.myapplication.constants.FactionColour;
+import com.codeclan.example.myapplication.constants.PieceType;
 import com.codeclan.example.myapplication.models.Coordinate;
 import com.codeclan.example.myapplication.models.pieces.Piece;
 
@@ -60,4 +61,21 @@ public class Square extends Coordinate {
         this.piece = null;
         return piece;
     }
+
+    public boolean containsSensei(){
+        if (!containsPiece()){
+            return false;
+        }
+
+        if (this.piece.getType().equals(PieceType.SENSEI)){
+            return true;
+        }
+
+        return false;
+    }
+
+    public int getPieceImage(){
+        return this.piece.getImageInt();
+    }
+
 }

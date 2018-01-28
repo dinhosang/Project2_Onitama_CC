@@ -190,7 +190,7 @@ public class GameTest {
 //
 //    Comment out the if statement [if (!cardInActivePlayersHand(card))] to see the tests run.
 
-    
+
 //    @Test
 //    public void checkPieceCanCaptureAnotherPiece(){
 //        if (game.getActiveFaction().equals(FactionColour.BLUE)) {

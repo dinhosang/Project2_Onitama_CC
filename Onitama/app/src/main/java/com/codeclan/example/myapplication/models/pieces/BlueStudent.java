@@ -11,7 +11,7 @@ import com.codeclan.example.myapplication.constants.PieceType;
 public class BlueStudent extends Piece {
 
     public BlueStudent() {
-        super(FactionColour.BLUE, PieceType.STUDENT, R.drawable.small_rock);
+        super(FactionColour.BLUE, PieceType.STUDENT, R.drawable.blue_student_body_small_square);
     }
 
 }
