@@ -7,8 +7,8 @@ package com.codeclan.example.myapplication.models;
 public abstract class Coordinate {
 
 
-    int xCoord;
-    int yCoord;
+    protected int xCoord;
+    protected int yCoord;
 
 
     public Coordinate(int xCoord, int yCoord) {
@@ -25,4 +25,5 @@ public abstract class Coordinate {
     public int getYCoord() {
         return yCoord;
     }
+
 }

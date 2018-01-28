@@ -1,7 +1,7 @@
 package com.codeclan.example.myapplication.models.pieces;
 
 import com.codeclan.example.myapplication.R;
-import com.codeclan.example.myapplication.constants.PieceColour;
+import com.codeclan.example.myapplication.constants.FactionColour;
 import com.codeclan.example.myapplication.constants.PieceType;
 
 /**
@@ -11,7 +11,7 @@ import com.codeclan.example.myapplication.constants.PieceType;
 public class BlueStudent extends Piece {
 
     public BlueStudent() {
-        super(PieceColour.BLUE, PieceType.STUDENT, R.drawable.small_rock);
+        super(FactionColour.BLUE, PieceType.STUDENT, R.drawable.small_rock);
     }
 
 }

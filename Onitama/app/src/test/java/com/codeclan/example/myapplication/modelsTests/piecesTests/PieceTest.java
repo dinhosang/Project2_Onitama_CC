@@ -1,7 +1,7 @@
 package com.codeclan.example.myapplication.modelsTests.piecesTests;
 
 import com.codeclan.example.myapplication.R;
-import com.codeclan.example.myapplication.constants.PieceColour;
+import com.codeclan.example.myapplication.constants.FactionColour;
 import com.codeclan.example.myapplication.constants.PieceType;
 import com.codeclan.example.myapplication.models.pieces.BlueSensei;
 import com.codeclan.example.myapplication.models.pieces.Piece;
@@ -33,7 +33,7 @@ public class PieceTest {
 
     @Test
     public void canGetColour(){
-        assertEquals(PieceColour.RED, redStudent.getColour());
+        assertEquals(FactionColour.RED, redStudent.getPieceColour());
     }
 
     @Test

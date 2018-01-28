@@ -1,6 +1,4 @@
-package com.codeclan.example.myapplication.models;
-
-import com.codeclan.example.myapplication.models.Square;
+package com.codeclan.example.myapplication.models.squares;
 
 import java.util.ArrayList;
 import java.util.Arrays;

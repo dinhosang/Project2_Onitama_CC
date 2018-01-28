@@ -1,6 +1,6 @@
 package com.codeclan.example.myapplication.models.pieces;
 
-import com.codeclan.example.myapplication.constants.PieceColour;
+import com.codeclan.example.myapplication.constants.FactionColour;
 import com.codeclan.example.myapplication.constants.PieceType;
 
 /**
@@ -10,21 +10,21 @@ import com.codeclan.example.myapplication.constants.PieceType;
 public abstract class Piece {
 
 
-    int                 imageInt;
-    PieceType           type;
-    PieceColour         colour;
+    protected int           imageInt;
+    protected PieceType     type;
+    protected FactionColour colour;
 
 
-    public Piece(PieceColour colour, PieceType type, int imageInt) {
+    public Piece(FactionColour colour, PieceType type, int imageInt) {
 
-        this.colour     = colour;
-        this.type       = type;
-        this.imageInt   = imageInt;
+        this.colour         = colour;
+        this.type           = type;
+        this.imageInt       = imageInt;
 
     }
 
 
-    public PieceColour getColour() {
+    public FactionColour getPieceColour() {
         return colour;
     }
 
