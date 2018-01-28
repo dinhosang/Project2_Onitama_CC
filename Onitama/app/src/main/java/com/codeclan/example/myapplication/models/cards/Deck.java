@@ -92,7 +92,8 @@ public class Deck {
         moveset.put(3, move3);
         moveset.put(4, move4);
 
-        card = new Card(CardName.MONKEY, FactionColour.BLUE, R.drawable.eel, moveset);
+        card = new Card(CardName.MONKEY, FactionColour.BLUE,
+                        R.drawable.monkey_blue_view, R.drawable.monkey_red_view, moveset);
 
         cards.add(card);
     }
@@ -107,7 +108,8 @@ public class Deck {
         moveset.put(2, move2);
         moveset.put(3, move3);
 
-        card = new Card(CardName.RABBIT, FactionColour.BLUE, R.drawable.eel, moveset);
+        card = new Card(CardName.RABBIT, FactionColour.BLUE,
+                        R.drawable.rabbit_blue_view, R.drawable.rabbit_red_view, moveset);
 
         cards.add(card);
     }
@@ -124,7 +126,8 @@ public class Deck {
         moveset.put(3, move3);
         moveset.put(4, move4);
 
-        card = new Card(CardName.GOOSE, FactionColour.BLUE, R.drawable.eel, moveset);
+        card = new Card(CardName.GOOSE, FactionColour.BLUE,
+                        R.drawable.goose_blue_view, R.drawable.goose_red_view, moveset);
 
         cards.add(card);
     }
@@ -139,7 +142,8 @@ public class Deck {
         moveset.put(2, move2);
         moveset.put(3, move3);
 
-        card = new Card(CardName.CRANE, FactionColour.BLUE, R.drawable.eel, moveset);
+        card = new Card(CardName.CRANE, FactionColour.BLUE,
+                        R.drawable.crane_blue_view, R.drawable.crane_red_view, moveset);
 
         cards.add(card);
     }
@@ -154,7 +158,8 @@ public class Deck {
         moveset.put(2, move2);
         moveset.put(3, move3);
 
-        card = new Card(CardName.EEL, FactionColour.BLUE, R.drawable.eel, moveset);
+        card = new Card(CardName.EEL, FactionColour.BLUE,
+                        R.drawable.eel_blue_view, R.drawable.eel_red_view, moveset);
 
         cards.add(card);
     }
@@ -169,7 +174,8 @@ public class Deck {
         moveset.put(2, move2);
         moveset.put(3, move3);
 
-        card = new Card(CardName.OX, FactionColour.BLUE, R.drawable.eel, moveset);
+        card = new Card(CardName.OX, FactionColour.BLUE,
+                        R.drawable.ox_blue_view, R.drawable.ox_red_view, moveset);
 
         cards.add(card);
     }
@@ -184,7 +190,8 @@ public class Deck {
         moveset.put(2, move2);
         moveset.put(3, move3);
 
-        card = new Card(CardName.CRAB, FactionColour.BLUE, R.drawable.eel, moveset);
+        card = new Card(CardName.CRAB, FactionColour.BLUE,
+                        R.drawable.crab_blue_view, R.drawable.crab_red_view, moveset);
 
         cards.add(card);
     }
@@ -197,7 +204,8 @@ public class Deck {
         moveset.put(1, move1);
         moveset.put(2, move2);
 
-        card = new Card(CardName.TIGER, FactionColour.BLUE, R.drawable.eel, moveset);
+        card = new Card(CardName.TIGER, FactionColour.BLUE,
+                        R.drawable.tiger_blue_view, R.drawable.tiger_red_view, moveset);
 
         cards.add(card);
     }
@@ -214,7 +222,8 @@ public class Deck {
         moveset.put(3, move3);
         moveset.put(4, move4);
 
-        card = new Card(CardName.DRAGON, FactionColour.RED, R.drawable.eel, moveset);
+        card = new Card(CardName.DRAGON, FactionColour.RED,
+                        R.drawable.dragon_blue_view, R.drawable.dragon_red_view, moveset);
 
         cards.add(card);
     }
@@ -229,7 +238,8 @@ public class Deck {
         moveset.put(2, move2);
         moveset.put(3, move3);
 
-        card = new Card(CardName.BOAR, FactionColour.RED, R.drawable.eel, moveset);
+        card = new Card(CardName.BOAR, FactionColour.RED,
+                        R.drawable.boar_blue_view, R.drawable.boar_red_view, moveset);
 
         cards.add(card);
     }
@@ -246,7 +256,8 @@ public class Deck {
         moveset.put(3, move3);
         moveset.put(4, move4);
 
-        card = new Card(CardName.ELEPHANT, FactionColour.RED, R.drawable.eel, moveset);
+        card = new Card(CardName.ELEPHANT, FactionColour.RED,
+                        R.drawable.elephant_blue_view, R.drawable.elephant_red_view, moveset);
 
         cards.add(card);
     }
@@ -261,7 +272,8 @@ public class Deck {
         moveset.put(2, move2);
         moveset.put(3, move3);
 
-        card = new Card(CardName.HORSE, FactionColour.RED, R.drawable.eel, moveset);
+        card = new Card(CardName.HORSE, FactionColour.RED,
+                        R.drawable.horse_blue_view, R.drawable.horse_red_view, moveset);
 
         cards.add(card);
     }
@@ -276,7 +288,8 @@ public class Deck {
         moveset.put(2, move2);
         moveset.put(3, move3);
 
-        card = new Card(CardName.MANTIS, FactionColour.RED, R.drawable.eel, moveset);
+        card = new Card(CardName.MANTIS, FactionColour.RED,
+                        R.drawable.mantis_blue_view, R.drawable.mantis_red_view,moveset);
 
         cards.add(card);
     }
@@ -293,7 +306,8 @@ public class Deck {
         moveset.put(3, move3);
         moveset.put(4, move4);
 
-        card = new Card(CardName.ROOSTER, FactionColour.RED, R.drawable.eel, moveset);
+        card = new Card(CardName.ROOSTER, FactionColour.RED,
+                        R.drawable.rooster_blue_view, R.drawable.rooster_red_view, moveset);
 
         cards.add(card);
     }
@@ -308,7 +322,8 @@ public class Deck {
         moveset.put(2, move2);
         moveset.put(3, move3);
 
-        card = new Card(CardName.COBRA, FactionColour.RED, R.drawable.eel, moveset);
+        card = new Card(CardName.COBRA, FactionColour.RED,
+                        R.drawable.cobra_blue_view, R.drawable.cobra_red_view, moveset);
 
         cards.add(card);
     }
@@ -323,7 +338,8 @@ public class Deck {
         moveset.put(2, move2);
         moveset.put(3, move3);
 
-        card = new Card(CardName.FROG, FactionColour.RED, R.drawable.eel, moveset);
+        card = new Card(CardName.FROG, FactionColour.RED,
+                        R.drawable.frog_blue_view, R.drawable.frog_red_view, moveset);
 
         cards.add(card);
     }

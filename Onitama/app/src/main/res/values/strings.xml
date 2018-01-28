@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Onitama</string>
+    <string name="blue_one">blue_hand_one</string>
+    <string name="blue_two">blue_hand_two</string>
+    <string name="red_one">red_hand_one</string>
+    <string name="red_two">red_hand_two</string>
 </resources>

@@ -17,16 +17,18 @@ public class Card {
 
     private CardName        name;
     private FactionColour   colour;
-    private int             imageInt;
+    private int             imageBlueViewInt;
+    private int             imageRedViewInt;
     private HashMap<Integer, ArrayList<Coordinate>> moveset;
 
 
-    public Card(CardName name, FactionColour colour, int imageInt, HashMap<Integer, ArrayList<Coordinate>> moveset) {
+    public Card(CardName name, FactionColour colour, int imageBlueViewInt, int imageRedViewInt, HashMap<Integer, ArrayList<Coordinate>> moveset) {
 
-        this.name           = name;
-        this.colour         = colour;
-        this.imageInt       = imageInt;
-        this.moveset        = moveset;
+        this.name               = name;
+        this.colour             = colour;
+        this.imageBlueViewInt   = imageBlueViewInt;
+        this.imageRedViewInt    = imageRedViewInt;
+        this.moveset            = moveset;
 
     }
 
@@ -38,8 +40,12 @@ public class Card {
         return this.colour;
     }
 
-    public int getImageInt(){
-        return this.imageInt;
+    public int getImageBlueViewInt(){
+        return this.imageBlueViewInt;
+    }
+
+    public int getImageRedViewInt(){
+        return this.imageRedViewInt;
     }
 
     public HashMap<Integer, ArrayList<Coordinate>> getMoveset() {

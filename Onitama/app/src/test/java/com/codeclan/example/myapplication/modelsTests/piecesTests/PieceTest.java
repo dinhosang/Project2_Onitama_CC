@@ -43,7 +43,7 @@ public class PieceTest {
 
     @Test
     public void canGetImageInt(){
-        assertEquals(R.drawable.small_rock, redStudent.getImageInt());
+        assertEquals(R.drawable.red_student_body_small_square, redStudent.getImageInt());
     }
 
 }

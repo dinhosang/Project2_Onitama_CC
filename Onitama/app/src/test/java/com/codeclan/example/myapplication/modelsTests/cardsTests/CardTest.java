@@ -47,7 +47,8 @@ public class CardTest {
         movesetFrog.put(2, move2);
         movesetFrog.put(3, move3);
 
-        card = new Card(CardName.FROG, FactionColour.RED, R.drawable.eel, movesetFrog);
+        card = new Card(CardName.FROG, FactionColour.RED,
+                        R.drawable.frog_blue_view, R.drawable.frog_red_view, movesetFrog);
     }
 
 
@@ -62,8 +63,13 @@ public class CardTest {
     }
 
     @Test
-    public void canGetImageInt(){
-        assertEquals(R.drawable.eel, card.getImageInt());
+    public void canGetBlueImageInt(){
+        assertEquals(R.drawable.frog_blue_view, card.getImageBlueViewInt());
+    }
+
+    @Test
+    public void canGetRedImageInt(){
+        assertEquals(R.drawable.frog_red_view, card.getImageRedViewInt());
     }
 
     @Test
