@@ -152,8 +152,10 @@ public class Game {
             this.activeCard = null;
         } else {
             this.activeCard = potentialActiveCard;
+
         }
 
+        this.activeSquare = null;
     }
     
     public Card getActiveCard(){
