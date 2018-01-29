@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        boardGridAdapter = new BoardGridAdapter(this, game.getBoard().getCompleteBoard());
+        boardGridAdapter = new BoardGridAdapter(this, game.getBoard().getCompleteBoard(), game.getActiveSquare());
         gridView = findViewById(R.id.boardGridView);
         gridView.setAdapter(boardGridAdapter);
     }
