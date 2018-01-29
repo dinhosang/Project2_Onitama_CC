@@ -8,8 +8,6 @@ import android.widget.ImageView;
 
 import com.codeclan.example.myapplication.models.Game;
 import com.codeclan.example.myapplication.models.cards.Card;
-import com.codeclan.example.myapplication.models.pieces.Piece;
-import com.codeclan.example.myapplication.models.squares.Board;
 import com.codeclan.example.myapplication.models.squares.Square;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,27 +28,61 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        blueCardOne = findViewById(R.id.blueCardOne);
+        blueCardTwo = findViewById(R.id.blueCardTwo);
+        redCardOne  = findViewById(R.id.redCardOne);
+        redCardTwo  = findViewById(R.id.redCardTwo);
+
+        startGame();
+
+    }
+
+    private void startGame(){
         game        = new Game();
 
         activeCard  = null;
 
         chosenStartSquareWithPiece = null;
 
-        blueCardOne = findViewById(R.id.blueCardOne);
-        blueCardTwo = findViewById(R.id.blueCardTwo);
-        redCardOne  = findViewById(R.id.redCardOne);
-        redCardTwo  = findViewById(R.id.redCardTwo);
-
         showBoardState();
-
     }
 
     private void showBoardState() {
 
-        blueCardOne.setImageResource(game.getBlueHand().get(0).getImageBlueViewInt());
-        blueCardTwo.setImageResource(game.getBlueHand().get(1).getImageBlueViewInt());
-        redCardOne.setImageResource(game.getRedHand().get(0).getImageRedViewInt());
-        redCardTwo.setImageResource(game.getRedHand().get(1).getImageRedViewInt());
+        if (game.getGameWinner() != null){
+            startGame();
+        }
+
+        Card firstBlueCard = game.getBlueHand().get(0);
+        Card secondBlueCard = game.getBlueHand().get(1);
+        Card firstRedCard = game.getRedHand().get(0);
+        Card secondRedCard = game.getRedHand().get(1);
+
+        blueCardOne.setImageResource(firstBlueCard.getImageBlueViewInt());
+        blueCardTwo.setImageResource(secondBlueCard.getImageBlueViewInt());
+        redCardOne.setImageResource(firstRedCard.getImageRedViewInt());
+        redCardTwo.setImageResource(secondRedCard.getImageRedViewInt());
+
+        Card activeCard = game.getActiveCard();
+        int activeCardBorder = R.drawable.active_card_player_hand_border;
+        int nonActiveCardBorder = R.drawable.non_active_card_player_hand_border;
+
+        blueCardOne.setBackgroundResource(nonActiveCardBorder);
+        blueCardTwo.setBackgroundResource(nonActiveCardBorder);
+        redCardOne.setBackgroundResource(nonActiveCardBorder);
+        redCardTwo.setBackgroundResource(nonActiveCardBorder);
+
+        if (activeCard != null) {
+            if (activeCard.equals(firstBlueCard)) {
+                blueCardOne.setBackgroundResource(activeCardBorder);
+            } else if (activeCard.equals(secondBlueCard)) {
+                blueCardTwo.setBackgroundResource(activeCardBorder);
+            } else if (activeCard.equals(firstRedCard)) {
+                redCardOne.setBackgroundResource(activeCardBorder);
+            } else {
+                redCardTwo.setBackgroundResource(activeCardBorder);
+            }
+        }
 
         boardGridAdapter = new BoardGridAdapter(this, game.getBoard().getCompleteBoard());
         gridView = findViewById(R.id.boardGridView);

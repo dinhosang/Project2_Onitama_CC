@@ -42,11 +42,12 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:onClick="toggleCardSelectionOnClick"
+        android:scaleType="fitXY"
         android:src="@drawable/ic_launcher_background"
         android:tag="@string/red_one"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/blueCardTwo"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/redCardTwo"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
@@ -58,6 +59,7 @@
         android:layout_marginBottom="440dp"
         android:layout_marginTop="16dp"
         android:onClick="toggleCardSelectionOnClick"
+        android:scaleType="fitXY"
         android:src="@drawable/ic_launcher_background"
         android:tag="@string/red_two"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -83,14 +85,12 @@
         android:layout_height="52dp"
         android:layout_marginBottom="24dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="28dp"
         android:onClick="toggleCardSelectionOnClick"
+        android:scaleType="fitXY"
         android:src="@drawable/ic_launcher_background"
         android:tag="@string/blue_one"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/blueCardTwo"
-        app:layout_constraintHorizontal_bias="0.11"
-     />
+        app:layout_constraintEnd_toStartOf="@+id/blueCardTwo" />
 
     <ImageView
         android:id="@+id/blueCardTwo"
@@ -99,6 +99,7 @@
         android:layout_marginBottom="24dp"
         android:layout_marginEnd="28dp"
         android:onClick="toggleCardSelectionOnClick"
+        android:scaleType="fitXY"
         android:src="@drawable/ic_launcher_background"
         android:tag="@string/blue_two"
         app:layout_constraintBottom_toBottomOf="parent"
