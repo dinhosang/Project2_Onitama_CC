@@ -78,4 +78,8 @@ public class Square extends Coordinate {
         return this.piece.getImageInt();
     }
 
+    public Piece getPiece(){
+        return this.piece;
+    }
+
 }

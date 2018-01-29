@@ -25,11 +25,14 @@ public class Game {
     private ArrayList<Card>     redHand;
     private Card                floatingCardForRed;
     private Card                floatingCardForBlue;
+    private Card                activeCard;
+    
+    private Square              activeSquare;
 
     private ArrayList<Piece>    capturedBluePieces;
     private ArrayList<Piece>    capturedRedPieces;
 
-    private FactionColour       activeFaction;
+    private FactionColour       activeFactionColour;
     private FactionColour       gameWinner;
     
     public Game(){
@@ -43,10 +46,13 @@ public class Game {
 
         this.floatingCardForRed     = null;
         this.floatingCardForBlue    = null;
+        this.activeCard             = null;
         this.gameWinner             = null;
 
         this.capturedBluePieces     = new ArrayList<>();
         this.capturedRedPieces      = new ArrayList<>();
+
+        this.activeSquare = null;
 
         setupCards();
         
@@ -62,9 +68,9 @@ public class Game {
 
         Card floatingCard = this.deck.removeTopCard();
 
-        this.activeFaction = this.deck.removeTopCard().getCardColour();
+        this.activeFactionColour = this.deck.removeTopCard().getCardColour();
 
-        if (this.activeFaction.equals(FactionColour.RED)){
+        if (this.activeFactionColour.equals(FactionColour.RED)){
             this.floatingCardForRed = floatingCard;
         } else {
             this.floatingCardForBlue = floatingCard;
@@ -92,7 +98,7 @@ public class Game {
     }
 
     public FactionColour getActiveFaction() {
-        return activeFaction;
+        return activeFactionColour;
     }
 
     public Card getFloatingCardForRed() {
@@ -120,8 +126,78 @@ public class Game {
     public FactionColour getGameWinner() {
         return gameWinner;
     }
+    
+    public void toggleActiveCardSelection(Card potentialActiveCard){
 
-    public boolean checkMovesExistWhichKeepActiveFactionsPieceOnBoard(Square square, Card card) {
+        if (this.activeFactionColour.equals(FactionColour.BLUE)){
+
+            if (!this.blueHand.contains(potentialActiveCard)){
+                return;
+            }
+
+        } else {
+
+            if (!this.redHand.contains(potentialActiveCard)){
+                return;
+            }
+
+        }
+
+        if (this.activeCard == null) {
+            this.activeCard = potentialActiveCard;
+            return;
+        }
+
+        if (this.activeCard.equals(potentialActiveCard)){
+            this.activeCard = null;
+        } else {
+            this.activeCard = potentialActiveCard;
+        }
+
+    }
+    
+    public Card getActiveCard(){
+        return this.activeCard;
+    }
+    
+    
+    public void toggleSquareSelection(Square selectedSquare){
+        
+        
+        if (this.activeCard == null) {
+            return;
+        }
+
+        
+        if (this.activeSquare != null) {
+            
+            if (this.activeSquare.equals(selectedSquare)){
+                this.activeSquare = null;
+                return;
+            }
+            
+            if (selectedSquare.containsPiece()) {
+                if (this.activeFactionColour.equals(selectedSquare.getPiece().getPieceColour())) {
+                    return;
+                }
+            }
+            movePiece(this.activeSquare, this.activeCard, selectedSquare);
+        }
+        
+        if (selectedSquare.containsPiece()){
+            if (this.activeFactionColour.equals(selectedSquare.getPiece().getPieceColour())){
+                this.activeSquare = selectedSquare;
+            }
+        }
+        
+    }
+    
+    public Square getActiveSquare(){
+        return this.activeSquare;
+    }
+    
+
+    private boolean checkMovesExistWhichKeepActiveFactionsPieceOnBoard(Square square, Card card) {
 
         if (this.gameWinner != null){
             return false;
@@ -135,7 +211,7 @@ public class Game {
             return false;
         }
 
-        if (this.activeFaction.equals(FactionColour.RED)){
+        if (this.activeFactionColour.equals(FactionColour.RED)){
             if (square.containsRedPiece()){
                return checkMovesExistWhichKeepActiveFactionsPieceOnBoardRed(square, card);
             }
@@ -148,7 +224,7 @@ public class Game {
         return false;
     }
 
-    public boolean checkPieceMayMoveToSquare(Square startSquare, Card card, Square endSquare) {
+    private boolean checkPieceMayMoveToSquare(Square startSquare, Card card, Square endSquare) {
         if (!checkMovesExistWhichKeepActiveFactionsPieceOnBoard(startSquare, card)){
             return false;
         }
@@ -161,14 +237,14 @@ public class Game {
             }
         }
 
-        if (activeFaction.equals(FactionColour.BLUE)){
+        if (activeFactionColour.equals(FactionColour.BLUE)){
             return checkPieceCanReachSquareBlue(startSquare, card, endSquare);
         } else {
             return checkPieceCanReachSquareRed(startSquare, card, endSquare);
         }
     }
 
-    public void movePiece(Square startSquare, Card card, Square endSquare) {
+    private void movePiece(Square startSquare, Card card, Square endSquare) {
         if (checkPieceMayMoveToSquare(startSquare, card, endSquare)){
             Piece movingPiece = startSquare.removePiece();
 
@@ -315,10 +391,10 @@ public class Game {
         int squareXCoord = square.getXCoord();
         int squareYCoord = square.getYCoord();
 
-        if (this.activeFaction.equals(FactionColour.BLUE) && squareXCoord == 2 && squareYCoord == 4){
-            this.gameWinner = this.activeFaction;
-        } else if (this.activeFaction.equals(FactionColour.RED) && squareXCoord == 2 && squareYCoord == 0) {
-            this.gameWinner = this.activeFaction;
+        if (this.activeFactionColour.equals(FactionColour.BLUE) && squareXCoord == 2 && squareYCoord == 4){
+            this.gameWinner = this.activeFactionColour;
+        } else if (this.activeFactionColour.equals(FactionColour.RED) && squareXCoord == 2 && squareYCoord == 0) {
+            this.gameWinner = this.activeFactionColour;
         }
 
     }
@@ -331,12 +407,12 @@ public class Game {
         }
 
         if (piece.getType().equals(PieceType.SENSEI)){
-            this.gameWinner = this.activeFaction;
+            this.gameWinner = this.activeFactionColour;
         }
     }
 
     private boolean cardInActivePlayersHand(Card card) {
-        if (this.activeFaction.equals(FactionColour.BLUE)){
+        if (this.activeFactionColour.equals(FactionColour.BLUE)){
             return this.blueHand.contains(card);
         } else {
             return this.redHand.contains(card);
@@ -344,7 +420,11 @@ public class Game {
     }
 
     private void endOfTurnProcedure(Card card) {
-        if (this.activeFaction.equals(FactionColour.BLUE)){
+
+        this.activeCard                 = null;
+        this.activeSquare = null;
+        
+        if (this.activeFactionColour.equals(FactionColour.BLUE)){
             this.blueHand.remove(card);
             this.floatingCardForRed = card;
         } else {
@@ -353,7 +433,7 @@ public class Game {
         }
 
         if(this.gameWinner == null){
-            if (this.activeFaction.equals(FactionColour.BLUE)){
+            if (this.activeFactionColour.equals(FactionColour.BLUE)){
                 this.blueHand.add(this.floatingCardForBlue);
                 this.floatingCardForBlue = null;
             } else {
@@ -367,10 +447,10 @@ public class Game {
     }
 
     private void changeActiveFaction() {
-        if (this.activeFaction.equals(FactionColour.BLUE)){
-            this.activeFaction = FactionColour.RED;
+        if (this.activeFactionColour.equals(FactionColour.BLUE)){
+            this.activeFactionColour = FactionColour.RED;
         } else {
-            this.activeFaction = FactionColour.BLUE;
+            this.activeFactionColour = FactionColour.BLUE;
         }
     }
 

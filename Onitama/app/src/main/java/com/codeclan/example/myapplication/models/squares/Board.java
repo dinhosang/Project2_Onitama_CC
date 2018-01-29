@@ -26,9 +26,23 @@ public class Board {
     }
 
     private void prepareBoardWithUnits() {
-        Piece redStudent    = new RedStudent();
+        Piece redStudent1    = new RedStudent();
+        Piece redStudent2    = new RedStudent();
+        Piece redStudent3    = new RedStudent();
+        Piece redStudent4    = new RedStudent();
+
+        ArrayList<Piece> redStudents = new ArrayList<>(Arrays.asList(redStudent1, redStudent2,
+                                                                        redStudent3, redStudent4));
         Piece redSensei     = new RedSensei();
-        Piece blueStudent   = new BlueStudent();
+
+        Piece blueStudent1   = new BlueStudent();
+        Piece blueStudent2   = new BlueStudent();
+        Piece blueStudent3   = new BlueStudent();
+        Piece blueStudent4   = new BlueStudent();
+
+        ArrayList<Piece> blueStudents = new ArrayList<>(Arrays.asList(blueStudent1, blueStudent2,
+                blueStudent3, blueStudent4));
+
         Piece blueSensei    = new BlueSensei();
 
         for (Square square: this.completeBoard){
@@ -36,13 +50,13 @@ public class Board {
                 if (square.getXCoord() == 2){
                     square.addPiece(redSensei);
                 } else {
-                    square.addPiece(redStudent);
+                    square.addPiece(redStudents.remove(0));
                 }
             } else if (square.getYCoord() == 0){
                 if (square.getXCoord() == 2){
                     square.addPiece(blueSensei);
                 } else {
-                    square.addPiece(blueStudent);
+                    square.addPiece(blueStudents.remove(0));
                 }
             }
         }

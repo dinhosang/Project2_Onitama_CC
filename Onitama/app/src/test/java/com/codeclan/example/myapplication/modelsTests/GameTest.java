@@ -134,12 +134,13 @@ public class GameTest {
         }
     }
 
-    @Test
-    public void LegalMoveDoesNotExistWhichWouldKeepPieceOnBoard(){
-        assertEquals(false, game.checkMovesExistWhichKeepActiveFactionsPieceOnBoard(rightmostRedStartingSquare, frog));
-        assertEquals(false, game.checkMovesExistWhichKeepActiveFactionsPieceOnBoard(centreSquare, frog));
-        assertEquals(false, game.checkMovesExistWhichKeepActiveFactionsPieceOnBoard(leftmostBlueStartingSquare, frog));
-    }
+//    this method was moved to being private as it was only called externally in test
+//    @Test
+//    public void LegalMoveDoesNotExistWhichWouldKeepPieceOnBoard(){
+//        assertEquals(false, game.checkMovesExistWhichKeepActiveFactionsPieceOnBoard(rightmostRedStartingSquare, frog));
+//        assertEquals(false, game.checkMovesExistWhichKeepActiveFactionsPieceOnBoard(centreSquare, frog));
+//        assertEquals(false, game.checkMovesExistWhichKeepActiveFactionsPieceOnBoard(leftmostBlueStartingSquare, frog));
+//    }
 
 
     @Test
