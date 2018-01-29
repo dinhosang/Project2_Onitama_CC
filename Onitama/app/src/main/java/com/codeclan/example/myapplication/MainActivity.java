@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.codeclan.example.myapplication.constants.FactionColour;
 import com.codeclan.example.myapplication.models.Game;
 import com.codeclan.example.myapplication.models.cards.Card;
 import com.codeclan.example.myapplication.models.squares.Square;
@@ -20,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     ImageView           blueCardTwo;
     ImageView           redCardOne;
     ImageView           redCardTwo;
+    ImageView           blueFloatingCard;
+    ImageView           redFloatingCard;
     Game                game;
     BoardGridAdapter    boardGridAdapter;
     GridView            gridView;
@@ -32,8 +35,12 @@ public class MainActivity extends AppCompatActivity {
 
         blueCardOne = findViewById(R.id.blueCardOne);
         blueCardTwo = findViewById(R.id.blueCardTwo);
+
         redCardOne  = findViewById(R.id.redCardOne);
         redCardTwo  = findViewById(R.id.redCardTwo);
+
+        blueFloatingCard    = findViewById(R.id.blueFloatingCard);
+        redFloatingCard     = findViewById(R.id.redFloatingCard);
 
         startGame();
 
@@ -77,6 +84,16 @@ public class MainActivity extends AppCompatActivity {
         Card secondBlueCard = game.getBlueHand().get(1);
         Card firstRedCard = game.getRedHand().get(0);
         Card secondRedCard = game.getRedHand().get(1);
+
+        if (game.getActiveFaction().equals(FactionColour.BLUE)){
+            Card floatingCardForBlue = game.getFloatingCardForBlue();
+            blueFloatingCard.setImageResource(floatingCardForBlue.getImageBlueViewInt());
+            redFloatingCard.setImageResource(0);
+        } else  {
+            Card floatingCardForRed = game.getFloatingCardForRed();
+            redFloatingCard.setImageResource(floatingCardForRed.getImageRedViewInt());
+            blueFloatingCard.setImageResource(0);
+        }
 
         blueCardOne.setImageResource(firstBlueCard.getImageBlueViewInt());
         blueCardTwo.setImageResource(secondBlueCard.getImageBlueViewInt());
