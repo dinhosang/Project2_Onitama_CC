@@ -180,7 +180,8 @@ public class Game {
             
             if (selectedSquare.containsPiece()) {
                 if (this.activeFactionColour.equals(selectedSquare.getPiece().getPieceColour())) {
-                    return;
+//                    return;
+                    this.activeSquare = selectedSquare;
                 }
             }
             movePiece(this.activeSquare, this.activeCard, selectedSquare);

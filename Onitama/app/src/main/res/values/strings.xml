@@ -4,4 +4,8 @@
     <string name="blue_two">blue two</string>
     <string name="red_one">red one</string>
     <string name="red_two">red two</string>
+    <string name="new_game">New Game</string>
+    <string name="load_game">Load Game</string>
+    <string name="rules">Rules</string>
+    <string name="quit_game">Quit</string>
 </resources>
