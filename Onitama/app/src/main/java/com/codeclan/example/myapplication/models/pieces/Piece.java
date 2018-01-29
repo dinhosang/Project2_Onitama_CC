@@ -11,15 +11,17 @@ public abstract class Piece {
 
 
     protected int           imageInt;
+    protected int           activeImageInt;
     protected PieceType     type;
     protected FactionColour colour;
 
 
-    public Piece(FactionColour colour, PieceType type, int imageInt) {
+    public Piece(FactionColour colour, PieceType type, int imageInt, int activeImageInt) {
 
         this.colour         = colour;
         this.type           = type;
         this.imageInt       = imageInt;
+        this.activeImageInt = activeImageInt;
 
     }
 
@@ -34,5 +36,9 @@ public abstract class Piece {
 
     public int getImageInt() {
         return imageInt;
+    }
+
+    public int getActiveImageInt(){
+        return activeImageInt;
     }
 }

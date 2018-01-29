@@ -37,7 +37,7 @@ public class Game {
     
     public Game(){
         
-        this.name   = null;
+        this.name   = "recent game";
         this.board  = new Board();
         this.deck   = new Deck();
 

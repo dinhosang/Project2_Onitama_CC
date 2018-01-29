@@ -1,5 +1,7 @@
 package com.codeclan.example.myapplication;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +11,8 @@ import android.widget.ImageView;
 import com.codeclan.example.myapplication.models.Game;
 import com.codeclan.example.myapplication.models.cards.Card;
 import com.codeclan.example.myapplication.models.squares.Square;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,8 +23,6 @@ public class MainActivity extends AppCompatActivity {
     Game                game;
     BoardGridAdapter    boardGridAdapter;
     GridView            gridView;
-    Card                activeCard;
-    Square              chosenStartSquareWithPiece;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,14 +37,32 @@ public class MainActivity extends AppCompatActivity {
 
         startGame();
 
+//        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+//        String mostRecentGame = sharedPref.getString("MyFavourites", new Game().toString()); // UPDATE
+//
+//        Gson gson = new Gson();
+//        TypeToken<Game> gameGsonToken = new TypeToken<Game>(){};
+//        Game recentGame = gson.fromJson(mostRecentGame, gameGsonToken.getType());
+//
+//        SharedPreferences.Editor editor = sharedPref.edit();
+//        editor.putString(this.game.getName(), gson.toJson(this.game));
+//        editor.apply();
     }
 
     private void startGame(){
         game        = new Game();
 
-        activeCard  = null;
+        saveGame();
+    }
 
-        chosenStartSquareWithPiece = null;
+    private void saveGame(){
+        SharedPreferences sharedPref    = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        Gson gson = new Gson();
+
+        editor.putString(this.game.getName(), gson.toJson(this.game));
+        editor.apply();
 
         showBoardState();
     }
@@ -88,7 +108,6 @@ public class MainActivity extends AppCompatActivity {
         gridView = findViewById(R.id.boardGridView);
         gridView.setAdapter(boardGridAdapter);
     }
-
 
     public void toggleCardSelectionOnClick(View view) {
         String buttonClicked = view.getTag().toString();

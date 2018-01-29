@@ -7,7 +7,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
+import com.codeclan.example.myapplication.constants.FactionColour;
+import com.codeclan.example.myapplication.constants.PieceType;
 import com.codeclan.example.myapplication.models.Game;
+import com.codeclan.example.myapplication.models.pieces.Piece;
 import com.codeclan.example.myapplication.models.squares.Square;
 
 import java.util.ArrayList;
@@ -34,17 +37,19 @@ public class BoardGridAdapter extends ArrayAdapter<Square> {
         }
 
         ImageView squareImage = squareView.findViewById(R.id.squareItemView);
-        squareImage.setBackgroundResource(R.drawable.onitama_square);
+//        squareImage.setBackgroundResource(R.drawable.onitama_square);
+        squareImage.setBackgroundResource(R.drawable.non_active_square_border);
 
         Square currentSquare = getItem(position);
+
 
         if (currentSquare.containsPiece()){
             squareImage.setImageResource(currentSquare.getPieceImage());
         }
 
-        if (activeSquare != null){
+        if (this.activeSquare != null){
             if (currentSquare.equals(activeSquare)){
-                squareImage.setBackgroundResource(R.drawable.active_square_border);
+                squareImage.setImageResource(currentSquare.getPieceActiveImage());
             }
         }
 

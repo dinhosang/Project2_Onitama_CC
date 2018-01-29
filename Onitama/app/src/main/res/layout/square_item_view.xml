@@ -9,9 +9,8 @@
 
     <ImageView
         android:id="@+id/squareItemView"
-        android:layout_width="73dp"
-        android:layout_height="65dp"
-        android:background="@drawable/onitama_square"
+        android:layout_width="68dp"
+        android:layout_height="59dp"
         android:scaleType="centerInside"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="16dp" />

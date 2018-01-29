@@ -4,20 +4,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.codeclan.example.myapplication.WelcomeActivity">
+    android:layout_height="match_parent" >
 
-    <Button
+    <TextView
         android:id="@+id/loadGameTextView"
-        android:layout_width="200dp"
-        android:layout_height="60dp"
+        android:layout_width="202dp"
+        android:layout_height="36dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:onClick="welcomeScreenButtonOnClick"
-        android:text="@string/new_game"
+        android:layout_marginTop="108dp"
+        android:text="@string/load_game_fragment_header"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.404"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,7 +28,8 @@
         android:layout_height="60dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="24dp"
-        android:text="@string/load_game"
+        android:onClick="selectGameOnClick"
+        android:text="@string/last_unsaved_game"
         app:layout_constraintEnd_toEndOf="@+id/loadGameTextView"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/loadGameTextView"
@@ -59,14 +60,5 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/rulesButtonWelcome"
         app:layout_constraintTop_toBottomOf="@+id/rulesButtonWelcome" />
-
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="324dp"
-        android:layout_height="364dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
-
-    </android.support.constraint.ConstraintLayout>
-
 
 </android.support.constraint.ConstraintLayout>
