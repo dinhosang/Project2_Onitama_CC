@@ -6,6 +6,7 @@ import com.codeclan.example.myapplication.models.pieces.Piece;
 import com.codeclan.example.myapplication.models.pieces.RedSensei;
 import com.codeclan.example.myapplication.models.pieces.RedStudent;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -13,7 +14,7 @@ import java.util.Arrays;
  * Created by user on 25/01/2018.
  */
 
-public class Board {
+public class Board implements Serializable {
 
 
     private ArrayList<Square> completeBoard;

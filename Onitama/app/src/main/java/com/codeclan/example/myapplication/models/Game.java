@@ -8,14 +8,14 @@ import com.codeclan.example.myapplication.models.pieces.Piece;
 import com.codeclan.example.myapplication.models.squares.Board;
 import com.codeclan.example.myapplication.models.squares.Square;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by user on 28/01/2018.
  */
 
-public class Game {
-    
+public class Game implements Serializable {
     
     private String              name;
     private Board               board;
@@ -36,7 +36,7 @@ public class Game {
     private FactionColour       gameWinner;
     
     public Game(){
-        
+
         this.name   = "recent game";
         this.board  = new Board();
         this.deck   = new Deck();

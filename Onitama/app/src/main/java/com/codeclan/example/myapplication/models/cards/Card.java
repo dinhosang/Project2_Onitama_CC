@@ -4,6 +4,7 @@ import com.codeclan.example.myapplication.constants.CardName;
 import com.codeclan.example.myapplication.constants.FactionColour;
 import com.codeclan.example.myapplication.models.Coordinate;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +13,7 @@ import java.util.Map;
  * Created by user on 23/01/2018.
  */
 
-public class Card {
+public class Card implements Serializable {
 
 
     private CardName        name;

@@ -1,6 +1,7 @@
 package com.codeclan.example.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +15,8 @@ import com.codeclan.example.myapplication.models.cards.Card;
 import com.codeclan.example.myapplication.models.squares.Square;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
+import java.io.Serializable;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,7 +45,20 @@ public class MainActivity extends AppCompatActivity {
         blueFloatingCard    = findViewById(R.id.blueFloatingCard);
         redFloatingCard     = findViewById(R.id.redFloatingCard);
 
-        startGame();
+//        this.game = new Game();
+
+        Intent intent = getIntent();
+        if (intent.getStringExtra("load") != null){
+            String gameName = intent.getStringExtra("load");
+            loadGame(gameName);
+        } else {
+            // onCreate runs again after reaching end of a method with no other path forward!
+            // if below is not in else it tries to run, and sets game to null as nothing is in
+            // the intent under the chosen name if the game was loaded.
+            this.game = (Game) intent.getSerializableExtra("game");
+
+            saveGame();
+        }
 
 //        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 //        String mostRecentGame = sharedPref.getString("MyFavourites", new Game().toString()); // UPDATE
@@ -56,8 +72,20 @@ public class MainActivity extends AppCompatActivity {
 //        editor.apply();
     }
 
+    private void loadGame(String gameName) {
+        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        String mostRecentGame = sharedPref.getString(gameName, new Game().toString());
+
+        Gson gson = new Gson();
+        TypeToken<Game> gameGsonToken = new TypeToken<Game>(){};
+        Game loadedGame = gson.fromJson(mostRecentGame, gameGsonToken.getType());
+        this.game = loadedGame;
+
+        saveGame();
+    }
+
     private void startGame(){
-        game        = new Game();
+        this.game        = new Game();
 
         saveGame();
     }
@@ -76,21 +104,21 @@ public class MainActivity extends AppCompatActivity {
 
     private void showBoardState() {
 
-        if (game.getGameWinner() != null){
+        if (this.game.getGameWinner() != null){
             startGame();
         }
 
-        Card firstBlueCard = game.getBlueHand().get(0);
-        Card secondBlueCard = game.getBlueHand().get(1);
-        Card firstRedCard = game.getRedHand().get(0);
-        Card secondRedCard = game.getRedHand().get(1);
+        Card firstBlueCard = this.game.getBlueHand().get(0);
+        Card secondBlueCard = this.game.getBlueHand().get(1);
+        Card firstRedCard = this.game.getRedHand().get(0);
+        Card secondRedCard = this.game.getRedHand().get(1);
 
-        if (game.getActiveFaction().equals(FactionColour.BLUE)){
-            Card floatingCardForBlue = game.getFloatingCardForBlue();
+        if (this.game.getActiveFaction().equals(FactionColour.BLUE)){
+            Card floatingCardForBlue = this.game.getFloatingCardForBlue();
             blueFloatingCard.setImageResource(floatingCardForBlue.getImageBlueViewInt());
             redFloatingCard.setImageResource(0);
         } else  {
-            Card floatingCardForRed = game.getFloatingCardForRed();
+            Card floatingCardForRed = this.game.getFloatingCardForRed();
             redFloatingCard.setImageResource(floatingCardForRed.getImageRedViewInt());
             blueFloatingCard.setImageResource(0);
         }
@@ -100,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
         redCardOne.setImageResource(firstRedCard.getImageRedViewInt());
         redCardTwo.setImageResource(secondRedCard.getImageRedViewInt());
 
-        Card activeCard = game.getActiveCard();
+        Card activeCard = this.game.getActiveCard();
         int activeCardBorder = R.drawable.active_card_player_hand_border;
         int nonActiveCardBorder = R.drawable.non_active_card_player_hand_border;
 
@@ -121,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        boardGridAdapter = new BoardGridAdapter(this, game.getBoard().getCompleteBoard(), game.getActiveSquare());
+        boardGridAdapter = new BoardGridAdapter(this, this.game.getBoard().getCompleteBoard(), this.game.getActiveSquare());
         gridView = findViewById(R.id.boardGridView);
         gridView.setAdapter(boardGridAdapter);
     }
@@ -142,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         game.toggleActiveCardSelection(card);
+
         showBoardState();
 
     }
@@ -152,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
 
         game.toggleSquareSelection(clickedSquare);
 
-        showBoardState();
+        saveGame();
     }
 
 }

@@ -1,70 +1,257 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/board_image"
     tools:context="com.codeclan.example.myapplication.WelcomeActivity">
 
-    <Button
-        android:id="@+id/loadGameTextView"
-        android:layout_width="200dp"
-        android:layout_height="60dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+    <ImageView
+        android:id="@+id/redCardOneWelcome"
+        android:layout_width="136dp"
+        android:layout_height="77dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
-        android:onClick="welcomeScreenButtonOnClick"
-        android:text="@string/new_game"
+        android:onClick="toggleCardSelectionOnClick"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_launcher_background"
+        android:tag="@string/red_one"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.404"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/redCardTwoWelcome"
+        android:layout_width="136dp"
+        android:layout_height="77dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:onClick="toggleCardSelectionOnClick"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_launcher_background"
+        android:tag="@string/red_two"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <Button
-        android:id="@+id/loadGameButtonWelcome"
-        android:layout_width="200dp"
-        android:layout_height="60dp"
+
+    <GridView
+        android:id="@+id/welcomeBoardGridView"
+        android:layout_width="355dp"
+        android:layout_height="327dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/load_game"
-        app:layout_constraintEnd_toEndOf="@+id/loadGameTextView"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/loadGameTextView"
-        app:layout_constraintTop_toBottomOf="@+id/loadGameTextView" />
-
-
-    <Button
-        android:id="@+id/rulesButtonWelcome"
-        android:layout_width="200dp"
-        android:layout_height="60dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/rules"
-        app:layout_constraintEnd_toEndOf="@+id/loadGameButtonWelcome"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/loadGameButtonWelcome"
-        app:layout_constraintTop_toBottomOf="@+id/loadGameButtonWelcome" />
+        android:layout_marginTop="8dp"
+        android:numColumns="5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.56" />
 
-
-    <Button
-        android:id="@+id/quitButtonWelcome"
-        android:layout_width="200dp"
-        android:layout_height="60dp"
+    <ImageView
+        android:id="@+id/blueCardOneWelcome"
+        android:layout_width="0dp"
+        android:layout_height="77dp"
+        android:layout_marginBottom="16dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/quit_game"
-        app:layout_constraintEnd_toEndOf="@+id/rulesButtonWelcome"
+        android:onClick="toggleCardSelectionOnClick"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_launcher_background"
+        android:tag="@string/blue_one"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/redCardTwoWelcome"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/rulesButtonWelcome"
-        app:layout_constraintTop_toBottomOf="@+id/rulesButtonWelcome" />
+        app:layout_constraintStart_toStartOf="@+id/redCardTwoWelcome" />
+
+    <ImageView
+        android:id="@+id/blueCardTwoWelcome"
+        android:layout_width="0dp"
+        android:layout_height="77dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="8dp"
+        android:onClick="toggleCardSelectionOnClick"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_launcher_background"
+        android:tag="@string/blue_two"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/redCardOneWelcome"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/redCardOneWelcome" />
+
+    <ImageView
+        android:id="@+id/redFloatingCardWelcome"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="108dp"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.032"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/blueFloatingCardWelcome"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="104dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.98"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
 
     <android.support.constraint.ConstraintLayout
-        android:layout_width="324dp"
-        android:layout_height="364dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
+        android:id="@+id/loadGameMenu"
+        android:layout_width="262dp"
+        android:layout_height="427dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.178">
+
+        <TextView
+            android:id="@+id/loadHeaderTextView"
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="48dp"
+            android:outlineProvider="background"
+            android:text="@string/load_game_fragment_header"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@android:color/white"
+            android:textColorHighlight="@android:color/holo_blue_bright"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <Button
+            android:id="@+id/lastUnsavedGameButton"
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/last_unsaved_game"
+            android:onClick="loadMenuButtonOnClick"
+            app:layout_constraintEnd_toEndOf="@+id/loadHeaderTextView"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/loadHeaderTextView"
+            app:layout_constraintTop_toBottomOf="@+id/loadHeaderTextView" />
+
+
+        <ListView
+            android:id="@+id/saveGamesListView"
+            android:layout_width="200dp"
+            android:layout_height="120dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/ic_launcher_background"
+            android:text="@string/rules"
+            app:layout_constraintEnd_toEndOf="@+id/lastUnsavedGameButton"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/lastUnsavedGameButton"
+            app:layout_constraintTop_toBottomOf="@+id/lastUnsavedGameButton" />
+
+        <Button
+            android:id="@+id/backToWelcomeScreen"
+            android:layout_width="120dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:onClick="loadMenuButtonOnClick"
+            android:text="@string/return_to_welcome"
+            app:layout_constraintEnd_toEndOf="@+id/saveGamesListView"
+            app:layout_constraintStart_toStartOf="@+id/saveGamesListView"
+            app:layout_constraintTop_toBottomOf="@+id/saveGamesListView" />
+
+    </android.support.constraint.ConstraintLayout>
+
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/welcomeMenu"
+        android:layout_width="266dp"
+        android:layout_height="366dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.565">
+
+        <Button
+            android:id="@+id/newGameButton"
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp"
+            android:onClick="welcomeScreenButtonOnClick"
+            android:text="@string/new_game"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <Button
+            android:id="@+id/loadGameButtonWelcome"
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/load_game"
+            android:onClick="welcomeScreenButtonOnClick"
+            app:layout_constraintEnd_toEndOf="@+id/newGameButton"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/newGameButton"
+            app:layout_constraintTop_toBottomOf="@+id/newGameButton" />
+
+
+        <Button
+            android:id="@+id/rulesButtonWelcome"
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/rules"
+            android:onClick="welcomeScreenButtonOnClick"
+            app:layout_constraintEnd_toEndOf="@+id/loadGameButtonWelcome"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/loadGameButtonWelcome"
+            app:layout_constraintTop_toBottomOf="@+id/loadGameButtonWelcome" />
+
+
+        <Button
+            android:id="@+id/quitButtonWelcome"
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/quit_game"
+            android:onClick="welcomeScreenButtonOnClick"
+            app:layout_constraintEnd_toEndOf="@+id/rulesButtonWelcome"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/rulesButtonWelcome"
+            app:layout_constraintTop_toBottomOf="@+id/rulesButtonWelcome" />
 
     </android.support.constraint.ConstraintLayout>
 

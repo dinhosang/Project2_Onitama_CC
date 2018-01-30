@@ -1,10 +1,12 @@
 package com.codeclan.example.myapplication.models;
 
+import java.io.Serializable;
+
 /**
  * Created by user on 27/01/2018.
  */
 
-public abstract class Coordinate {
+public class Coordinate implements Serializable {
 
 
     protected int xCoord;

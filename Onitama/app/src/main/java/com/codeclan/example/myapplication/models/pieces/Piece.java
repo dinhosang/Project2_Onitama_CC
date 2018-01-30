@@ -3,11 +3,13 @@ package com.codeclan.example.myapplication.models.pieces;
 import com.codeclan.example.myapplication.constants.FactionColour;
 import com.codeclan.example.myapplication.constants.PieceType;
 
+import java.io.Serializable;
+
 /**
  * Created by user on 27/01/2018.
  */
 
-public abstract class Piece {
+public class Piece implements Serializable {
 
 
     protected int           imageInt;

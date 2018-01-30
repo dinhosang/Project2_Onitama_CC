@@ -9,6 +9,7 @@ import com.codeclan.example.myapplication.models.moves.Left;
 import com.codeclan.example.myapplication.models.moves.Right;
 import com.codeclan.example.myapplication.models.moves.Up;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -19,7 +20,7 @@ import java.util.HashMap;
  * Created by user on 28/01/2018.
  */
 
-public class Deck {
+public class Deck implements Serializable {
 
 
     private Down    down;

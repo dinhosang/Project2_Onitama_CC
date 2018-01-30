@@ -10,8 +10,9 @@
     <string name="quit_game">Quit</string>
     <string name="preference_file_key">ONITAMA_PROJECT_SAVED_GAMES</string>
     <string name="load_game_fragment_header"><u>Load</u></string>
-    <string name="last_unsaved_game">Last Unsaved Game</string>
+    <string name="last_unsaved_game">Load Last \n Unsaved Game</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="return_to_welcome">Return to \n Main Menu</string>
 </resources>
