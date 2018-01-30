@@ -112,7 +112,7 @@ public class GameTest {
 
     @Test
     public void canGetName(){
-        assertEquals(null, game.getName());
+        assertEquals("recent game", game.getName());
         game.setName("Test Game");
         assertEquals("Test Game", game.getName());
     }

@@ -34,7 +34,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-
     <GridView
         android:id="@+id/welcomeBoardGridView"
         android:layout_width="355dp"
@@ -107,7 +106,6 @@
         app:layout_constraintStart_toStartOf="parent" />
 
 
-
     <android.support.constraint.ConstraintLayout
         android:id="@+id/loadGameMenu"
         android:layout_width="262dp"
@@ -142,14 +140,32 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
-        <Button
-            android:id="@+id/lastUnsavedGameButton"
+        <TextView
+            android:id="@+id/noLastUnsavedGameTextView"
             android:layout_width="200dp"
             android:layout_height="60dp"
             android:layout_marginEnd="8dp"
             android:layout_marginTop="20dp"
-            android:text="@string/last_unsaved_game"
+            android:background="@android:drawable/btn_default_small"
+            android:text="@string/no_last_unsaved_game"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/loadHeaderTextView"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/loadHeaderTextView"
+            app:layout_constraintTop_toBottomOf="@+id/loadHeaderTextView" />
+
+
+        <Button
+            android:id="@+id/loadLastUnsavedGameButton"
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="20dp"
             android:onClick="loadMenuButtonOnClick"
+            android:text="@string/last_unsaved_game"
             app:layout_constraintEnd_toEndOf="@+id/loadHeaderTextView"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/loadHeaderTextView"
@@ -164,10 +180,10 @@
             android:layout_marginTop="24dp"
             android:background="@drawable/ic_launcher_background"
             android:text="@string/rules"
-            app:layout_constraintEnd_toEndOf="@+id/lastUnsavedGameButton"
+            app:layout_constraintEnd_toEndOf="@+id/loadLastUnsavedGameButton"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/lastUnsavedGameButton"
-            app:layout_constraintTop_toBottomOf="@+id/lastUnsavedGameButton" />
+            app:layout_constraintStart_toStartOf="@+id/loadLastUnsavedGameButton"
+            app:layout_constraintTop_toBottomOf="@+id/loadLastUnsavedGameButton" />
 
         <Button
             android:id="@+id/backToWelcomeScreen"
@@ -218,8 +234,8 @@
             android:layout_height="60dp"
             android:layout_marginEnd="8dp"
             android:layout_marginTop="24dp"
-            android:text="@string/load_game"
             android:onClick="welcomeScreenButtonOnClick"
+            android:text="@string/load_game"
             app:layout_constraintEnd_toEndOf="@+id/newGameButton"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/newGameButton"
@@ -232,8 +248,8 @@
             android:layout_height="60dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="24dp"
-            android:text="@string/rules"
             android:onClick="welcomeScreenButtonOnClick"
+            android:text="@string/rules"
             app:layout_constraintEnd_toEndOf="@+id/loadGameButtonWelcome"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@+id/loadGameButtonWelcome"
@@ -246,8 +262,8 @@
             android:layout_height="60dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="24dp"
-            android:text="@string/quit_game"
             android:onClick="welcomeScreenButtonOnClick"
+            android:text="@string/quit_game"
             app:layout_constraintEnd_toEndOf="@+id/rulesButtonWelcome"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@+id/rulesButtonWelcome"

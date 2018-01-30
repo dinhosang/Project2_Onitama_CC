@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.codeclan.example.myapplication.constants.FactionColour;
 import com.codeclan.example.myapplication.models.Game;
@@ -22,6 +23,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
     Game newGame;
     Game loadedGame;
+
     ConstraintLayout welcomeMenu;
     ConstraintLayout loadMenu;
 
@@ -120,21 +122,46 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private void loadMenu() {
 
-        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        String mostRecentGame = sharedPref.getString("recent game", new Game().toString());
+        Button      loadRecentUnsavedGameButton;
+        TextView    noLastUnsavedGameTextView;
 
-        Gson gson = new Gson();
-        TypeToken<Game> gameGsonToken = new TypeToken<Game>(){};
-        Game loadedGame = gson.fromJson(mostRecentGame, gameGsonToken.getType());
-        this.loadedGame = loadedGame;
+        loadRecentUnsavedGameButton = findViewById(R.id.loadLastUnsavedGameButton);
+        loadRecentUnsavedGameButton.setText(R.string.last_unsaved_game);
+
+        noLastUnsavedGameTextView = findViewById((R.id.noLastUnsavedGameTextView));
+
+        loadRecentUnsavedGameButton.bringToFront();
+        loadRecentUnsavedGameButton.setAlpha(1);
+        noLastUnsavedGameTextView.setAlpha(0);
+
+        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        String emptyGame = new Game().toString();
+        String mostRecentGame = sharedPref.getString("recent game", emptyGame);
 
         this.welcomeMenu.setAlpha(0);
         this.loadMenu.setAlpha(1);
 
         this.loadMenu.bringToFront();
 
-        showWelcomeScreen(this.loadedGame);
+        if (mostRecentGame.equals(emptyGame)){
 
+            loadRecentUnsavedGameButton = findViewById(R.id.loadLastUnsavedGameButton);
+            loadRecentUnsavedGameButton.setText(R.string.no_last_unsaved_game);
+
+            loadRecentUnsavedGameButton.setAlpha(0);
+            noLastUnsavedGameTextView.setAlpha(1);
+            noLastUnsavedGameTextView.bringToFront();
+
+            showWelcomeScreen(this.newGame);
+        } else {
+
+            Gson gson = new Gson();
+            TypeToken<Game> gameGsonToken = new TypeToken<Game>() {};
+            Game loadedGame = gson.fromJson(mostRecentGame, gameGsonToken.getType());
+            this.loadedGame = loadedGame;
+
+            showWelcomeScreen(this.loadedGame);
+        }
     }
 
     public void toggleUnitSquareSelection(View view) {

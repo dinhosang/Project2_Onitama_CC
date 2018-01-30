@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             // the intent under the chosen name if the game was loaded.
             this.game = (Game) intent.getSerializableExtra("game");
 
-            saveGame();
+            saveGame(this.game);
         }
 
 //        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
@@ -81,23 +81,29 @@ public class MainActivity extends AppCompatActivity {
         Game loadedGame = gson.fromJson(mostRecentGame, gameGsonToken.getType());
         this.game = loadedGame;
 
-        saveGame();
+        saveGame(this.game);
     }
 
     private void startGame(){
         this.game        = new Game();
 
-        saveGame();
+        showBoardState();
     }
 
-    private void saveGame(){
+    private void saveGame(Game gameToPotentiallySave){
         SharedPreferences sharedPref    = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
 
         Gson gson = new Gson();
 
-        editor.putString(this.game.getName(), gson.toJson(this.game));
-        editor.apply();
+        if (gameToPotentiallySave == null){
+            editor.remove(this.game.getName());
+            editor.apply();
+            startGame();
+        } else {
+            editor.putString(this.game.getName(), gson.toJson(this.game));
+            editor.apply();
+        }
 
         showBoardState();
     }
@@ -105,7 +111,8 @@ public class MainActivity extends AppCompatActivity {
     private void showBoardState() {
 
         if (this.game.getGameWinner() != null){
-            startGame();
+            Game blankGame = null;
+            saveGame(blankGame);
         }
 
         Card firstBlueCard = this.game.getBlueHand().get(0);
@@ -181,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
 
         game.toggleSquareSelection(clickedSquare);
 
-        saveGame();
+        saveGame(this.game);
     }
 
 }
