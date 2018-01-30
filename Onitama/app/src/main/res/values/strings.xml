@@ -16,4 +16,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="return_to_welcome">Return to \n Main Menu</string>
+    <string name="save_game_dialog_title">Save Game</string>
+    <string name="enter_save_game_name">Enter save game name</string>
+    <string name="cancel_save">Cancel</string>
+    <string name="save_game_with_name">Save</string>
 </resources>

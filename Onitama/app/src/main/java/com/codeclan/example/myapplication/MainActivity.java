@@ -3,11 +3,18 @@ package com.codeclan.example.myapplication;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.codeclan.example.myapplication.constants.FactionColour;
 import com.codeclan.example.myapplication.models.Game;
@@ -52,14 +59,21 @@ public class MainActivity extends AppCompatActivity {
             String gameName = intent.getStringExtra("load");
             loadGame(gameName);
         } else {
-            // onCreate runs again after reaching end of a method with no other path forward!
-            // if below is not in else it tries to run, and sets game to null as nothing is in
-            // the intent under the chosen name if the game was loaded.
+            // onCreate runs again from after the if after reaching end of a method with no other path forward!
+            // if below is not in else but just free standing code it then tries to run, and sets game to null
+            // as nothing is in the intent under the chosen name if the game was loaded.
             this.game = (Game) intent.getSerializableExtra("game");
 
             saveGame(this.game);
         }
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.activity_main, menu);
+        return true;
     }
 
     private void loadGame(String gameName) {
@@ -179,6 +193,56 @@ public class MainActivity extends AppCompatActivity {
         game.toggleSquareSelection(clickedSquare);
 
         saveGame(this.game);
+    }
+
+    public void onMenuItemClick(MenuItem item) {
+        if (item.getItemId() == R.id.action_save_game) {
+
+            AlertDialog.Builder dialogBuilder;
+            final EditText      saveGameNameField;
+            Button              cancelButton;
+            Button              saveButton;
+
+            View saveGameView   = getLayoutInflater().inflate(R.layout.save_game_view, null);
+            dialogBuilder       = new AlertDialog.Builder(MainActivity.this);
+
+
+            saveGameNameField   = (EditText) saveGameView.findViewById(R.id.saveGameViewEnterSaveNameEditText);
+            cancelButton        = (Button) saveGameView.findViewById(R.id.saveGameViewCancelButton);
+            saveButton          = (Button) saveGameView.findViewById(R.id.saveGameViewSaveButton);
+
+//            dialogBuilder.setView(saveGameView);
+//            final AlertDialog dialog = dialogBuilder.create();
+//            dialog.show();
+
+            cancelButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+//                    dialog.dismiss();
+                }
+            });
+
+
+            saveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String nameChosen = saveGameNameField.getText().toString();
+
+                    if (nameChosen.isEmpty()){
+                        Toast.makeText(MainActivity.this, "Please enter a name for the saved game", Toast.LENGTH_SHORT).show();
+                    } else {
+                        MainActivity.this.game.setName(nameChosen);
+                        Toast.makeText(MainActivity.this, String.format("Game Saved As: %s", nameChosen), Toast.LENGTH_SHORT).show();
+//                        dialog.dismiss();
+                    }
+                }
+            });
+
+            dialogBuilder.setView(saveGameView);
+            final AlertDialog dialog = dialogBuilder.create();
+            dialog.show();
+
+        }
     }
 
 }

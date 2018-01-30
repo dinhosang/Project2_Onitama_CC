@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp">
+
+    <TextView
+        android:id="@+id/saveGameViewTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center_vertical"
+        android:text="@string/save_game_dialog_title"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/saveGameViewEnterSaveNameEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:hint="@string/enter_save_game_name"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/saveGameViewTitle" />
+
+    <Button
+        android:id="@+id/saveGameViewCancelButton"
+        android:layout_width="183dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/cancel_save"
+        app:layout_constraintStart_toStartOf="@+id/saveGameViewEnterSaveNameEditText"
+        app:layout_constraintTop_toBottomOf="@+id/saveGameViewEnterSaveNameEditText" />
+
+    <Button
+        android:id="@+id/saveGameViewSaveButton"
+        android:layout_width="183dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/save_game_with_name"
+        app:layout_constraintEnd_toEndOf="@+id/saveGameViewEnterSaveNameEditText"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/saveGameViewCancelButton"
+        app:layout_constraintTop_toBottomOf="@+id/saveGameViewEnterSaveNameEditText" />
+</android.support.constraint.ConstraintLayout>

@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 public class BoardGridAdapter extends ArrayAdapter<Square> {
 
-    Square activeSquare;
+    private Square activeSquare;
 
 
     public BoardGridAdapter(Context context, ArrayList<Square> squares, Square activeSquare) {
@@ -31,13 +31,13 @@ public class BoardGridAdapter extends ArrayAdapter<Square> {
     }
 
 
+    @Override
     public View getView(int position, View squareView, ViewGroup parent){
         if (squareView == null){
             squareView = LayoutInflater.from(getContext()).inflate(R.layout.square_item_view, parent, false);
         }
 
         ImageView squareImage = squareView.findViewById(R.id.squareItemView);
-//        squareImage.setBackgroundResource(R.drawable.onitama_square);
         squareImage.setBackgroundResource(R.drawable.non_active_square_border);
 
         Square currentSquare = getItem(position);

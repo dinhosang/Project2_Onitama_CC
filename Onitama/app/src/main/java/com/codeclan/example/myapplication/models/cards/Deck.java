@@ -27,7 +27,6 @@ public class Deck implements Serializable {
     private Up      up;
     private Left    left;
     private Right   right;
-    private Card    card;
 
     private ArrayList<Card> cards;
 
@@ -81,6 +80,15 @@ public class Deck implements Serializable {
         createMonkey();
     }
 
+    private void createCard(CardName cardname, FactionColour factionColour, int cardBlueView, 
+                            int cardRedView, HashMap<Integer, ArrayList<Coordinate>> movesets){
+        
+        Card card = new Card(cardname, factionColour, cardBlueView, cardRedView, movesets);
+        
+        cards.add(card);
+        
+    }
+
     private void createMonkey() {
         ArrayList<Coordinate> move1 = new ArrayList<>(Arrays.asList(right, down));
         ArrayList<Coordinate> move2 = new ArrayList<>(Arrays.asList(left, down));
@@ -93,10 +101,8 @@ public class Deck implements Serializable {
         moveset.put(3, move3);
         moveset.put(4, move4);
 
-        card = new Card(CardName.MONKEY, FactionColour.BLUE,
+        createCard(CardName.MONKEY, FactionColour.BLUE,
                         R.drawable.monkey_blue_view, R.drawable.monkey_red_view, moveset);
-
-        cards.add(card);
     }
 
     private void createRabbit() {
@@ -109,10 +115,8 @@ public class Deck implements Serializable {
         moveset.put(2, move2);
         moveset.put(3, move3);
 
-        card = new Card(CardName.RABBIT, FactionColour.BLUE,
+        createCard(CardName.RABBIT, FactionColour.BLUE,
                         R.drawable.rabbit_blue_view, R.drawable.rabbit_red_view, moveset);
-
-        cards.add(card);
     }
 
     private void createGoose() {
@@ -127,10 +131,8 @@ public class Deck implements Serializable {
         moveset.put(3, move3);
         moveset.put(4, move4);
 
-        card = new Card(CardName.GOOSE, FactionColour.BLUE,
+        createCard(CardName.GOOSE, FactionColour.BLUE,
                         R.drawable.goose_blue_view, R.drawable.goose_red_view, moveset);
-
-        cards.add(card);
     }
 
     private void createCrane() {
@@ -143,10 +145,8 @@ public class Deck implements Serializable {
         moveset.put(2, move2);
         moveset.put(3, move3);
 
-        card = new Card(CardName.CRANE, FactionColour.BLUE,
+        createCard(CardName.CRANE, FactionColour.BLUE,
                         R.drawable.crane_blue_view, R.drawable.crane_red_view, moveset);
-
-        cards.add(card);
     }
 
     private void createEel() {
@@ -159,10 +159,8 @@ public class Deck implements Serializable {
         moveset.put(2, move2);
         moveset.put(3, move3);
 
-        card = new Card(CardName.EEL, FactionColour.BLUE,
+        createCard(CardName.EEL, FactionColour.BLUE,
                         R.drawable.eel_blue_view, R.drawable.eel_red_view, moveset);
-
-        cards.add(card);
     }
 
     private void createOx() {
@@ -175,10 +173,8 @@ public class Deck implements Serializable {
         moveset.put(2, move2);
         moveset.put(3, move3);
 
-        card = new Card(CardName.OX, FactionColour.BLUE,
+        createCard(CardName.OX, FactionColour.BLUE,
                         R.drawable.ox_blue_view, R.drawable.ox_red_view, moveset);
-
-        cards.add(card);
     }
 
     private void createCrab() {
@@ -191,10 +187,8 @@ public class Deck implements Serializable {
         moveset.put(2, move2);
         moveset.put(3, move3);
 
-        card = new Card(CardName.CRAB, FactionColour.BLUE,
+        createCard(CardName.CRAB, FactionColour.BLUE,
                         R.drawable.crab_blue_view, R.drawable.crab_red_view, moveset);
-
-        cards.add(card);
     }
 
     private void createTiger() {
@@ -205,10 +199,8 @@ public class Deck implements Serializable {
         moveset.put(1, move1);
         moveset.put(2, move2);
 
-        card = new Card(CardName.TIGER, FactionColour.BLUE,
+        createCard(CardName.TIGER, FactionColour.BLUE,
                         R.drawable.tiger_blue_view, R.drawable.tiger_red_view, moveset);
-
-        cards.add(card);
     }
 
     private void createDragon() {
@@ -223,10 +215,8 @@ public class Deck implements Serializable {
         moveset.put(3, move3);
         moveset.put(4, move4);
 
-        card = new Card(CardName.DRAGON, FactionColour.RED,
+        createCard(CardName.DRAGON, FactionColour.RED,
                         R.drawable.dragon_blue_view, R.drawable.dragon_red_view, moveset);
-
-        cards.add(card);
     }
 
     private void createBoar() {
@@ -239,10 +229,8 @@ public class Deck implements Serializable {
         moveset.put(2, move2);
         moveset.put(3, move3);
 
-        card = new Card(CardName.BOAR, FactionColour.RED,
+        createCard(CardName.BOAR, FactionColour.RED,
                         R.drawable.boar_blue_view, R.drawable.boar_red_view, moveset);
-
-        cards.add(card);
     }
 
     private void createElephant() {
@@ -257,10 +245,8 @@ public class Deck implements Serializable {
         moveset.put(3, move3);
         moveset.put(4, move4);
 
-        card = new Card(CardName.ELEPHANT, FactionColour.RED,
+        createCard(CardName.ELEPHANT, FactionColour.RED,
                         R.drawable.elephant_blue_view, R.drawable.elephant_red_view, moveset);
-
-        cards.add(card);
     }
 
     private void createHorse() {
@@ -273,10 +259,8 @@ public class Deck implements Serializable {
         moveset.put(2, move2);
         moveset.put(3, move3);
 
-        card = new Card(CardName.HORSE, FactionColour.RED,
+        createCard(CardName.HORSE, FactionColour.RED,
                         R.drawable.horse_blue_view, R.drawable.horse_red_view, moveset);
-
-        cards.add(card);
     }
 
     private void createMantis() {
@@ -289,10 +273,8 @@ public class Deck implements Serializable {
         moveset.put(2, move2);
         moveset.put(3, move3);
 
-        card = new Card(CardName.MANTIS, FactionColour.RED,
+        createCard(CardName.MANTIS, FactionColour.RED,
                         R.drawable.mantis_blue_view, R.drawable.mantis_red_view,moveset);
-
-        cards.add(card);
     }
 
     private void createRooster() {
@@ -307,10 +289,8 @@ public class Deck implements Serializable {
         moveset.put(3, move3);
         moveset.put(4, move4);
 
-        card = new Card(CardName.ROOSTER, FactionColour.RED,
+        createCard(CardName.ROOSTER, FactionColour.RED,
                         R.drawable.rooster_blue_view, R.drawable.rooster_red_view, moveset);
-
-        cards.add(card);
     }
 
     private void createCobra() {
@@ -323,10 +303,8 @@ public class Deck implements Serializable {
         moveset.put(2, move2);
         moveset.put(3, move3);
 
-        card = new Card(CardName.COBRA, FactionColour.RED,
+        createCard(CardName.COBRA, FactionColour.RED,
                         R.drawable.cobra_blue_view, R.drawable.cobra_red_view, moveset);
-
-        cards.add(card);
     }
 
     private void createFrog() {
@@ -339,10 +317,8 @@ public class Deck implements Serializable {
         moveset.put(2, move2);
         moveset.put(3, move3);
 
-        card = new Card(CardName.FROG, FactionColour.RED,
+        createCard(CardName.FROG, FactionColour.RED,
                         R.drawable.frog_blue_view, R.drawable.frog_red_view, moveset);
-
-        cards.add(card);
     }
 
     private void shuffleCards(){
