@@ -60,16 +60,6 @@ public class MainActivity extends AppCompatActivity {
             saveGame(this.game);
         }
 
-//        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-//        String mostRecentGame = sharedPref.getString("MyFavourites", new Game().toString()); // UPDATE
-//
-//        Gson gson = new Gson();
-//        TypeToken<Game> gameGsonToken = new TypeToken<Game>(){};
-//        Game recentGame = gson.fromJson(mostRecentGame, gameGsonToken.getType());
-//
-//        SharedPreferences.Editor editor = sharedPref.edit();
-//        editor.putString(this.game.getName(), gson.toJson(this.game));
-//        editor.apply();
     }
 
     private void loadGame(String gameName) {
