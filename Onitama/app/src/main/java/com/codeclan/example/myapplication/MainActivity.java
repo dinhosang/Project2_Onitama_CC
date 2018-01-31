@@ -99,20 +99,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadGame(String gameName, int turnToLoad) {
 
-        gameSaveDataString = sharedPref.getString(gameName, "no save");
-        this.game = SaveDataHelper.loadGame(gameSaveDataString, turnToLoad);
+        this.game = SaveDataHelper.loadGame(gameName, this.getApplicationContext(),turnToLoad);
 
         showBoardState();
     }
 
     private void saveGame(){
 
-        gameSaveDataString = sharedPref.getString(this.game.getName(), "no save");
-
-        HashMap<Integer, Game> gameSaveMap = SaveDataHelper.saveGame(this.game, gameSaveDataString);
-
-        editor.putString(this.game.getName(), gson.toJson(gameSaveMap));
-        editor.apply();
+        SaveDataHelper.saveGame(this.game, this.getApplicationContext());
 
         showBoardState();
     }
@@ -120,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
     private void showBoardState() {
 
         if (this.game.getGameWinner() != null){
-            clearGame();
+            clearSaveOfGameNamed(this.game.getName());
             startGame();
         }
 
@@ -170,10 +164,9 @@ public class MainActivity extends AppCompatActivity {
         gridView.setAdapter(boardGridAdapter);
     }
 
-    private void clearGame(){
+    private void clearSaveOfGameNamed(String gameNameToClearSaveOf){
 
-        editor.remove(this.game.getName());
-        editor.apply();
+        SaveDataHelper.clearSaveOfGameNamed(gameNameToClearSaveOf, this.getApplicationContext());
 
     }
 
@@ -254,7 +247,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "Reserved name, please enter another", Toast.LENGTH_LONG).show();
                     } else {
 
-                        clearGame();
+                        clearSaveOfGameNamed(MainActivity.this.game.getName());
                         MainActivity.this.game.setName(nameChosen);
 
                         saveGame();

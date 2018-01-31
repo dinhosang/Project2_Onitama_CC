@@ -34,6 +34,7 @@ public abstract class SaveDataHelper {
 
         preferenceFileKey   = context.getString(R.string.preference_file_key);
         sharedPref          = context.getSharedPreferences(preferenceFileKey, Context.MODE_PRIVATE);
+        editor              = sharedPref.edit();
     }
 
 
@@ -89,36 +90,58 @@ public abstract class SaveDataHelper {
     }
 
 
-    public static HashMap<Integer, Game> saveGame(Game gameToSave, String jsonStringSaveData){
+    public static void saveGame(Game gameToSave, Context context){
 
-        Date currentTime = Calendar.getInstance().getTime();
+        initSharedPref(context);
+
+        String gameName;
+        String gameSaveDataString;
+
+
+        gameName            = gameToSave.getName();
+        Integer turnCount   = gameToSave.getTurnCount();
+        Date currentTime    = Calendar.getInstance().getTime();
         gameToSave.setDateSaved(currentTime);
 
-        Integer turnCount = gameToSave.getTurnCount();
 
-
-        if (jsonStringSaveData.equals("no save")){
+        gameSaveDataString  = sharedPref.getString(gameName, "no save");
+        if (gameSaveDataString.equals("no save")){
 
             gameSaveMap = new HashMap<>();
 
         } else {
 
-            gameSaveMap = gson.fromJson(jsonStringSaveData, gameSaveGsonToken.getType());
+            gameSaveMap = gson.fromJson(gameSaveDataString, gameSaveGsonToken.getType());
 
         }
 
         gameSaveMap.put(0, gameToSave);
         gameSaveMap.put(turnCount, gameToSave);
 
-        return gameSaveMap;
+        editor.putString(gameName, gson.toJson(gameSaveMap));
+        editor.apply();
     }
 
 
-    public static Game loadGame(String gameSaveDataString, int turnToLoadOn) {
+    public static Game loadGame(String gameName, Context context, int turnToLoadOn) {
 
-        gameSaveMap = gson.fromJson(gameSaveDataString, gameSaveGsonToken.getType());
+        initSharedPref(context);
+        String gameSaveDataString;
+
+        gameSaveDataString  = sharedPref.getString(gameName, "no save");
+        gameSaveMap         = gson.fromJson(gameSaveDataString, gameSaveGsonToken.getType());
 
         return gameSaveMap.get(turnToLoadOn);
+    }
+
+
+    public static void clearSaveOfGameNamed(String gameNameToClearSaveOf, Context context){
+
+        initSharedPref(context);
+
+        editor.remove(gameNameToClearSaveOf);
+        editor.apply();
+
     }
 
 }

@@ -1,8 +1,6 @@
 package com.codeclan.example.myapplication;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,12 +14,9 @@ import android.widget.TextView;
 import com.codeclan.example.myapplication.constants.FactionColour;
 import com.codeclan.example.myapplication.models.Game;
 import com.codeclan.example.myapplication.models.cards.Card;
-import com.codeclan.example.myapplication.models.squares.Square;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
-import java.util.Map;
+
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -30,10 +25,6 @@ public class WelcomeActivity extends AppCompatActivity {
 
     ConstraintLayout welcomeMenu;
     ConstraintLayout loadMenu;
-
-    Gson gson;
-
-    SharedPreferences sharedPref;
 
 
     @Override
@@ -44,10 +35,6 @@ public class WelcomeActivity extends AppCompatActivity {
         this.newGame        = new Game();
         this.welcomeMenu    = findViewById(R.id.welcomeMenu);
         this.loadMenu       = findViewById(R.id.loadGameMenu);
-
-        this.gson           = new Gson();
-        this.sharedPref     = getSharedPreferences(getString(R.string.preference_file_key),
-                                            Context.MODE_PRIVATE);
 
         this.welcomeMenu.setAlpha(1);
         this.loadMenu.setAlpha(0);
@@ -141,9 +128,6 @@ public class WelcomeActivity extends AppCompatActivity {
         loadRecentUnsavedGameButton.setAlpha(1);
         noLastUnsavedGameTextView.setAlpha(0);
 
-        String emptyGame        = new Game().toString();
-        String mostRecentGame   = this.sharedPref.getString("recent game", emptyGame);
-
 
         this.welcomeMenu.setAlpha(0);
         this.loadMenu.setAlpha(1);
@@ -161,8 +145,8 @@ public class WelcomeActivity extends AppCompatActivity {
             showWelcomeScreen(this.newGame);
         } else {
 
-            this.loadedGame = SaveDataHelper.loadGame(mostRecentGame, 0);
-
+            this.loadedGame = SaveDataHelper.loadGame(this.loadedGame.getName(),
+                                                        this.getApplicationContext(),0);
             showWelcomeScreen(this.loadedGame);
         }
     }
