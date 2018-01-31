@@ -56,4 +56,19 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/saveGameViewCancelButton"
         app:layout_constraintTop_toBottomOf="@+id/saveGameViewEnterSaveNameEditText" />
+
+    <TextView
+        android:id="@+id/saveGameViewExplanation"
+        android:layout_width="312dp"
+        android:layout_height="190dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="108dp"
+        android:text="@string/unsaved_autosave_explanation"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/saveGameViewEnterSaveNameEditText" />
 </android.support.constraint.ConstraintLayout>

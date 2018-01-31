@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codeclan.example.myapplication.constants.FactionColour;
@@ -38,13 +39,6 @@ public class MainActivity extends AppCompatActivity {
     GridView            gridView;
 
 
-    Gson    gson;
-    String  gameSaveDataString;
-
-    SharedPreferences           sharedPref;
-    SharedPreferences.Editor    editor;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -59,14 +53,6 @@ public class MainActivity extends AppCompatActivity {
 
         blueFloatingCard    = findViewById(R.id.blueFloatingCard);
         redFloatingCard     = findViewById(R.id.redFloatingCard);
-
-        // getSharedPreferences is not static so cannot move to SavaDataHelper file after making
-        // the helper extend Activity. Helper is now just a Java class.
-        sharedPref      = getSharedPreferences(getString(R.string.preference_file_key),
-                                                Context.MODE_PRIVATE);
-
-        editor          = sharedPref.edit();
-        gson            = new Gson();
 
 
         Intent intent = getIntent();
@@ -209,8 +195,13 @@ public class MainActivity extends AppCompatActivity {
     public void onMenuItemClick(MenuItem item) {
         if (item.getItemId() == R.id.action_save_game) {
 
+            final String        originalGameName;
+            originalGameName    = MainActivity.this.game.getName();
+
             AlertDialog.Builder dialogBuilder;
             final EditText      saveGameNameField;
+
+            TextView            saveGameExplanation;
             Button              cancelButton;
             Button              saveButton;
 
@@ -218,9 +209,26 @@ public class MainActivity extends AppCompatActivity {
             dialogBuilder       = new AlertDialog.Builder(MainActivity.this);
 
 
-            saveGameNameField   = (EditText) saveGameView.findViewById(R.id.saveGameViewEnterSaveNameEditText);
-            cancelButton        = (Button) saveGameView.findViewById(R.id.saveGameViewCancelButton);
-            saveButton          = (Button) saveGameView.findViewById(R.id.saveGameViewSaveButton);
+            saveGameNameField   = saveGameView.findViewById(R.id.saveGameViewEnterSaveNameEditText);
+            cancelButton        = saveGameView.findViewById(R.id.saveGameViewCancelButton);
+            saveButton          = saveGameView.findViewById(R.id.saveGameViewSaveButton);
+            saveGameExplanation = saveGameView.findViewById(R.id.saveGameViewExplanation);
+
+            if (originalGameName.equals("recent game")){
+
+                final float scale = getApplicationContext().getResources().getDisplayMetrics().density;
+                int pixels = (int) (190 * scale + 0.5f);
+
+                saveGameExplanation.getLayoutParams().height = pixels;
+                saveGameExplanation.setText(R.string.unsaved_autosave_explanation);
+            } else {
+
+                final float scale = getApplicationContext().getResources().getDisplayMetrics().density;
+                int pixels = (int) (120 * scale + 0.5f);
+
+                saveGameExplanation.getLayoutParams().height = pixels;
+                saveGameExplanation.setText(R.string.save_explanation);
+            }
 
             dialogBuilder.setView(saveGameView);
             final AlertDialog dialog = dialogBuilder.create();
@@ -241,18 +249,23 @@ public class MainActivity extends AppCompatActivity {
 
                     String nameChosen = saveGameNameField.getText().toString();
 
-                    if (nameChosen.isEmpty()){
+                    if (nameChosen.isEmpty()) {
                         Toast.makeText(MainActivity.this, "Please enter a name for the saved game", Toast.LENGTH_SHORT).show();
-                    } else if (nameChosen.equals("recent game")){
+                    } else if (nameChosen.equals("recent game")) {
                         Toast.makeText(MainActivity.this, "Reserved name, please enter another", Toast.LENGTH_LONG).show();
                     } else {
 
-                        clearSaveOfGameNamed(MainActivity.this.game.getName());
                         MainActivity.this.game.setName(nameChosen);
 
                         saveGame();
 
-                        Toast.makeText(MainActivity.this, String.format("Game Saved As: %s", nameChosen), Toast.LENGTH_LONG).show();
+                        if (originalGameName.equals("recent game")) {
+                            clearSaveOfGameNamed(originalGameName);
+                            Toast.makeText(MainActivity.this, String.format("Game saved as: %s", nameChosen), Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(MainActivity.this, String.format("Game now saved as: %s", nameChosen), Toast.LENGTH_LONG).show();
+                        }
+
                         dialog.cancel();
                     }
                 }

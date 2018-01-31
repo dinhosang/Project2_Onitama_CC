@@ -98,6 +98,23 @@ public class WelcomeActivity extends AppCompatActivity {
         gridView.setAdapter(boardGridAdapter);
     }
 
+    public void welcomeScreenButtonOnClick(View view) {
+        Button chosenButton = (Button) view;
+        String textOnView = chosenButton.getText().toString();
+
+        if (textOnView.equals(getString(R.string.new_game))){
+            startNewGame();
+        } else if (textOnView.equals(getString(R.string.load_game))){
+            loadMenu();
+        }
+
+//        else if (textOnView.equals(getString(R.string.quit_game))){
+//            finish();
+//            System.exit(0);
+//        }
+    }
+
+
     private void startNewGame() {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("game", this.newGame);
@@ -145,7 +162,7 @@ public class WelcomeActivity extends AppCompatActivity {
             showWelcomeScreen(this.newGame);
         } else {
 
-            this.loadedGame = SaveDataHelper.loadGame(this.loadedGame.getName(),
+            this.loadedGame = SaveDataHelper.loadGame("recent game",
                                                         this.getApplicationContext(),0);
             showWelcomeScreen(this.loadedGame);
         }
@@ -157,22 +174,6 @@ public class WelcomeActivity extends AppCompatActivity {
         savedGames = SaveDataHelper.getAllSavedGamesExceptRecent(this.getApplicationContext());
 
         return savedGames;
-    }
-
-    public void welcomeScreenButtonOnClick(View view) {
-        Button chosenButton = (Button) view;
-        String textOnView = chosenButton.getText().toString();
-
-        if (textOnView.equals(getString(R.string.new_game))){
-            startNewGame();
-        } else if (textOnView.equals(getString(R.string.load_game))){
-            loadMenu();
-        }
-
-//        else if (textOnView.equals(getString(R.string.quit_game))){
-//            finish();
-//            System.exit(0);
-//        }
     }
 
     public void loadMenuButtonOnClick(View view) {
