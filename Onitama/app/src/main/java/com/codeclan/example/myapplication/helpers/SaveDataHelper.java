@@ -1,10 +1,10 @@
-package com.codeclan.example.myapplication;
+package com.codeclan.example.myapplication.helpers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.codeclan.example.myapplication.R;
 import com.codeclan.example.myapplication.models.Game;
-import com.codeclan.example.myapplication.models.pieces.Piece;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -21,20 +21,26 @@ import java.util.Map;
 public abstract class SaveDataHelper {
 
 
-    private static String                   preferenceFileKey;
-    private static SharedPreferences        sharedPref;
-    private static SharedPreferences.Editor editor;
+    private static Gson gson;
 
-    private static Gson gson = new Gson();
-    private static HashMap<Integer, Game> gameSaveMap;
-    private static TypeToken<HashMap<Integer, Game>> gameSaveGsonToken = new TypeToken<HashMap<Integer, Game>>(){};
+    private static SharedPreferences                    sharedPref;
+    private static SharedPreferences.Editor             editor;
+
+    private static HashMap<Integer, Game>               gameSaveMap;
+    private static TypeToken<HashMap<Integer, Game>>    gameSaveGsonToken;
 
 
     private static void initSharedPref(Context context){
 
+        String preferenceFileKey;
+
+        gson                = new Gson();
+        gameSaveGsonToken   = new TypeToken<HashMap<Integer, Game>>(){};
+
         preferenceFileKey   = context.getString(R.string.preference_file_key);
         sharedPref          = context.getSharedPreferences(preferenceFileKey, Context.MODE_PRIVATE);
         editor              = sharedPref.edit();
+
     }
 
 

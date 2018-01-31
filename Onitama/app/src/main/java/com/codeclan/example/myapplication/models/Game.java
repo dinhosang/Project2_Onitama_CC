@@ -1,7 +1,10 @@
 package com.codeclan.example.myapplication.models;
 
+import android.provider.MediaStore;
+
 import com.codeclan.example.myapplication.constants.FactionColour;
 import com.codeclan.example.myapplication.constants.PieceType;
+import com.codeclan.example.myapplication.constants.VictoryType;
 import com.codeclan.example.myapplication.models.cards.Card;
 import com.codeclan.example.myapplication.models.cards.Deck;
 import com.codeclan.example.myapplication.models.pieces.Piece;
@@ -37,8 +40,11 @@ public class Game implements Serializable {
     private ArrayList<Piece>    capturedBluePieces;
     private ArrayList<Piece>    capturedRedPieces;
 
-    private FactionColour       activeFactionColour;
+    private FactionColour       startingFaction;
+    private FactionColour       activeFaction;
+
     private FactionColour       gameWinner;
+    private VictoryType         victoryType;
     
     public Game(){
 
@@ -77,13 +83,16 @@ public class Game implements Serializable {
 
         Card floatingCard = this.deck.removeTopCard();
 
-        this.activeFactionColour = this.deck.removeTopCard().getCardColour();
+        Card cardToDetermineStartPlayer = this.deck.removeTopCard();
+        this.activeFaction = cardToDetermineStartPlayer.getCardColour();
 
-        if (this.activeFactionColour.equals(FactionColour.RED)){
+        if (this.activeFaction.equals(FactionColour.RED)){
             this.floatingCardForRed = floatingCard;
         } else {
             this.floatingCardForBlue = floatingCard;
         }
+
+        this.startingFaction = cardToDetermineStartPlayer.getCardColour();
 
     }
 
@@ -108,6 +117,14 @@ public class Game implements Serializable {
         return this.turnCount;
     }
 
+    public VictoryType getVictoryType(){
+        return this.victoryType;
+    }
+
+    public FactionColour getStartingFaction(){
+        return this.startingFaction;
+    }
+
     public ArrayList<Card> getRedHand() {
         ArrayList<Card> copyRedHand = new ArrayList<>(this.redHand);
         return copyRedHand;
@@ -119,7 +136,7 @@ public class Game implements Serializable {
     }
 
     public FactionColour getActiveFaction() {
-        return activeFactionColour;
+        return activeFaction;
     }
 
     public Card getFloatingCardForRed() {
@@ -150,7 +167,7 @@ public class Game implements Serializable {
     
     public void toggleActiveCardSelection(Card potentialActiveCard){
 
-        if (this.activeFactionColour.equals(FactionColour.BLUE)){
+        if (this.activeFaction.equals(FactionColour.BLUE)){
 
             if (!this.blueHand.contains(potentialActiveCard)){
                 return;
@@ -200,7 +217,7 @@ public class Game implements Serializable {
             }
             
             if (selectedSquare.containsPiece()) {
-                if (this.activeFactionColour.equals(selectedSquare.getPiece().getPieceColour())) {
+                if (this.activeFaction.equals(selectedSquare.getPiece().getPieceColour())) {
 //                    return;
                     this.activeSquare = selectedSquare;
                 }
@@ -209,7 +226,7 @@ public class Game implements Serializable {
         }
         
         if (selectedSquare.containsPiece()){
-            if (this.activeFactionColour.equals(selectedSquare.getPiece().getPieceColour())){
+            if (this.activeFaction.equals(selectedSquare.getPiece().getPieceColour())){
                 this.activeSquare = selectedSquare;
             }
         }
@@ -235,7 +252,7 @@ public class Game implements Serializable {
             return false;
         }
 
-        if (this.activeFactionColour.equals(FactionColour.RED)){
+        if (this.activeFaction.equals(FactionColour.RED)){
             if (square.containsRedPiece()){
                return checkMovesExistWhichKeepActiveFactionsPieceOnBoardRed(square, card);
             }
@@ -261,7 +278,7 @@ public class Game implements Serializable {
             }
         }
 
-        if (activeFactionColour.equals(FactionColour.BLUE)){
+        if (activeFaction.equals(FactionColour.BLUE)){
             return checkPieceCanReachSquareBlue(startSquare, card, endSquare);
         } else {
             return checkPieceCanReachSquareRed(startSquare, card, endSquare);
@@ -416,10 +433,12 @@ public class Game implements Serializable {
         int squareXCoord = square.getXCoord();
         int squareYCoord = square.getYCoord();
 
-        if (this.activeFactionColour.equals(FactionColour.BLUE) && squareXCoord == 2 && squareYCoord == 4){
-            this.gameWinner = this.activeFactionColour;
-        } else if (this.activeFactionColour.equals(FactionColour.RED) && squareXCoord == 2 && squareYCoord == 0) {
-            this.gameWinner = this.activeFactionColour;
+        if (this.activeFaction.equals(FactionColour.BLUE) && squareXCoord == 2 && squareYCoord == 4){
+            this.gameWinner     = this.activeFaction;
+            this.victoryType    = VictoryType.GATE;
+        } else if (this.activeFaction.equals(FactionColour.RED) && squareXCoord == 2 && squareYCoord == 0) {
+            this.gameWinner     = this.activeFaction;
+            this.victoryType    = VictoryType.GATE;
         }
 
     }
@@ -432,12 +451,13 @@ public class Game implements Serializable {
         }
 
         if (piece.getType().equals(PieceType.SENSEI)){
-            this.gameWinner = this.activeFactionColour;
+            this.gameWinner     = this.activeFaction;
+            this.victoryType    = VictoryType.SENSEI;
         }
     }
 
     private boolean cardInActivePlayersHand(Card card) {
-        if (this.activeFactionColour.equals(FactionColour.BLUE)){
+        if (this.activeFaction.equals(FactionColour.BLUE)){
             return this.blueHand.contains(card);
         } else {
             return this.redHand.contains(card);
@@ -449,7 +469,7 @@ public class Game implements Serializable {
         this.activeCard   = null;
         this.activeSquare = null;
         
-        if (this.activeFactionColour.equals(FactionColour.BLUE)){
+        if (this.activeFaction.equals(FactionColour.BLUE)){
             this.blueHand.remove(card);
             this.floatingCardForRed = card;
         } else {
@@ -461,7 +481,7 @@ public class Game implements Serializable {
 
             this.turnCount += 1;
 
-            if (this.activeFactionColour.equals(FactionColour.BLUE)){
+            if (this.activeFaction.equals(FactionColour.BLUE)){
                 this.blueHand.add(this.floatingCardForBlue);
                 this.floatingCardForBlue = null;
             } else {
@@ -475,10 +495,10 @@ public class Game implements Serializable {
     }
 
     private void changeActiveFaction() {
-        if (this.activeFactionColour.equals(FactionColour.BLUE)){
-            this.activeFactionColour = FactionColour.RED;
+        if (this.activeFaction.equals(FactionColour.BLUE)){
+            this.activeFaction = FactionColour.RED;
         } else {
-            this.activeFactionColour = FactionColour.BLUE;
+            this.activeFaction = FactionColour.BLUE;
         }
     }
 

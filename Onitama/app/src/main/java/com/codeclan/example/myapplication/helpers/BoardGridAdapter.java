@@ -1,4 +1,4 @@
-package com.codeclan.example.myapplication;
+package com.codeclan.example.myapplication.helpers;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,10 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
-import com.codeclan.example.myapplication.constants.FactionColour;
-import com.codeclan.example.myapplication.constants.PieceType;
-import com.codeclan.example.myapplication.models.Game;
-import com.codeclan.example.myapplication.models.pieces.Piece;
+import com.codeclan.example.myapplication.R;
 import com.codeclan.example.myapplication.models.squares.Square;
 
 import java.util.ArrayList;

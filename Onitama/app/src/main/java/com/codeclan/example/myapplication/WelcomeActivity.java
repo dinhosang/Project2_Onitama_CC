@@ -12,6 +12,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.codeclan.example.myapplication.constants.FactionColour;
+import com.codeclan.example.myapplication.helpers.BoardGridAdapter;
+import com.codeclan.example.myapplication.helpers.SaveDataHelper;
+import com.codeclan.example.myapplication.helpers.SaveGamesListViewAdapter;
 import com.codeclan.example.myapplication.models.Game;
 import com.codeclan.example.myapplication.models.cards.Card;
 
@@ -46,7 +49,7 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     private void showWelcomeScreen(Game game){
-        BoardGridAdapter    boardGridAdapter;
+        BoardGridAdapter boardGridAdapter;
         GridView            gridView;
         ImageView           blueCardOne;
         ImageView           blueCardTwo;

@@ -1,8 +1,7 @@
 package com.codeclan.example.myapplication;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,12 +17,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codeclan.example.myapplication.constants.FactionColour;
+import com.codeclan.example.myapplication.helpers.BoardGridAdapter;
+import com.codeclan.example.myapplication.helpers.SaveDataHelper;
 import com.codeclan.example.myapplication.models.Game;
 import com.codeclan.example.myapplication.models.cards.Card;
 import com.codeclan.example.myapplication.models.squares.Square;
-import com.google.gson.Gson;
-
-import java.util.HashMap;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -34,9 +32,12 @@ public class MainActivity extends AppCompatActivity {
     ImageView           redCardTwo;
     ImageView           blueFloatingCard;
     ImageView           redFloatingCard;
-    Game                game;
+
     BoardGridAdapter    boardGridAdapter;
     GridView            gridView;
+    ConstraintLayout    resultView;
+
+    Game                game;
 
 
     @Override
@@ -44,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        resultView  = findViewById(R.id.resultView);
 
         blueCardOne = findViewById(R.id.blueCardOne);
         blueCardTwo = findViewById(R.id.blueCardTwo);
@@ -99,10 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void showBoardState() {
 
-        if (this.game.getGameWinner() != null){
-            clearSaveOfGameNamed(this.game.getName());
-            startGame();
-        }
+        checkGameIsWon();
 
         Card firstBlueCard = this.game.getBlueHand().get(0);
         Card secondBlueCard = this.game.getBlueHand().get(1);
@@ -150,6 +150,25 @@ public class MainActivity extends AppCompatActivity {
         gridView.setAdapter(boardGridAdapter);
     }
 
+    private void checkGameIsWon(){
+
+        if (this.game.getGameWinner() == null) {
+            return;
+        }
+
+//        clearSaveOfGameNamed(this.game.getName());
+//
+//        resultView.setAlpha(1);
+//        resultView.bringToFront();
+//
+//        Button returnMainMenu;
+//        Button startNewGame;
+//        Button
+
+        startGame();
+
+    }
+
     private void clearSaveOfGameNamed(String gameNameToClearSaveOf){
 
         SaveDataHelper.clearSaveOfGameNamed(gameNameToClearSaveOf, this.getApplicationContext());
@@ -157,6 +176,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startGame(){
+
         this.game        = new Game();
 
         showBoardState();
