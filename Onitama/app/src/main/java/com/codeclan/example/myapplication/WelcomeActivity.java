@@ -44,7 +44,7 @@ public class WelcomeActivity extends AppCompatActivity {
         this.newGame        = new Game();
         this.welcomeMenu    = findViewById(R.id.welcomeMenu);
         this.loadMenu       = findViewById(R.id.loadGameMenu);
-        
+
         this.gson           = new Gson();
         this.sharedPref     = getSharedPreferences(getString(R.string.preference_file_key),
                                             Context.MODE_PRIVATE);
@@ -111,22 +111,6 @@ public class WelcomeActivity extends AppCompatActivity {
         gridView.setAdapter(boardGridAdapter);
     }
 
-    public void welcomeScreenButtonOnClick(View view) {
-        Button chosenButton = (Button) view;
-        String textOnView = chosenButton.getText().toString();
-
-        if (textOnView.equals(getString(R.string.new_game))){
-            startNewGame();
-        } else if (textOnView.equals(getString(R.string.load_game))){
-            loadMenu();
-        }
-
-//        else if (textOnView.equals(getString(R.string.quit_game))){
-//            finish();
-//            System.exit(0);
-//        }
-    }
-
     private void startNewGame() {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("game", this.newGame);
@@ -146,7 +130,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         noLastUnsavedGameTextView = findViewById((R.id.noLastUnsavedGameTextView));
 
-        ArrayList<Game> savedGames = getSavedGames();
+        ArrayList<Game> savedGames = getAllSavedGamesExceptRecent();
 
         if (!savedGames.isEmpty()){
             SaveGamesListViewAdapter savedGameAdapter = new SaveGamesListViewAdapter(this, savedGames);
@@ -157,13 +141,12 @@ public class WelcomeActivity extends AppCompatActivity {
         loadRecentUnsavedGameButton.setAlpha(1);
         noLastUnsavedGameTextView.setAlpha(0);
 
-        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        String emptyGame = new Game().toString();
-        String mostRecentGame = sharedPref.getString("recent game", emptyGame);
+        String emptyGame        = new Game().toString();
+        String mostRecentGame   = this.sharedPref.getString("recent game", emptyGame);
+
 
         this.welcomeMenu.setAlpha(0);
         this.loadMenu.setAlpha(1);
-
         this.loadMenu.bringToFront();
 
         if (mostRecentGame.equals(emptyGame)){
@@ -178,43 +161,36 @@ public class WelcomeActivity extends AppCompatActivity {
             showWelcomeScreen(this.newGame);
         } else {
 
-            Gson gson = new Gson();
-            TypeToken<Game> gameGsonToken = new TypeToken<Game>() {};
-            Game loadedGame = gson.fromJson(mostRecentGame, gameGsonToken.getType());
-            this.loadedGame = loadedGame;
-
+            this.loadedGame = SaveDataHelper.loadGame(mostRecentGame, 0);
             showWelcomeScreen(this.loadedGame);
         }
     }
 
-    private ArrayList<Game> getSavedGames(){
+    private ArrayList<Game> getAllSavedGamesExceptRecent(){
 
-        Game currentSavedGame;
-        ArrayList<Game> savedGames = new ArrayList<>();
+        ArrayList<Game> savedGames;
+        Map<String, ?>  allEntries;
 
-        Map<String, ?> allEntries = this.sharedPref.getAll();
-
-
-        TypeToken<Game> gameGsonToken = new TypeToken<Game>(){};
-
-        if (!allEntries.isEmpty()) {
-
-            for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
-
-                currentSavedGame = gson.fromJson(entry.getValue().toString(), gameGsonToken.getType());
-                if (!currentSavedGame.getName().equals("recent game")) {
-                    savedGames.add(currentSavedGame);
-                }
-            }
-        }
-
-
+        allEntries = this.sharedPref.getAll();
+        savedGames = SaveDataHelper.getAllSavedGamesExceptRecent(allEntries);
 
         return savedGames;
     }
 
-    public void toggleUnitSquareSelection(View view) {
+    public void welcomeScreenButtonOnClick(View view) {
+        Button chosenButton = (Button) view;
+        String textOnView = chosenButton.getText().toString();
 
+        if (textOnView.equals(getString(R.string.new_game))){
+            startNewGame();
+        } else if (textOnView.equals(getString(R.string.load_game))){
+            loadMenu();
+        }
+
+//        else if (textOnView.equals(getString(R.string.quit_game))){
+//            finish();
+//            System.exit(0);
+//        }
     }
 
     public void loadMenuButtonOnClick(View view) {
@@ -244,4 +220,6 @@ public class WelcomeActivity extends AppCompatActivity {
         intent.putExtra("game", this.loadedGame);
         startActivity(intent);
     }
+
+    public void toggleUnitSquareSelection(View view) {}
 }

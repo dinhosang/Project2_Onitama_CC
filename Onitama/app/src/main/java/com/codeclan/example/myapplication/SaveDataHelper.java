@@ -4,9 +4,11 @@ import com.codeclan.example.myapplication.models.Game;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by user on 31/01/2018.
@@ -20,33 +22,32 @@ public class SaveDataHelper {
     private static TypeToken<HashMap<Integer, Game>> gameSaveGsonToken = new TypeToken<HashMap<Integer, Game>>(){};
 
 
-    private ArrayList<Game> getSavedGames(){
+    public static ArrayList<Game> getAllSavedGamesExceptRecent(Map<String, ?> allEntries){
 
-        Game currentSavedGame;
+        String gameName;
+        Game currentSavedGameAtLatestTurn;
+        HashMap<Integer, Game> currentSaveGameData;
+
         ArrayList<Game> savedGames = new ArrayList<>();
-
-        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        Map<String, ?> allEntries = sharedPref.getAll();
-
-        Gson gson = new Gson();
-        TypeToken<Game> gameGsonToken = new TypeToken<Game>(){};
 
         if (!allEntries.isEmpty()) {
 
             for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
 
-                currentSavedGame = gson.fromJson(entry.getValue().toString(), gameGsonToken.getType());
-                if (!currentSavedGame.getName().equals("recent game")) {
-                    savedGames.add(currentSavedGame);
+                currentSaveGameData             = gson.fromJson(entry.getValue().toString(),
+                                                                gameSaveGsonToken.getType());
+                currentSavedGameAtLatestTurn    = currentSaveGameData.get(0);
+
+                gameName = currentSavedGameAtLatestTurn.getName();
+                if (!gameName.equals("recent game")) {
+
+                    savedGames.add(currentSavedGameAtLatestTurn);
                 }
             }
-        }
-
-
+        } else {}
 
         return savedGames;
     }
-
 
 
     public static HashMap<Integer, Game> saveGame(Game gameToSave, String jsonStringSaveData){

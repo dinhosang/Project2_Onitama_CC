@@ -121,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (this.game.getGameWinner() != null){
             clearGame();
+            startGame();
         }
 
         Card firstBlueCard = this.game.getBlueHand().get(0);
@@ -174,7 +175,6 @@ public class MainActivity extends AppCompatActivity {
         editor.remove(this.game.getName());
         editor.apply();
 
-        startGame();
     }
 
     private void startGame(){
@@ -250,9 +250,12 @@ public class MainActivity extends AppCompatActivity {
 
                     if (nameChosen.isEmpty()){
                         Toast.makeText(MainActivity.this, "Please enter a name for the saved game", Toast.LENGTH_SHORT).show();
+                    } else if (nameChosen.equals("recent game")){
+                        Toast.makeText(MainActivity.this, "Reserved name, please enter another", Toast.LENGTH_LONG).show();
                     } else {
+                        clearGame();
                         MainActivity.this.game.setName(nameChosen);
-                        Toast.makeText(MainActivity.this, String.format("Game Saved As: %s", nameChosen), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, String.format("Game Saved As: %s", nameChosen), Toast.LENGTH_LONG).show();
                         //                    dialog.dismiss();
                         saveGame();
                     }
