@@ -229,15 +229,15 @@ public class MainActivity extends AppCompatActivity {
             cancelButton        = (Button) saveGameView.findViewById(R.id.saveGameViewCancelButton);
             saveButton          = (Button) saveGameView.findViewById(R.id.saveGameViewSaveButton);
 
-//            dialogBuilder.setView(saveGameView);
-//            final AlertDialog dialog = dialogBuilder.create();
-//            dialog.show();
+            dialogBuilder.setView(saveGameView);
+            final AlertDialog dialog = dialogBuilder.create();
+            dialog.show();
 
 
             cancelButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    dialog.cancel();
+                    dialog.cancel();
                 }
             });
 
@@ -256,15 +256,15 @@ public class MainActivity extends AppCompatActivity {
                         clearGame();
                         MainActivity.this.game.setName(nameChosen);
                         Toast.makeText(MainActivity.this, String.format("Game Saved As: %s", nameChosen), Toast.LENGTH_LONG).show();
-                        //                    dialog.dismiss();
                         saveGame();
+                        dialog.cancel();
                     }
                 }
             });
 
-            dialogBuilder.setView(saveGameView);
-            final AlertDialog dialog = dialogBuilder.create();
-            dialog.show();
+//            dialogBuilder.setView(saveGameView);
+//            final AlertDialog dialog = dialogBuilder.create();
+//            dialog.show();
         }
     }
 }
