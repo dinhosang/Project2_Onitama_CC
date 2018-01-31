@@ -23,7 +23,9 @@ import com.codeclan.example.myapplication.models.squares.Square;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,6 +38,11 @@ public class MainActivity extends AppCompatActivity {
     Game                game;
     BoardGridAdapter    boardGridAdapter;
     GridView            gridView;
+
+    SharedPreferences           sharedPref;
+    SharedPreferences.Editor    editor;
+
+    Gson gson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +59,12 @@ public class MainActivity extends AppCompatActivity {
         blueFloatingCard    = findViewById(R.id.blueFloatingCard);
         redFloatingCard     = findViewById(R.id.redFloatingCard);
 
+        // getSharedPreferences is not static so cannot move to SavaDataHelper file.
+        sharedPref      = getSharedPreferences(getString(R.string.preference_file_key),
+                                                Context.MODE_PRIVATE);
+        editor          = sharedPref.edit();
+        gson            = new Gson();
+
 //        this.game = new Game();
 
         Intent intent = getIntent();
@@ -64,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
             // as nothing is in the intent under the chosen name if the game was loaded.
             this.game = (Game) intent.getSerializableExtra("game");
 
-            saveGame(this.game);
+            saveGame();
         }
 
     }
@@ -77,15 +90,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadGame(String gameName) {
-        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        String mostRecentGame = sharedPref.getString(gameName, new Game().toString());
+        String chosenGame = sharedPref.getString(gameName, new Game().toString());
 
-        Gson gson = new Gson();
         TypeToken<Game> gameGsonToken = new TypeToken<Game>(){};
-        Game loadedGame = gson.fromJson(mostRecentGame, gameGsonToken.getType());
+        Game loadedGame = gson.fromJson(chosenGame, gameGsonToken.getType());
         this.game = loadedGame;
 
-        saveGame(this.game);
+        saveGame();
     }
 
     private void startGame(){
@@ -94,20 +105,14 @@ public class MainActivity extends AppCompatActivity {
         showBoardState();
     }
 
-    private void saveGame(Game gameToPotentiallySave){
-        SharedPreferences sharedPref    = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
+    private void saveGame(){
 
-        Gson gson = new Gson();
+        String gameSaveDataString = sharedPref.getString(this.game.getName(), "no save");
 
-        if (gameToPotentiallySave == null){
-            editor.remove(this.game.getName());
-            editor.apply();
-            startGame();
-        } else {
-            editor.putString(this.game.getName(), gson.toJson(this.game));
-            editor.apply();
-        }
+        HashMap<Integer, Game> gameSaveMap = SaveDataHelper.saveGame(this.game, gameSaveDataString);
+
+        editor.putString(this.game.getName(), gson.toJson(gameSaveMap));
+        editor.apply();
 
         showBoardState();
     }
@@ -115,8 +120,7 @@ public class MainActivity extends AppCompatActivity {
     private void showBoardState() {
 
         if (this.game.getGameWinner() != null){
-            Game blankGame = null;
-            saveGame(blankGame);
+            clearGame();
         }
 
         Card firstBlueCard = this.game.getBlueHand().get(0);
@@ -163,6 +167,15 @@ public class MainActivity extends AppCompatActivity {
         boardGridAdapter = new BoardGridAdapter(this, this.game.getBoard().getCompleteBoard(), this.game.getActiveSquare());
         gridView = findViewById(R.id.boardGridView);
         gridView.setAdapter(boardGridAdapter);
+    }
+
+    private void clearGame(){
+
+        editor.remove(this.game.getName());
+        editor.apply();
+
+        startGame();
+
     }
 
     public void toggleCardSelectionOnClick(View view) {
@@ -233,7 +246,8 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         MainActivity.this.game.setName(nameChosen);
                         Toast.makeText(MainActivity.this, String.format("Game Saved As: %s", nameChosen), Toast.LENGTH_SHORT).show();
-//                        dialog.dismiss();
+                        //                    dialog.dismiss();
+                        saveGame(MainActivity.this.game);
                     }
                 }
             });

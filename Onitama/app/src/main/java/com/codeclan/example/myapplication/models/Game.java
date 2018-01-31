@@ -10,6 +10,8 @@ import com.codeclan.example.myapplication.models.squares.Square;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by user on 28/01/2018.
@@ -18,6 +20,9 @@ import java.util.ArrayList;
 public class Game implements Serializable {
     
     private String              name;
+    private Date                dateSaved;
+    private int                 turnCount;
+
     private Board               board;
     private Deck                deck;
 
@@ -37,9 +42,13 @@ public class Game implements Serializable {
     
     public Game(){
 
-        this.name   = "recent game";
+        this.name       = "recent game";
+        this.dateSaved  = Calendar.getInstance().getTime();
+        this.turnCount  = 1;
+
         this.board  = new Board();
         this.deck   = new Deck();
+
 
         this.blueHand   = new ArrayList<>();
         this.redHand    = new ArrayList<>();
@@ -85,6 +94,18 @@ public class Game implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Date getDateSaved() {
+        return this.dateSaved;
+    }
+
+    public void setDateSaved(Date newSaveDate) {
+        this.dateSaved = newSaveDate;
+    }
+
+    public int getTurnCount(){
+        return this.turnCount;
     }
 
     public ArrayList<Card> getRedHand() {
@@ -250,6 +271,7 @@ public class Game implements Serializable {
     private void movePiece(Square startSquare, Card card, Square endSquare) {
         if (checkPieceMayMoveToSquare(startSquare, card, endSquare)){
             Piece movingPiece = startSquare.removePiece();
+
 
             if (endSquare.containsPiece()){
                 Piece removedPiece = endSquare.removePiece();
@@ -424,7 +446,7 @@ public class Game implements Serializable {
 
     private void endOfTurnProcedure(Card card) {
 
-        this.activeCard                 = null;
+        this.activeCard   = null;
         this.activeSquare = null;
         
         if (this.activeFactionColour.equals(FactionColour.BLUE)){
@@ -436,6 +458,9 @@ public class Game implements Serializable {
         }
 
         if(this.gameWinner == null){
+
+            this.turnCount += 1;
+
             if (this.activeFactionColour.equals(FactionColour.BLUE)){
                 this.blueHand.add(this.floatingCardForBlue);
                 this.floatingCardForBlue = null;

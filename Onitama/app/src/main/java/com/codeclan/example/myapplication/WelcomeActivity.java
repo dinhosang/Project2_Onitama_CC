@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.codeclan.example.myapplication.constants.FactionColour;
@@ -19,6 +20,9 @@ import com.codeclan.example.myapplication.models.squares.Square;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.util.ArrayList;
+import java.util.Map;
+
 public class WelcomeActivity extends AppCompatActivity {
 
     Game newGame;
@@ -27,12 +31,13 @@ public class WelcomeActivity extends AppCompatActivity {
     ConstraintLayout welcomeMenu;
     ConstraintLayout loadMenu;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
-        this.newGame        =  new Game();
+        this.newGame        = new Game();
         this.welcomeMenu    = findViewById(R.id.welcomeMenu);
         this.loadMenu       = findViewById(R.id.loadGameMenu);
 
@@ -124,11 +129,21 @@ public class WelcomeActivity extends AppCompatActivity {
 
         Button      loadRecentUnsavedGameButton;
         TextView    noLastUnsavedGameTextView;
+        ListView    saveGamesListView;
 
         loadRecentUnsavedGameButton = findViewById(R.id.loadLastUnsavedGameButton);
         loadRecentUnsavedGameButton.setText(R.string.last_unsaved_game);
+        saveGamesListView = findViewById(R.id.saveGamesListView);
+        saveGamesListView.setBackgroundResource(R.drawable.onitama_square);
 
         noLastUnsavedGameTextView = findViewById((R.id.noLastUnsavedGameTextView));
+
+        ArrayList<Game> savedGames = getSavedGames();
+
+        if (!savedGames.isEmpty()){
+            SaveGamesListViewAdapter savedGameAdapter = new SaveGamesListViewAdapter(this, savedGames);
+            saveGamesListView.setAdapter(savedGameAdapter);
+        }
 
         loadRecentUnsavedGameButton.bringToFront();
         loadRecentUnsavedGameButton.setAlpha(1);
@@ -164,6 +179,33 @@ public class WelcomeActivity extends AppCompatActivity {
         }
     }
 
+    private ArrayList<Game> getSavedGames(){
+
+        Game currentSavedGame;
+        ArrayList<Game> savedGames = new ArrayList<>();
+
+        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        Map<String, ?> allEntries = sharedPref.getAll();
+
+        Gson gson = new Gson();
+        TypeToken<Game> gameGsonToken = new TypeToken<Game>(){};
+
+        if (!allEntries.isEmpty()) {
+
+            for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
+
+                currentSavedGame = gson.fromJson(entry.getValue().toString(), gameGsonToken.getType());
+                if (!currentSavedGame.getName().equals("recent game")) {
+                    savedGames.add(currentSavedGame);
+                }
+            }
+        }
+
+
+
+        return savedGames;
+    }
+
     public void toggleUnitSquareSelection(View view) {
 
     }
@@ -192,5 +234,11 @@ public class WelcomeActivity extends AppCompatActivity {
 
     public void toggleCardSelectionOnClick(View view) {
 
+    }
+
+    public void savedGameItemOnClick(View view){
+        Game gameToLoad = (Game) view.getTag();
+        this.loadedGame = gameToLoad;
+        loadGame();
     }
 }
