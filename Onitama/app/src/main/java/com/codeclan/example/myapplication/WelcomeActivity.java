@@ -149,7 +149,7 @@ public class WelcomeActivity extends AppCompatActivity {
         this.loadMenu.setAlpha(1);
         this.loadMenu.bringToFront();
 
-        if (mostRecentGame.equals(emptyGame)){
+        if (!SaveDataHelper.recentGameExists(this.getApplicationContext())){
 
             loadRecentUnsavedGameButton = findViewById(R.id.loadLastUnsavedGameButton);
             loadRecentUnsavedGameButton.setText(R.string.no_last_unsaved_game);
@@ -162,6 +162,7 @@ public class WelcomeActivity extends AppCompatActivity {
         } else {
 
             this.loadedGame = SaveDataHelper.loadGame(mostRecentGame, 0);
+
             showWelcomeScreen(this.loadedGame);
         }
     }

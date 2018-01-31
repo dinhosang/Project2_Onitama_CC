@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.codeclan.example.myapplication.models.Game;
+import com.codeclan.example.myapplication.models.pieces.Piece;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -17,7 +18,7 @@ import java.util.Map;
  * Created by user on 31/01/2018.
  */
 
-public class SaveDataHelper {
+public abstract class SaveDataHelper {
 
 
     private static String                   preferenceFileKey;
@@ -29,16 +30,23 @@ public class SaveDataHelper {
     private static TypeToken<HashMap<Integer, Game>> gameSaveGsonToken = new TypeToken<HashMap<Integer, Game>>(){};
 
 
-
-    public static ArrayList<Game> getAllSavedGamesExceptRecent(Context context){
+    private static void initSharedPref(Context context){
 
         preferenceFileKey   = context.getString(R.string.preference_file_key);
         sharedPref          = context.getSharedPreferences(preferenceFileKey, Context.MODE_PRIVATE);
+    }
+
+
+    public static ArrayList<Game> getAllSavedGamesExceptRecent(Context context){
+
+        initSharedPref(context);
 
         Map<String, ?>  allEntries;
         allEntries = sharedPref.getAll();
 
         String gameName;
+        String currentGameSavaDataString;
+
         Game currentSavedGameAtLatestTurn;
         HashMap<Integer, Game> currentSaveGameData;
 
@@ -48,19 +56,36 @@ public class SaveDataHelper {
 
             for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
 
-                currentSaveGameData             = gson.fromJson(entry.getValue().toString(),
-                                                                gameSaveGsonToken.getType());
-                currentSavedGameAtLatestTurn    = currentSaveGameData.get(0);
-
-                gameName = currentSavedGameAtLatestTurn.getName();
+                gameName = entry.getKey();
                 if (!gameName.equals("recent game")) {
+
+                    currentGameSavaDataString       = entry.getValue().toString();
+
+                    currentSaveGameData             = gson.fromJson(currentGameSavaDataString,
+                                                                    gameSaveGsonToken.getType());
+                    currentSavedGameAtLatestTurn    = currentSaveGameData.get(0);
 
                     savedGames.add(currentSavedGameAtLatestTurn);
                 }
             }
-        } else {}
+        }
 
         return savedGames;
+    }
+
+
+    public static boolean recentGameExists(Context context){
+
+        initSharedPref(context);
+
+        String emptyGameString      = new Game().toString();
+        String mostRecentGame       = sharedPref.getString("recent game", emptyGameString);
+
+        if (mostRecentGame.equals(emptyGameString)){
+            return false;
+        } else {
+            return true;
+        }
     }
 
 
