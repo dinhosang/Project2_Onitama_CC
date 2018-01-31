@@ -1,5 +1,8 @@
 package com.codeclan.example.myapplication;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import com.codeclan.example.myapplication.models.Game;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -17,12 +20,23 @@ import java.util.Map;
 public class SaveDataHelper {
 
 
+    private static String                   preferenceFileKey;
+    private static SharedPreferences        sharedPref;
+    private static SharedPreferences.Editor editor;
+
     private static Gson gson = new Gson();
     private static HashMap<Integer, Game> gameSaveMap;
     private static TypeToken<HashMap<Integer, Game>> gameSaveGsonToken = new TypeToken<HashMap<Integer, Game>>(){};
 
 
-    public static ArrayList<Game> getAllSavedGamesExceptRecent(Map<String, ?> allEntries){
+
+    public static ArrayList<Game> getAllSavedGamesExceptRecent(Context context){
+
+        preferenceFileKey   = context.getString(R.string.preference_file_key);
+        sharedPref          = context.getSharedPreferences(preferenceFileKey, Context.MODE_PRIVATE);
+
+        Map<String, ?>  allEntries;
+        allEntries = sharedPref.getAll();
 
         String gameName;
         Game currentSavedGameAtLatestTurn;

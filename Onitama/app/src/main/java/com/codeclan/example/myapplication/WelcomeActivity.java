@@ -169,10 +169,7 @@ public class WelcomeActivity extends AppCompatActivity {
     private ArrayList<Game> getAllSavedGamesExceptRecent(){
 
         ArrayList<Game> savedGames;
-        Map<String, ?>  allEntries;
-
-        allEntries = this.sharedPref.getAll();
-        savedGames = SaveDataHelper.getAllSavedGamesExceptRecent(allEntries);
+        savedGames = SaveDataHelper.getAllSavedGamesExceptRecent(this.getApplicationContext());
 
         return savedGames;
     }
