@@ -253,10 +253,13 @@ public class MainActivity extends AppCompatActivity {
                     } else if (nameChosen.equals("recent game")){
                         Toast.makeText(MainActivity.this, "Reserved name, please enter another", Toast.LENGTH_LONG).show();
                     } else {
+
                         clearGame();
                         MainActivity.this.game.setName(nameChosen);
-                        Toast.makeText(MainActivity.this, String.format("Game Saved As: %s", nameChosen), Toast.LENGTH_LONG).show();
+
                         saveGame();
+
+                        Toast.makeText(MainActivity.this, String.format("Game Saved As: %s", nameChosen), Toast.LENGTH_LONG).show();
                         dialog.cancel();
                     }
                 }
