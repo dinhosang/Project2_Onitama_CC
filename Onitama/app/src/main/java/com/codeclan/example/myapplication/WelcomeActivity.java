@@ -31,6 +31,10 @@ public class WelcomeActivity extends AppCompatActivity {
     ConstraintLayout welcomeMenu;
     ConstraintLayout loadMenu;
 
+    Gson gson;
+
+    SharedPreferences sharedPref;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +44,17 @@ public class WelcomeActivity extends AppCompatActivity {
         this.newGame        = new Game();
         this.welcomeMenu    = findViewById(R.id.welcomeMenu);
         this.loadMenu       = findViewById(R.id.loadGameMenu);
-
-        showWelcomeScreen(this.newGame);
+        
+        this.gson           = new Gson();
+        this.sharedPref     = getSharedPreferences(getString(R.string.preference_file_key),
+                                            Context.MODE_PRIVATE);
 
         this.welcomeMenu.setAlpha(1);
         this.loadMenu.setAlpha(0);
 
         this.welcomeMenu.bringToFront();
+
+        showWelcomeScreen(this.newGame);
 
     }
 
@@ -184,10 +192,9 @@ public class WelcomeActivity extends AppCompatActivity {
         Game currentSavedGame;
         ArrayList<Game> savedGames = new ArrayList<>();
 
-        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        Map<String, ?> allEntries = sharedPref.getAll();
+        Map<String, ?> allEntries = this.sharedPref.getAll();
 
-        Gson gson = new Gson();
+
         TypeToken<Game> gameGsonToken = new TypeToken<Game>(){};
 
         if (!allEntries.isEmpty()) {
@@ -226,19 +233,15 @@ public class WelcomeActivity extends AppCompatActivity {
 
     }
 
-    private void loadGame() {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("game", this.loadedGame);
-        startActivity(intent);
-    }
-
-    public void toggleCardSelectionOnClick(View view) {
-
-    }
-
     public void savedGameItemOnClick(View view){
         Game gameToLoad = (Game) view.getTag();
         this.loadedGame = gameToLoad;
         loadGame();
+    }
+
+    private void loadGame() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("game", this.loadedGame);
+        startActivity(intent);
     }
 }

@@ -21,11 +21,9 @@ import com.codeclan.example.myapplication.models.Game;
 import com.codeclan.example.myapplication.models.cards.Card;
 import com.codeclan.example.myapplication.models.squares.Square;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,10 +37,13 @@ public class MainActivity extends AppCompatActivity {
     BoardGridAdapter    boardGridAdapter;
     GridView            gridView;
 
+
+    Gson    gson;
+    String  gameSaveDataString;
+
     SharedPreferences           sharedPref;
     SharedPreferences.Editor    editor;
 
-    Gson gson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,19 +60,23 @@ public class MainActivity extends AppCompatActivity {
         blueFloatingCard    = findViewById(R.id.blueFloatingCard);
         redFloatingCard     = findViewById(R.id.redFloatingCard);
 
-        // getSharedPreferences is not static so cannot move to SavaDataHelper file.
+        // getSharedPreferences is not static so cannot move to SavaDataHelper file after making
+        // the helper extend Activity. Helper is now just a Java class.
         sharedPref      = getSharedPreferences(getString(R.string.preference_file_key),
                                                 Context.MODE_PRIVATE);
+
         editor          = sharedPref.edit();
         gson            = new Gson();
 
-//        this.game = new Game();
 
         Intent intent = getIntent();
         if (intent.getStringExtra("load") != null){
+
             String gameName = intent.getStringExtra("load");
-            loadGame(gameName);
+            loadGame(gameName, 0);
+
         } else {
+
             // onCreate runs again from after the if after reaching end of a method with no other path forward!
             // if below is not in else but just free standing code it then tries to run, and sets game to null
             // as nothing is in the intent under the chosen name if the game was loaded.
@@ -79,35 +84,30 @@ public class MainActivity extends AppCompatActivity {
 
             saveGame();
         }
-
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.activity_main, menu);
+
         return true;
     }
 
-    private void loadGame(String gameName) {
-        String chosenGame = sharedPref.getString(gameName, new Game().toString());
 
-        TypeToken<Game> gameGsonToken = new TypeToken<Game>(){};
-        Game loadedGame = gson.fromJson(chosenGame, gameGsonToken.getType());
-        this.game = loadedGame;
+    private void loadGame(String gameName, int turnToLoad) {
 
-        saveGame();
-    }
-
-    private void startGame(){
-        this.game        = new Game();
+        gameSaveDataString = sharedPref.getString(gameName, "no save");
+        this.game = SaveDataHelper.loadGame(gameSaveDataString, turnToLoad);
 
         showBoardState();
     }
 
     private void saveGame(){
 
-        String gameSaveDataString = sharedPref.getString(this.game.getName(), "no save");
+        gameSaveDataString = sharedPref.getString(this.game.getName(), "no save");
 
         HashMap<Integer, Game> gameSaveMap = SaveDataHelper.saveGame(this.game, gameSaveDataString);
 
@@ -175,8 +175,14 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
 
         startGame();
-
     }
+
+    private void startGame(){
+        this.game        = new Game();
+
+        showBoardState();
+    }
+
 
     public void toggleCardSelectionOnClick(View view) {
         String buttonClicked = view.getTag().toString();
@@ -196,7 +202,6 @@ public class MainActivity extends AppCompatActivity {
         game.toggleActiveCardSelection(card);
 
         showBoardState();
-
     }
 
     public void toggleUnitSquareSelection(View view) {
@@ -205,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
 
         game.toggleSquareSelection(clickedSquare);
 
-        saveGame(this.game);
+        saveGame();
     }
 
     public void onMenuItemClick(MenuItem item) {
@@ -228,10 +233,11 @@ public class MainActivity extends AppCompatActivity {
 //            final AlertDialog dialog = dialogBuilder.create();
 //            dialog.show();
 
+
             cancelButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    dialog.dismiss();
+//                    dialog.cancel();
                 }
             });
 
@@ -239,6 +245,7 @@ public class MainActivity extends AppCompatActivity {
             saveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
                     String nameChosen = saveGameNameField.getText().toString();
 
                     if (nameChosen.isEmpty()){
@@ -247,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
                         MainActivity.this.game.setName(nameChosen);
                         Toast.makeText(MainActivity.this, String.format("Game Saved As: %s", nameChosen), Toast.LENGTH_SHORT).show();
                         //                    dialog.dismiss();
-                        saveGame(MainActivity.this.game);
+                        saveGame();
                     }
                 }
             });
@@ -255,8 +262,6 @@ public class MainActivity extends AppCompatActivity {
             dialogBuilder.setView(saveGameView);
             final AlertDialog dialog = dialogBuilder.create();
             dialog.show();
-
         }
     }
-
 }
