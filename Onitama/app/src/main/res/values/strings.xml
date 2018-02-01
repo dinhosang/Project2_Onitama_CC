@@ -30,4 +30,7 @@
     <string name="result_view_return_main_menu_button">Main Menu</string>
     <string name="result_view_new_game_button">New Game</string>
     <string name="result_view_review_game_button">Review Game</string>
+    <string name="rewind_game">Rewind Game</string>
+    <string name="save_game">Save Game</string>
+    <string name="change_turn_warning_message">If game is rewound to an earlier turn and the change is accepted all later turns will be lost.</string>
 </resources>

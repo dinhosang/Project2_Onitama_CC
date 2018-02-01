@@ -3,5 +3,9 @@
     <item
         android:id="@+id/action_save_game"
         android:onClick="onMenuItemClick"
-        android:title="Save Game" />
+        android:title="@string/save_game" />
+    <item
+        android:id="@+id/action_rewind_game"
+        android:onClick="onMenuItemClick"
+        android:title="@string/rewind_game" />
 </menu>

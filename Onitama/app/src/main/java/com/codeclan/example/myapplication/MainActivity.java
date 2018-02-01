@@ -49,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
 
     ConstraintLayout    activeGameLayout;
     ConstraintLayout    finishedGameLayout;
+    ConstraintLayout    changeTurnLayout;
+    ConstraintLayout    changeTurnButtons;
 
     BoardGridAdapter    boardGridAdapter;
     GridView            gridView;
@@ -62,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
     Game                game;
 
     boolean             reviewGame;
+    boolean             changeTurn;
+
+    int                 maxTurn;
 
 
     @Override
@@ -72,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
 
         activeGameLayout        = findViewById(R.id.activeGameLayout);
         finishedGameLayout      = findViewById(R.id.finishedGameLayout);
+        changeTurnLayout        = findViewById(R.id.changeTurnLayout);
+        changeTurnButtons       = findViewById(R.id.changeTurnButtons);
         resultView              = findViewById(R.id.resultView);
 
         blueCardOne = findViewById(R.id.blueCardOne);
@@ -97,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
         reviewGameButton        = findViewById(R.id.resultViewReviewGameButton);
 
         reviewGame = false;
+        changeTurn = false;
 
         prepareResultDisplayView();
 
@@ -140,7 +148,11 @@ public class MainActivity extends AppCompatActivity {
 
         this.game = SaveDataHelper.loadGame(gameName, this.getApplicationContext(),turnToLoad);
 
-        showBoardState();
+        if (!this.changeTurn) {
+            showBoardState();
+        } else {
+            displayReviewGame();
+        }
     }
 
     private void saveGame(){
@@ -216,6 +228,13 @@ public class MainActivity extends AppCompatActivity {
         boardGridAdapter = new BoardGridAdapter(this, this.game.getBoard().getCompleteBoard(), this.game.getActiveSquare());
         gridView = findViewById(R.id.boardGridView);
         gridView.setAdapter(boardGridAdapter);
+
+        if (activeGameLayout.getAlpha() != 1){
+            activeGameLayout.setAlpha(1);
+            finishedGameLayout.setAlpha(0);
+        }
+
+        activeGameLayout.bringToFront();
     }
 
     private void displayReviewGame(){
@@ -225,7 +244,19 @@ public class MainActivity extends AppCompatActivity {
         Card firstRedCard   = this.game.getRedHand().get(0);
         Card secondRedCard  = this.game.getRedHand().get(1);
 
-        if (this.game.getActiveFaction().equals(FactionColour.RED)) {
+        if (this.game.getActiveFaction().equals(FactionColour.RED) && !this.changeTurn) {
+
+            Card floatingCardForBlue = this.game.getFloatingCardForBlue();
+
+            reviewBlueFloatingCard.setImageResource(floatingCardForBlue.getImageBlueViewInt());
+            reviewRedFloatingCard.setImageResource(0);
+        } else if (this.game.getActiveFaction().equals(FactionColour.RED) && this.changeTurn) {
+
+            Card floatingCardForRed = this.game.getFloatingCardForRed();
+
+            reviewRedFloatingCard.setImageResource(floatingCardForRed.getImageRedViewInt());
+            reviewBlueFloatingCard.setImageResource(0);
+        } else if (this.game.getActiveFaction().equals(FactionColour.BLUE) && this.changeTurn) {
 
             Card floatingCardForBlue = this.game.getFloatingCardForBlue();
 
@@ -272,10 +303,19 @@ public class MainActivity extends AppCompatActivity {
 
         reviewGridView.setAdapter(boardGridAdapter);
 
-        if (finishedGameLayout.getAlpha() != 1){
+        if (finishedGameLayout.getAlpha() != 1 && !this.changeTurn){
             finishedGameLayout.bringToFront();
             finishedGameLayout.setAlpha(1);
             activeGameLayout.setAlpha(0);
+            resultView.setAlpha(1);
+        } else if (finishedGameLayout.getAlpha() != 1) {
+            finishedGameLayout.bringToFront();
+            finishedGameLayout.setAlpha(1);
+            activeGameLayout.setAlpha(0);
+            resultView.setAlpha(0);
+            changeTurnLayout.bringToFront();
+            changeTurnButtons.bringToFront();
+            // method to clear button click from resultView buttons
         }
     }
 
@@ -401,10 +441,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             });
+        } else if (item.getItemId() == R.id.action_rewind_game){
 
-//            dialogBuilder.setView(saveGameView);
-//            final AlertDialog dialog = dialogBuilder.create();
-//            dialog.show();
+            changeTurn  = true;
+            maxTurn     = this.game.getTurnCount();
+
+            displayReviewGame();
+            changeTurnLayout.setAlpha(1);
+            changeTurnLayout.bringToFront();
         }
     }
 
@@ -446,13 +490,113 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         } else if (buttonChosen.equals(this.startNewGameButton)) {
 
-            activeGameLayout.bringToFront();
-            activeGameLayout.setAlpha(1);
-            finishedGameLayout.setAlpha(0);
-
             startGame();
         } else if (buttonChosen.equals(this.reviewGameButton)){
             // TODO code for being able to review finished game, after rewind feature is implemented.
         }
     }
+
+    public void changeTurnOnClick(View view) {
+
+        Button      buttonChosen;
+        int         buttonId;
+//        EditText    turnChosenView;
+//        String      turnChosenString;
+//        Integer     turnChosen;
+        String      gameName;
+        int         currentTurn;
+
+        gameName        = this.game.getName();
+        currentTurn     = this.game.getTurnCount();
+
+        buttonChosen    = (Button) view;
+        buttonId        = buttonChosen.getId();
+
+//        turnChosenString    = turnChosenView.getText().toString();
+//        turnChosen = Integer.getInteger(turnChosenString);
+
+        if (buttonId == R.id.acceptTurnButton){
+
+            clearLaterSavesOfGameNamed(gameName, currentTurn + 1, maxTurn);
+
+            changeTurn = false;
+            changeTurnLayout.setAlpha(0);
+
+            displayActiveGame();
+//        } else if (buttonId == R.id.goToTurnButton && (turnChosen > 0) && (turnChosen < maxTurn)) {
+//
+//            loadGame(gameName, turnChosen);
+//        } else if (buttonId == R.id.goToTurnButton && (turnChosen < 1)) {
+//
+//            Toast.makeText(this, "Please enter a number greater than 0", Toast.LENGTH_LONG).show();
+//        } else if (buttonId == R.id.goToTurnButton && (turnChosen > maxTurn)) {
+//
+//            int maxTurnPlusOne = maxTurn + 1;
+//            String messageToToast = "Please enter a number lower than " + maxTurnPlusOne;
+//
+//            Toast.makeText(this, messageToToast, Toast.LENGTH_LONG).show();
+        } else if (buttonId == R.id.startTurnButton && currentTurn != 1) {
+
+            loadGame(gameName, 1);
+        } else if (buttonId == R.id.backThreeButton && (currentTurn - 3) > 0) {
+
+            loadGame(gameName, currentTurn - 3);
+        } else if (buttonId == R.id.backOneButton && (currentTurn - 1) > 0) {
+
+            loadGame(gameName, currentTurn - 1);
+        } else if (buttonId == R.id.forwardOneButton && (maxTurn - currentTurn) > 0) {
+
+            loadGame(gameName, currentTurn + 1);
+        } else if (buttonId == R.id.forwardThreeButton  && (maxTurn - currentTurn) > 2) {
+
+            loadGame(gameName, currentTurn + 3);
+        } else if (buttonId == R.id.latestTurnButton && (currentTurn != maxTurn)) {
+
+            loadGame(gameName, maxTurn);
+        }
+    }
+
+    private void clearLaterSavesOfGameNamed(String gameNameToClearSaveOf, int turnToClearFrom, int  turnToClearTo){
+
+        SaveDataHelper.clearLaterSavesOfGameNamed(gameNameToClearSaveOf, this.getApplicationContext(),
+                                                    turnToClearFrom, turnToClearTo);
+
+    }
+
+    private void changeGameViewToNonInteractiveMode(){
+
+        this.blueCardOne.setOnClickListener((new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        blueCardTwo.setOnClickListener((new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        redCardOne.setOnClickListener((new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        redCardTwo.setOnClickListener((new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+    }
+
 }

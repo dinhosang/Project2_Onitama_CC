@@ -150,4 +150,22 @@ public abstract class SaveDataHelper {
 
     }
 
+    public static void clearLaterSavesOfGameNamed(String gameNameToClearSaveOf, Context context,
+                                                  int turnToClearFrom, int turnToClearTo) {
+
+        initSharedPref(context);
+
+        String gameSaveDataString;
+
+        gameSaveDataString  = sharedPref.getString(gameNameToClearSaveOf, "no save");
+        gameSaveMap         = gson.fromJson(gameSaveDataString, gameSaveGsonToken.getType());
+
+        for (int index = turnToClearFrom; index <= turnToClearTo; ++index) {
+            gameSaveMap.remove(index);
+        }
+
+        editor.putString(gameNameToClearSaveOf, gson.toJson(gameSaveMap));
+        editor.apply();
+    }
+
 }

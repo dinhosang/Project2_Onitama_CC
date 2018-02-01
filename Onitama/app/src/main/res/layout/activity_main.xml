@@ -10,6 +10,157 @@
 
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/changeTurnLayout"
+        android:layout_width="363dp"
+        android:layout_height="196dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:alpha="0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/acceptTurnButton"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="138dp"
+            android:layout_marginStart="137dp"
+            android:layout_marginTop="8dp"
+            android:onClick="changeTurnOnClick"
+            android:text="Accept"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/changeTurnButtons"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/changeTurnButtons"
+            android:layout_width="335dp"
+            android:layout_height="46dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintBottom_toTopOf="@+id/acceptTurnButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/changeTurnWarningMessageTextView">
+
+            <Button
+                android:id="@+id/backThreeButton"
+                android:layout_width="45dp"
+                android:layout_height="32dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="12dp"
+                android:background="@android:drawable/ic_media_rew"
+                android:onClick="changeTurnOnClick"
+                android:text="3"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/backOneButton"
+                app:layout_constraintEnd_toStartOf="@+id/backOneButton"
+                app:layout_constraintTop_toTopOf="@+id/backOneButton"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <Button
+                android:id="@+id/backOneButton"
+                android:layout_width="45dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="112dp"
+                android:background="@android:drawable/ic_media_rew"
+                android:onClick="changeTurnOnClick"
+                android:text="1"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="7dp" />
+
+            <Button
+                android:id="@+id/startTurnButton"
+                android:layout_width="45dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@android:drawable/ic_media_previous"
+                android:onClick="changeTurnOnClick"
+                android:text="End"
+                app:layout_constraintBottom_toBottomOf="@+id/backThreeButton"
+                app:layout_constraintEnd_toStartOf="@+id/backThreeButton"
+                app:layout_constraintHorizontal_bias="0.214"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/backThreeButton"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <Button
+                android:id="@+id/forwardOneButton"
+                android:layout_width="45dp"
+                android:layout_height="32dp"
+                android:layout_marginBottom="7dp"
+                android:layout_marginEnd="116dp"
+                android:layout_marginTop="7dp"
+                android:background="@android:drawable/ic_media_ff"
+                android:onClick="changeTurnOnClick"
+                android:text="1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <Button
+                android:id="@+id/forwardThreeButton"
+                android:layout_width="45dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="8dp"
+                android:background="@android:drawable/ic_media_ff"
+                android:onClick="changeTurnOnClick"
+                android:text="3"
+                app:layout_constraintBottom_toBottomOf="@+id/forwardOneButton"
+                app:layout_constraintStart_toEndOf="@+id/forwardOneButton"
+                app:layout_constraintTop_toTopOf="@+id/forwardOneButton"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <Button
+                android:id="@+id/latestTurnButton"
+                android:layout_width="45dp"
+                android:layout_height="32dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="8dp"
+                android:background="@android:drawable/ic_media_next"
+                android:onClick="changeTurnOnClick"
+                android:text="End"
+                app:layout_constraintBottom_toBottomOf="@+id/forwardThreeButton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.157"
+                app:layout_constraintStart_toEndOf="@+id/forwardThreeButton"
+                app:layout_constraintTop_toTopOf="@+id/forwardThreeButton"
+                app:layout_constraintVertical_bias="0.0" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/changeTurnWarningMessageTextView"
+            android:layout_width="238dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="1dp"
+            android:layout_marginEnd="70dp"
+            android:layout_marginStart="77dp"
+            android:layout_marginTop="24dp"
+            android:background="@android:color/background_light"
+            android:text="@string/change_turn_warning_message"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/changeTurnButtons"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+
+
+    <android.support.constraint.ConstraintLayout
         android:id="@+id/finishedGameLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -253,6 +404,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+
         <ImageView
             android:id="@+id/redCardOne"
             android:layout_width="136dp"
@@ -350,179 +502,6 @@
             app:layout_constraintHorizontal_bias="0.98"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/changeTurnLayout"
-            android:layout_width="363dp"
-            android:layout_height="165dp"
-            android:layout_marginBottom="16dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:alpha="1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <Button
-                android:id="@+id/acceptTurnButton"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="138dp"
-                android:layout_marginStart="137dp"
-                android:layout_marginTop="8dp"
-                android:text="Accept"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/changeTurnButtons"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/changeTurnButtons"
-                android:layout_width="335dp"
-                android:layout_height="46dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="24dp"
-                app:layout_constraintBottom_toTopOf="@+id/acceptTurnButton"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/changeTurnWarningMessageTextView">
-
-                <Button
-                    android:id="@+id/backThreeButton"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:background="@android:drawable/ic_media_rew"
-                    android:text="3"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/backOneButton"
-                    app:layout_constraintEnd_toStartOf="@+id/backOneButton"
-                    app:layout_constraintTop_toTopOf="@+id/backOneButton"
-                    app:layout_constraintVertical_bias="0.0" />
-
-                <Button
-                    android:id="@+id/backOneButton"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@android:drawable/ic_media_rew"
-                    android:text="1"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/enterTurnDesiredEditText"
-                    app:layout_constraintEnd_toStartOf="@+id/enterTurnDesiredEditText"
-                    app:layout_constraintTop_toTopOf="@+id/enterTurnDesiredEditText"
-                    app:layout_constraintVertical_bias="1.0" />
-
-                <Button
-                    android:id="@+id/startTurnButton"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@android:drawable/ic_media_previous"
-                    android:text="End"
-                    app:layout_constraintBottom_toBottomOf="@+id/backThreeButton"
-                    app:layout_constraintEnd_toStartOf="@+id/backThreeButton"
-                    app:layout_constraintHorizontal_bias="0.67"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/backThreeButton"
-                    app:layout_constraintVertical_bias="1.0" />
-
-                <EditText
-                    android:id="@+id/enterTurnDesiredEditText"
-                    android:layout_width="43dp"
-                    android:layout_height="32dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:background="?attr/colorButtonNormal"
-                    android:ems="10"
-                    android:hint="0"
-                    android:inputType="number"
-                    android:textAlignment="center"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.45"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <Button
-                    android:id="@+id/forwardOneButton"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_marginBottom="7dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="7dp"
-                    android:background="@android:drawable/ic_media_ff"
-                    android:text="1"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/goToTurnButton"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0" />
-
-                <Button
-                    android:id="@+id/forwardThreeButton"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@android:drawable/ic_media_ff"
-                    android:text="3"
-                    app:layout_constraintBottom_toBottomOf="@+id/forwardOneButton"
-                    app:layout_constraintStart_toEndOf="@+id/forwardOneButton"
-                    app:layout_constraintTop_toTopOf="@+id/forwardOneButton"
-                    app:layout_constraintVertical_bias="1.0" />
-
-                <Button
-                    android:id="@+id/latestTurnButton"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginStart="8dp"
-                    android:background="@android:drawable/ic_media_next"
-                    android:text="End"
-                    app:layout_constraintBottom_toBottomOf="@+id/forwardThreeButton"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.785"
-                    app:layout_constraintStart_toEndOf="@+id/forwardThreeButton"
-                    app:layout_constraintTop_toTopOf="@+id/forwardThreeButton"
-                    app:layout_constraintVertical_bias="0.0" />
-
-                <Button
-                    android:id="@+id/goToTurnButton"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_marginBottom="7dp"
-                    android:layout_marginTop="7dp"
-                    android:background="@android:drawable/ic_search_category_default"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/enterTurnDesiredEditText"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0" />
-            </android.support.constraint.ConstraintLayout>
-
-            <TextView
-                android:id="@+id/changeTurnWarningMessageTextView"
-                android:layout_width="207dp"
-                android:layout_height="44dp"
-                android:layout_marginBottom="1dp"
-                android:layout_marginEnd="70dp"
-                android:layout_marginStart="77dp"
-                android:layout_marginTop="24dp"
-                android:text="Warning Message"
-                android:textAlignment="center"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/changeTurnButtons"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </android.support.constraint.ConstraintLayout>
 
     </android.support.constraint.ConstraintLayout>
 
