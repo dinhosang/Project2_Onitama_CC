@@ -112,10 +112,6 @@ public class WelcomeActivity extends AppCompatActivity {
             loadMenu();
         }
 
-//        else if (textOnView.equals(getString(R.string.quit_game))){
-//            finish();
-//            System.exit(0);
-//        }
     }
 
 

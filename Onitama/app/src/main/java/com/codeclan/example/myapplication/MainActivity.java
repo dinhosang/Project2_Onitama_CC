@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
     Game                game;
 
-    Boolean             reviewGame;
+    boolean             reviewGame;
 
 
     @Override
@@ -172,17 +172,22 @@ public class MainActivity extends AppCompatActivity {
         Card secondRedCard  = this.game.getRedHand().get(1);
 
         if (this.game.getActiveFaction().equals(FactionColour.BLUE)) {
+
             Card floatingCardForBlue = this.game.getFloatingCardForBlue();
+
             blueFloatingCard.setImageResource(floatingCardForBlue.getImageBlueViewInt());
             redFloatingCard.setImageResource(0);
         } else {
+
             Card floatingCardForRed = this.game.getFloatingCardForRed();
+
             redFloatingCard.setImageResource(floatingCardForRed.getImageRedViewInt());
             blueFloatingCard.setImageResource(0);
         }
 
         blueCardOne.setImageResource(firstBlueCard.getImageBlueViewInt());
         blueCardTwo.setImageResource(secondBlueCard.getImageBlueViewInt());
+
         redCardOne.setImageResource(firstRedCard.getImageRedViewInt());
         redCardTwo.setImageResource(secondRedCard.getImageRedViewInt());
 
@@ -192,6 +197,7 @@ public class MainActivity extends AppCompatActivity {
 
         blueCardOne.setBackgroundResource(nonActiveCardBorder);
         blueCardTwo.setBackgroundResource(nonActiveCardBorder);
+
         redCardOne.setBackgroundResource(nonActiveCardBorder);
         redCardTwo.setBackgroundResource(nonActiveCardBorder);
 
