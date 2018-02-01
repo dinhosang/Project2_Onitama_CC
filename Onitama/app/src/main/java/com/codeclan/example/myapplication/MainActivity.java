@@ -23,6 +23,8 @@ import com.codeclan.example.myapplication.models.Game;
 import com.codeclan.example.myapplication.models.cards.Card;
 import com.codeclan.example.myapplication.models.squares.Square;
 
+import org.w3c.dom.Text;
+
 import java.util.Locale;
 
 
@@ -35,17 +37,13 @@ public class MainActivity extends AppCompatActivity {
     ImageView           blueFloatingCard;
     ImageView           redFloatingCard;
 
-    ImageView           reviewBlueCardOne;
-    ImageView           reviewBlueCardTwo;
-    ImageView           reviewRedCardOne;
-    ImageView           reviewRedCardTwo;
-    ImageView           reviewBlueFloatingCard;
-    ImageView           reviewRedFloatingCard;
-
     TextView            startingFaction;
     TextView            winningFaction;
     TextView            victoryType;
     TextView            turnCount;
+
+    TextView            reviewRewindMessage;
+    TextView            currentTurnDisplay;
 
     ConstraintLayout    activeGameLayout;
     ConstraintLayout    changeTurnLayout;
@@ -61,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     Game                game;
 
     boolean             gameWon;
-    boolean             changeTurn;
+    boolean             reviewingGame;
 
     int                 maxTurn;
 
@@ -90,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         reviewGameButton        = findViewById(R.id.resultViewReviewGameButton);
 
         gameWon = false;
-        changeTurn = false;
+        reviewingGame = false;
 
         prepareResultDisplayView();
 
@@ -135,16 +133,23 @@ public class MainActivity extends AppCompatActivity {
 
         this.game = SaveDataHelper.loadGame(gameName, this.getApplicationContext(),turnToLoad);
 
-        determineBoardState();
+        if (!reviewingGame) {
+
+            determineBoardState();
+        } else {
+
+            currentTurnDisplay.setText(String.format(Locale.UK, "%d/%d",
+                    this.game.getTurnCount(), maxTurn));
+            displayGame();
+        }
     }
 
     private void startNewGame(){
 
         clearSaveOfGameNamed(this.game.getName());
 
-        this.game = new Game();
-
-        gameWon = false;
+        this.game   = new Game();
+        gameWon     = false;
 
         changeGameViewBackToInteractiveMode();
 
@@ -344,12 +349,10 @@ public class MainActivity extends AppCompatActivity {
             });
         } else if (item.getItemId() == R.id.action_rewind_game){
 
-            changeTurn  = true;
             maxTurn     = this.game.getTurnCount();
 
+            changeRewindReviewFunctionalityToInteractiveMode();
             displayGame();
-            changeTurnLayout.setAlpha(1);
-            changeTurnLayout.bringToFront();
         }
     }
 
@@ -387,10 +390,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (buttonChosen.equals(this.returnMainMenuButton)) {
 
-            clearSaveOfGameNamed(this.game.getName());
-
-            Intent intent = new Intent(this, WelcomeActivity.class);
-            startActivity(intent);
+            returnToMainMenu();
         } else if (buttonChosen.equals(this.startNewGameButton)) {
 
             resultView.setAlpha(0);
@@ -400,16 +400,24 @@ public class MainActivity extends AppCompatActivity {
 
             startNewGame();
         } else if (buttonChosen.equals(this.reviewGameButton)){
-            // TODO code for being able to review finished game, after rewind feature is implemented.
+
+            activeGameLayout.bringToFront();
+
+            maxTurn     = this.game.getTurnCount();
+
+            changeRewindReviewFunctionalityToInteractiveMode();
+            displayGame();
         }
     }
 
     public void changeTurnOnClick(View view) {
 
-        Button      buttonChosen;
-        int         buttonId;
         String      gameName;
+
+        int         buttonId;
         int         currentTurn;
+
+        Button      buttonChosen;
 
         gameName        = this.game.getName();
         currentTurn     = this.game.getTurnCount();
@@ -417,13 +425,14 @@ public class MainActivity extends AppCompatActivity {
         buttonChosen    = (Button) view;
         buttonId        = buttonChosen.getId();
 
-        if (buttonId == R.id.acceptTurnButton){
+        if (buttonId == R.id.acceptTurnButton && !gameWon){
 
             clearLaterSavesOfGameNamed(gameName, currentTurn + 1, maxTurn);
 
-            changeTurn = false;
-            changeTurnLayout.setAlpha(0);
 
+            changeTurnLayout.setAlpha(0);
+            changeGameViewBackToInteractiveMode();
+            changeRewindReviewFunctionalityBackToNonInteractiveMode();
             displayGame();
 //        } else if (buttonId == R.id.goToTurnButton && (turnChosen > 0) && (turnChosen < maxTurn)) {
 //
@@ -437,6 +446,9 @@ public class MainActivity extends AppCompatActivity {
 //            String messageToToast = "Please enter a number lower than " + maxTurnPlusOne;
 //
 //            Toast.makeText(this, messageToToast, Toast.LENGTH_LONG).show();
+        } else if (buttonId == R.id.acceptTurnButton && gameWon) {
+
+            returnToMainMenu();
         } else if (buttonId == R.id.startTurnButton && currentTurn != 1) {
 
             loadGame(gameName, 1);
@@ -538,4 +550,45 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void changeRewindReviewFunctionalityToInteractiveMode(){
+
+        Button finaliseRewindReview;
+
+        finaliseRewindReview = findViewById(R.id.acceptTurnButton);
+
+        reviewRewindMessage = findViewById(R.id.changeTurnWarningMessageTextView);
+        currentTurnDisplay  = findViewById(R.id.reviewCurrentTurnDisplay);
+
+        reviewingGame = true;
+
+        if (gameWon) {
+            reviewRewindMessage.setText(getString(R.string.review_game_message));
+            finaliseRewindReview.setText(getString(R.string.finish_review));
+        } else {
+            reviewRewindMessage.setText(getString(R.string.change_turn_warning_message));
+            finaliseRewindReview.setText(getString(R.string.accept_turn_change));
+        }
+
+        currentTurnDisplay.setText(String.format(Locale.UK, "%d/%d",
+                                                this.game.getTurnCount(), maxTurn));
+
+        changeTurnLayout.setAlpha(1);
+        changeTurnLayout.bringToFront();
+    }
+
+    private void changeRewindReviewFunctionalityBackToNonInteractiveMode(){
+
+        reviewingGame = false;
+
+        changeTurnLayout.setAlpha(0);
+        activeGameLayout.bringToFront();
+    }
+
+    private void returnToMainMenu(){
+
+        clearSaveOfGameNamed(this.game.getName());
+
+        Intent intent = new Intent(this, WelcomeActivity.class);
+        startActivity(intent);
+    }
 }

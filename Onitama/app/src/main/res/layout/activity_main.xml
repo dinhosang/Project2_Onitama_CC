@@ -184,12 +184,14 @@
             android:id="@+id/backOneButton"
             android:layout_width="45dp"
             android:layout_height="32dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginStart="112dp"
             android:layout_marginTop="80dp"
             android:background="@android:drawable/ic_media_rew"
             android:onClick="changeTurnOnClick"
             android:text="1"
             android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/reviewCurrentTurnDisplay"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -200,7 +202,6 @@
             android:layout_marginEnd="8dp"
             android:background="@android:drawable/ic_media_previous"
             android:onClick="changeTurnOnClick"
-            android:text="End"
             app:layout_constraintBottom_toBottomOf="@+id/backThreeButton"
             app:layout_constraintEnd_toStartOf="@+id/backThreeButton"
             app:layout_constraintHorizontal_bias="0.214"
@@ -213,12 +214,14 @@
             android:layout_height="32dp"
             android:layout_marginBottom="7dp"
             android:layout_marginEnd="116dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="80dp"
             android:background="@android:drawable/ic_media_ff"
             android:onClick="changeTurnOnClick"
             android:text="1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/reviewCurrentTurnDisplay"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
 
@@ -243,7 +246,6 @@
             android:layout_marginStart="8dp"
             android:background="@android:drawable/ic_media_next"
             android:onClick="changeTurnOnClick"
-            android:text="End"
             app:layout_constraintBottom_toBottomOf="@+id/forwardThreeButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.157"
@@ -267,6 +269,22 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/reviewCurrentTurnDisplay"
+            android:layout_width="26dp"
+            android:layout_height="23dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/onitama_square"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/forwardOneButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/backOneButton" />
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout

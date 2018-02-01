@@ -32,5 +32,9 @@
     <string name="result_view_review_game_button">Review Game</string>
     <string name="rewind_game">Rewind Game</string>
     <string name="save_game">Save Game</string>
-    <string name="change_turn_warning_message">If game is rewound to an earlier turn and the change is accepted all later turns will be lost.</string>
+    <string name="accept_turn_change">Accept</string>
+    <string name="finish_review">Finish Review</string>
+    <string name="change_turn_warning_message">If the game is rewound to an earlier turn,
+                                    and the change is accepted, all later turns will be lost.</string>
+    <string name="review_game_message">Click the \'Finish Review\' button to return to the main menu.</string>
 </resources>
