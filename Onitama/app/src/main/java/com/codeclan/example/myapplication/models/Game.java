@@ -452,7 +452,7 @@ public class Game implements Serializable {
 
         if (piece.getType().equals(PieceType.SENSEI)){
             this.winningFaction     = this.activeFaction;
-            this.victoryType    = VictoryType.SENSEI;
+            this.victoryType        = VictoryType.SENSEI;
         }
     }
 
@@ -487,9 +487,9 @@ public class Game implements Serializable {
 
         if(this.winningFaction == null){
 
+            this.turnCount += 1;
             changeActiveFaction();
         }
-
     }
 
     private void changeActiveFaction() {

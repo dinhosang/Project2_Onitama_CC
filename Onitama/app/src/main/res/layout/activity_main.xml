@@ -8,11 +8,139 @@
     android:layout_height="match_parent"
     tools:context="com.codeclan.example.myapplication.MainActivity">
 
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/resultView"
+        android:layout_width="295dp"
+        android:layout_height="300dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="100dp"
+        android:alpha="0"
+        android:background="@drawable/onitama_square"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+
+        <TextView
+            android:id="@+id/resultViewTitle"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/result_view_title"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/resultViewStartingFactionTextView"
+            android:layout_width="190dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/result_view_starting_faction_text"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.494"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/resultViewWinningFactionTextView" />
+
+        <TextView
+            android:id="@+id/resultViewWinningFactionTextView"
+            android:layout_width="190dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/result_view_winning_faction_colour"
+            android:textAlignment="textStart"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.494"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/resultViewTitle" />
+
+        <TextView
+            android:id="@+id/resultViewVictoryConditionTextView"
+            android:layout_width="190dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="12dp"
+            android:text="@string/result_view_victory_condition_achieved"
+            android:textAlignment="textStart"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/resultViewStartingFactionTextView" />
+
+        <TextView
+            android:id="@+id/resultViewTurnCountTextView"
+            android:layout_width="190dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="12dp"
+            android:text="@string/result_view_turn_count"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/resultViewVictoryConditionTextView" />
+
+        <Button
+            android:id="@+id/resultViewMainMenuButton"
+            android:layout_width="85dp"
+            android:layout_height="55dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="8dp"
+            android:onClick="resultViewButtonOnClick"
+            android:text="@string/result_view_return_main_menu_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/resultViewNewGameButton"
+            android:layout_width="85dp"
+            android:layout_height="55dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="12dp"
+            android:onClick="resultViewButtonOnClick"
+            android:text="@string/result_view_new_game_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/resultViewMainMenuButton" />
+
+        <Button
+            android:id="@+id/resultViewReviewGameButton"
+            android:layout_width="85dp"
+            android:layout_height="55dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:onClick="resultViewButtonOnClick"
+            android:text="@string/result_view_review_game_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/resultViewNewGameButton" />
+
+
+    </android.support.constraint.ConstraintLayout>
+
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/changeTurnLayout"
-        android:layout_width="363dp"
-        android:layout_height="196dp"
+        android:layout_width="360dp"
+        android:layout_height="176dp"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -37,108 +165,91 @@
             app:layout_constraintTop_toBottomOf="@+id/changeTurnButtons"
             app:layout_constraintVertical_bias="0.0" />
 
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/changeTurnButtons"
-            android:layout_width="335dp"
-            android:layout_height="46dp"
+        <Button
+            android:id="@+id/backThreeButton"
+            android:layout_width="45dp"
+            android:layout_height="32dp"
             android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
-            app:layout_constraintBottom_toTopOf="@+id/acceptTurnButton"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="12dp"
+            android:background="@android:drawable/ic_media_rew"
+            android:onClick="changeTurnOnClick"
+            android:text="3"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/backOneButton"
+            app:layout_constraintEnd_toStartOf="@+id/backOneButton"
+            app:layout_constraintTop_toTopOf="@+id/backOneButton"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <Button
+            android:id="@+id/backOneButton"
+            android:layout_width="45dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="112dp"
+            android:layout_marginTop="80dp"
+            android:background="@android:drawable/ic_media_rew"
+            android:onClick="changeTurnOnClick"
+            android:text="1"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/changeTurnWarningMessageTextView">
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
-                android:id="@+id/backThreeButton"
-                android:layout_width="45dp"
-                android:layout_height="32dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="12dp"
-                android:background="@android:drawable/ic_media_rew"
-                android:onClick="changeTurnOnClick"
-                android:text="3"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/backOneButton"
-                app:layout_constraintEnd_toStartOf="@+id/backOneButton"
-                app:layout_constraintTop_toTopOf="@+id/backOneButton"
-                app:layout_constraintVertical_bias="0.0" />
+        <Button
+            android:id="@+id/startTurnButton"
+            android:layout_width="45dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="8dp"
+            android:background="@android:drawable/ic_media_previous"
+            android:onClick="changeTurnOnClick"
+            android:text="End"
+            app:layout_constraintBottom_toBottomOf="@+id/backThreeButton"
+            app:layout_constraintEnd_toStartOf="@+id/backThreeButton"
+            app:layout_constraintHorizontal_bias="0.214"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/backThreeButton" />
 
-            <Button
-                android:id="@+id/backOneButton"
-                android:layout_width="45dp"
-                android:layout_height="32dp"
-                android:layout_marginStart="112dp"
-                android:background="@android:drawable/ic_media_rew"
-                android:onClick="changeTurnOnClick"
-                android:text="1"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:layout_editor_absoluteY="7dp" />
+        <Button
+            android:id="@+id/forwardOneButton"
+            android:layout_width="45dp"
+            android:layout_height="32dp"
+            android:layout_marginBottom="7dp"
+            android:layout_marginEnd="116dp"
+            android:layout_marginTop="80dp"
+            android:background="@android:drawable/ic_media_ff"
+            android:onClick="changeTurnOnClick"
+            android:text="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
-            <Button
-                android:id="@+id/startTurnButton"
-                android:layout_width="45dp"
-                android:layout_height="32dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@android:drawable/ic_media_previous"
-                android:onClick="changeTurnOnClick"
-                android:text="End"
-                app:layout_constraintBottom_toBottomOf="@+id/backThreeButton"
-                app:layout_constraintEnd_toStartOf="@+id/backThreeButton"
-                app:layout_constraintHorizontal_bias="0.214"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/backThreeButton"
-                app:layout_constraintVertical_bias="1.0" />
+        <Button
+            android:id="@+id/forwardThreeButton"
+            android:layout_width="45dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="12dp"
+            android:background="@android:drawable/ic_media_ff"
+            android:onClick="changeTurnOnClick"
+            android:text="3"
+            app:layout_constraintBottom_toBottomOf="@+id/forwardOneButton"
+            app:layout_constraintStart_toEndOf="@+id/forwardOneButton"
+            app:layout_constraintTop_toTopOf="@+id/forwardOneButton"
+            app:layout_constraintVertical_bias="1.0" />
 
-            <Button
-                android:id="@+id/forwardOneButton"
-                android:layout_width="45dp"
-                android:layout_height="32dp"
-                android:layout_marginBottom="7dp"
-                android:layout_marginEnd="116dp"
-                android:layout_marginTop="7dp"
-                android:background="@android:drawable/ic_media_ff"
-                android:onClick="changeTurnOnClick"
-                android:text="1"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <Button
-                android:id="@+id/forwardThreeButton"
-                android:layout_width="45dp"
-                android:layout_height="32dp"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="8dp"
-                android:background="@android:drawable/ic_media_ff"
-                android:onClick="changeTurnOnClick"
-                android:text="3"
-                app:layout_constraintBottom_toBottomOf="@+id/forwardOneButton"
-                app:layout_constraintStart_toEndOf="@+id/forwardOneButton"
-                app:layout_constraintTop_toTopOf="@+id/forwardOneButton"
-                app:layout_constraintVertical_bias="1.0" />
-
-            <Button
-                android:id="@+id/latestTurnButton"
-                android:layout_width="45dp"
-                android:layout_height="32dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginStart="8dp"
-                android:background="@android:drawable/ic_media_next"
-                android:onClick="changeTurnOnClick"
-                android:text="End"
-                app:layout_constraintBottom_toBottomOf="@+id/forwardThreeButton"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.157"
-                app:layout_constraintStart_toEndOf="@+id/forwardThreeButton"
-                app:layout_constraintTop_toTopOf="@+id/forwardThreeButton"
-                app:layout_constraintVertical_bias="0.0" />
-
-        </android.support.constraint.ConstraintLayout>
+        <Button
+            android:id="@+id/latestTurnButton"
+            android:layout_width="45dp"
+            android:layout_height="32dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="8dp"
+            android:background="@android:drawable/ic_media_next"
+            android:onClick="changeTurnOnClick"
+            android:text="End"
+            app:layout_constraintBottom_toBottomOf="@+id/forwardThreeButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.157"
+            app:layout_constraintStart_toEndOf="@+id/forwardThreeButton"
+            app:layout_constraintTop_toTopOf="@+id/forwardThreeButton"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/changeTurnWarningMessageTextView"
@@ -156,241 +267,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-    </android.support.constraint.ConstraintLayout>
-
-
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/finishedGameLayout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:alpha="0"
-        android:background="@drawable/board_image_small_small"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/reviewRedCardOne"
-            android:layout_width="136dp"
-            android:layout_height="77dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="16dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_launcher_background"
-            android:tag="@string/red_one"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/reviewRedCardTwo"
-            android:layout_width="136dp"
-            android:layout_height="77dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_launcher_background"
-            android:tag="@string/red_two"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <GridView
-            android:id="@+id/reviewBoardGridView"
-            android:layout_width="355dp"
-            android:layout_height="327dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:numColumns="5"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.56" />
-
-        <ImageView
-            android:id="@+id/reviewBlueCardOne"
-            android:layout_width="0dp"
-            android:layout_height="77dp"
-            android:layout_marginBottom="16dp"
-            android:layout_marginStart="8dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_launcher_background"
-            android:tag="@string/blue_one"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/reviewRedCardTwo"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/reviewRedCardTwo" />
-
-        <ImageView
-            android:id="@+id/reviewBlueCardTwo"
-            android:layout_width="0dp"
-            android:layout_height="77dp"
-            android:layout_marginBottom="16dp"
-            android:layout_marginStart="0dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_launcher_background"
-            android:tag="@string/blue_two"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/reviewRedCardOne"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/reviewRedCardOne" />
-
-        <ImageView
-            android:id="@+id/reviewRedFloatingCard"
-            android:layout_width="120dp"
-            android:layout_height="50dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="104dp"
-            android:scaleType="fitXY"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.032"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/reviewBlueFloatingCard"
-            android:layout_width="120dp"
-            android:layout_height="50dp"
-            android:layout_marginBottom="104dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:scaleType="fitXY"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.98"
-            app:layout_constraintStart_toStartOf="parent" />
-
-
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/resultView"
-            android:layout_width="295dp"
-            android:layout_height="300dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/onitama_square"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.497">
-
-
-            <TextView
-                android:id="@+id/resultViewTitle"
-                android:layout_width="170dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="24dp"
-                android:text="@string/result_view_title"
-                android:textAlignment="center"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/resultViewStartingFactionTextView"
-                android:layout_width="190dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="24dp"
-                android:text="@string/result_view_starting_faction_text"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.494"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/resultViewWinningFactionTextView" />
-
-            <TextView
-                android:id="@+id/resultViewWinningFactionTextView"
-                android:layout_width="190dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="@string/result_view_winning_faction_colour"
-                android:textAlignment="textStart"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.494"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/resultViewTitle" />
-
-            <TextView
-                android:id="@+id/resultViewVictoryConditionTextView"
-                android:layout_width="190dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="12dp"
-                android:text="@string/result_view_victory_condition_achieved"
-                android:textAlignment="textStart"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/resultViewStartingFactionTextView" />
-
-            <TextView
-                android:id="@+id/resultViewTurnCountTextView"
-                android:layout_width="190dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="12dp"
-                android:text="@string/result_view_turn_count"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/resultViewVictoryConditionTextView" />
-
-            <Button
-                android:id="@+id/resultViewMainMenuButton"
-                android:layout_width="85dp"
-                android:layout_height="55dp"
-                android:layout_marginBottom="16dp"
-                android:layout_marginStart="8dp"
-                android:onClick="resultViewButtonOnClick"
-                android:text="@string/result_view_return_main_menu_button"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <Button
-                android:id="@+id/resultViewNewGameButton"
-                android:layout_width="85dp"
-                android:layout_height="55dp"
-                android:layout_marginBottom="16dp"
-                android:layout_marginStart="12dp"
-                android:onClick="resultViewButtonOnClick"
-                android:text="@string/result_view_new_game_button"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/resultViewMainMenuButton" />
-
-            <Button
-                android:id="@+id/resultViewReviewGameButton"
-                android:layout_width="85dp"
-                android:layout_height="55dp"
-                android:layout_marginBottom="16dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:onClick="resultViewButtonOnClick"
-                android:text="@string/result_view_review_game_button"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/resultViewNewGameButton" />
-
-
-        </android.support.constraint.ConstraintLayout>
-
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
