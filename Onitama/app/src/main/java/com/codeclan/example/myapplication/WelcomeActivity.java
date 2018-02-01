@@ -49,7 +49,7 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     private void showWelcomeScreen(Game game){
-        BoardGridAdapter boardGridAdapter;
+        BoardGridAdapter    boardGridAdapter;
         GridView            gridView;
         ImageView           blueCardOne;
         ImageView           blueCardTwo;
@@ -72,7 +72,8 @@ public class WelcomeActivity extends AppCompatActivity {
         Card firstRedCard = game.getRedHand().get(0);
         Card secondRedCard = game.getRedHand().get(1);
 
-        if (game.getActiveFaction().equals(FactionColour.BLUE)){
+        if ((game.getActiveFaction().equals(FactionColour.BLUE) && game.getWinningFaction() == null)
+                || game.getActiveFaction().equals(FactionColour.RED) && game.getWinningFaction() != null) {
             Card floatingCardForBlue = game.getFloatingCardForBlue();
             blueFloatingCard.setImageResource(floatingCardForBlue.getImageBlueViewInt());
             redFloatingCard.setImageResource(0);

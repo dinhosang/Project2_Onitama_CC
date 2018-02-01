@@ -6,7 +6,17 @@ package com.codeclan.example.myapplication.constants;
 
 public enum VictoryType {
 
-    SENSEI,
-    GATE;
+    SENSEI("Sensei"),
+    GATE("Gate");
+
+    private String victoryValue;
+
+    VictoryType(String value){
+        this.victoryValue = value;
+    }
+
+    public String getVictoryValue(){
+        return this.victoryValue;
+    }
 
 }

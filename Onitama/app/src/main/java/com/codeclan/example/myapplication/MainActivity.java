@@ -23,6 +23,8 @@ import com.codeclan.example.myapplication.models.Game;
 import com.codeclan.example.myapplication.models.cards.Card;
 import com.codeclan.example.myapplication.models.squares.Square;
 
+import java.util.Locale;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,11 +35,33 @@ public class MainActivity extends AppCompatActivity {
     ImageView           blueFloatingCard;
     ImageView           redFloatingCard;
 
+    ImageView           reviewBlueCardOne;
+    ImageView           reviewBlueCardTwo;
+    ImageView           reviewRedCardOne;
+    ImageView           reviewRedCardTwo;
+    ImageView           reviewBlueFloatingCard;
+    ImageView           reviewRedFloatingCard;
+
+    TextView            startingFaction;
+    TextView            winningFaction;
+    TextView            victoryType;
+    TextView            turnCount;
+
+    ConstraintLayout    activeGameLayout;
+    ConstraintLayout    finishedGameLayout;
+
     BoardGridAdapter    boardGridAdapter;
     GridView            gridView;
+    GridView            reviewGridView;
+
     ConstraintLayout    resultView;
+    Button              returnMainMenuButton;
+    Button              startNewGameButton;
+    Button              reviewGameButton;
 
     Game                game;
+
+    Boolean             reviewGame;
 
 
     @Override
@@ -46,7 +70,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        resultView  = findViewById(R.id.resultView);
+        activeGameLayout        = findViewById(R.id.activeGameLayout);
+        finishedGameLayout      = findViewById(R.id.finishedGameLayout);
+        resultView              = findViewById(R.id.resultView);
 
         blueCardOne = findViewById(R.id.blueCardOne);
         blueCardTwo = findViewById(R.id.blueCardTwo);
@@ -57,6 +83,22 @@ public class MainActivity extends AppCompatActivity {
         blueFloatingCard    = findViewById(R.id.blueFloatingCard);
         redFloatingCard     = findViewById(R.id.redFloatingCard);
 
+        reviewBlueCardOne   = findViewById(R.id.reviewBlueCardOne);
+        reviewBlueCardTwo   = findViewById(R.id.reviewBlueCardTwo);
+
+        reviewRedCardOne    = findViewById(R.id.reviewRedCardOne);
+        reviewRedCardTwo    = findViewById(R.id.reviewRedCardTwo);
+
+        reviewBlueFloatingCard  = findViewById(R.id.reviewBlueFloatingCard);
+        reviewRedFloatingCard   = findViewById(R.id.reviewRedFloatingCard);
+
+        returnMainMenuButton    = findViewById(R.id.resultViewMainMenuButton);
+        startNewGameButton      = findViewById(R.id.resultViewNewGameButton);
+        reviewGameButton        = findViewById(R.id.resultViewReviewGameButton);
+
+        reviewGame = false;
+
+        prepareResultDisplayView();
 
         Intent intent = getIntent();
         if (intent.getStringExtra("load") != null){
@@ -85,6 +127,14 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    public void prepareResultDisplayView(){
+
+        this.turnCount       = findViewById(R.id.resultViewTurnCountTextView);
+        this.victoryType     = findViewById(R.id.resultViewVictoryConditionTextView);
+        this.winningFaction  = findViewById(R.id.resultViewWinningFactionTextView);
+        this.startingFaction = findViewById(R.id.resultViewStartingFactionTextView);
+    }
+
 
     private void loadGame(String gameName, int turnToLoad) {
 
@@ -102,18 +152,30 @@ public class MainActivity extends AppCompatActivity {
 
     private void showBoardState() {
 
-        checkGameIsWon();
+        if (this.game.getWinningFaction() != null) {
 
-        Card firstBlueCard = this.game.getBlueHand().get(0);
+            resultViewDisplay();
+        } else if (this.reviewGame) {
+
+            displayReviewGame();
+        } else {
+
+            displayActiveGame();
+        }
+    }
+
+    private void displayActiveGame(){
+
+        Card firstBlueCard  = this.game.getBlueHand().get(0);
         Card secondBlueCard = this.game.getBlueHand().get(1);
-        Card firstRedCard = this.game.getRedHand().get(0);
-        Card secondRedCard = this.game.getRedHand().get(1);
+        Card firstRedCard   = this.game.getRedHand().get(0);
+        Card secondRedCard  = this.game.getRedHand().get(1);
 
-        if (this.game.getActiveFaction().equals(FactionColour.BLUE)){
+        if (this.game.getActiveFaction().equals(FactionColour.BLUE)) {
             Card floatingCardForBlue = this.game.getFloatingCardForBlue();
             blueFloatingCard.setImageResource(floatingCardForBlue.getImageBlueViewInt());
             redFloatingCard.setImageResource(0);
-        } else  {
+        } else {
             Card floatingCardForRed = this.game.getFloatingCardForRed();
             redFloatingCard.setImageResource(floatingCardForRed.getImageRedViewInt());
             blueFloatingCard.setImageResource(0);
@@ -150,23 +212,65 @@ public class MainActivity extends AppCompatActivity {
         gridView.setAdapter(boardGridAdapter);
     }
 
-    private void checkGameIsWon(){
+    private void displayReviewGame(){
 
-        if (this.game.getGameWinner() == null) {
-            return;
+        Card firstBlueCard  = this.game.getBlueHand().get(0);
+        Card secondBlueCard = this.game.getBlueHand().get(1);
+        Card firstRedCard   = this.game.getRedHand().get(0);
+        Card secondRedCard  = this.game.getRedHand().get(1);
+
+        if (this.game.getActiveFaction().equals(FactionColour.RED)) {
+
+            Card floatingCardForBlue = this.game.getFloatingCardForBlue();
+
+            reviewBlueFloatingCard.setImageResource(floatingCardForBlue.getImageBlueViewInt());
+            reviewRedFloatingCard.setImageResource(0);
+        } else {
+
+            Card floatingCardForRed = this.game.getFloatingCardForRed();
+
+            reviewRedFloatingCard.setImageResource(floatingCardForRed.getImageRedViewInt());
+            reviewBlueFloatingCard.setImageResource(0);
         }
 
-//        clearSaveOfGameNamed(this.game.getName());
-//
-//        resultView.setAlpha(1);
-//        resultView.bringToFront();
-//
-//        Button returnMainMenu;
-//        Button startNewGame;
-//        Button
+        reviewBlueCardOne.setImageResource(firstBlueCard.getImageBlueViewInt());
+        reviewBlueCardTwo.setImageResource(secondBlueCard.getImageBlueViewInt());
 
-        startGame();
+        reviewRedCardOne.setImageResource(firstRedCard.getImageRedViewInt());
+        reviewRedCardTwo.setImageResource(secondRedCard.getImageRedViewInt());
 
+        Card activeCard = this.game.getActiveCard();
+        int activeCardBorder = R.drawable.active_card_player_hand_border;
+        int nonActiveCardBorder = R.drawable.non_active_card_player_hand_border;
+
+        reviewBlueCardOne.setBackgroundResource(nonActiveCardBorder);
+        reviewBlueCardTwo.setBackgroundResource(nonActiveCardBorder);
+
+        reviewRedCardOne.setBackgroundResource(nonActiveCardBorder);
+        reviewRedCardTwo.setBackgroundResource(nonActiveCardBorder);
+
+        if (activeCard != null) {
+            if (activeCard.equals(firstBlueCard)) {
+                reviewBlueCardOne.setBackgroundResource(activeCardBorder);
+            } else if (activeCard.equals(secondBlueCard)) {
+                reviewBlueCardTwo.setBackgroundResource(activeCardBorder);
+            } else if (activeCard.equals(firstRedCard)) {
+                reviewRedCardOne.setBackgroundResource(activeCardBorder);
+            } else {
+                reviewRedCardTwo.setBackgroundResource(activeCardBorder);
+            }
+        }
+
+        boardGridAdapter    = new BoardGridAdapter(this, this.game.getBoard().getCompleteBoard(), this.game.getActiveSquare());
+        reviewGridView      = findViewById(R.id.reviewBoardGridView);
+
+        reviewGridView.setAdapter(boardGridAdapter);
+
+        if (finishedGameLayout.getAlpha() != 1){
+            finishedGameLayout.bringToFront();
+            finishedGameLayout.setAlpha(1);
+            activeGameLayout.setAlpha(0);
+        }
     }
 
     private void clearSaveOfGameNamed(String gameNameToClearSaveOf){
@@ -177,11 +281,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void startGame(){
 
-        this.game        = new Game();
+        clearSaveOfGameNamed(this.game.getName());
 
-        showBoardState();
+        this.game = new Game();
+
+        saveGame();
     }
-
 
     public void toggleCardSelectionOnClick(View view) {
         String buttonClicked = view.getTag().toString();
@@ -294,6 +399,54 @@ public class MainActivity extends AppCompatActivity {
 //            dialogBuilder.setView(saveGameView);
 //            final AlertDialog dialog = dialogBuilder.create();
 //            dialog.show();
+        }
+    }
+
+    private void resultViewDisplay(){
+
+        displayReviewGame();
+
+        String startingFactionHeader    = getString(R.string.result_view_starting_faction_text);
+        String startingFactionString    = String.format("%s %s", startingFactionHeader,
+                this.game.getStartingFaction());
+
+        String winningFactionHeader     = getString(R.string.result_view_winning_faction_colour);
+        String winningFactionString     = String.format("%s %s", winningFactionHeader,
+                this.game.getWinningFaction());
+
+        String victoryTypeHeader        = getString(R.string.result_view_victory_condition_achieved);
+        String victoryTypeString        = String.format("%s %s", victoryTypeHeader,
+                this.game.getVictoryType());
+
+        String turnCountHeader          = getString(R.string.result_view_turn_count);
+        String turnCountString          = String.format(Locale.UK, "%s   %d", turnCountHeader,
+                this.game.getTurnCount());
+
+        startingFaction.setText(startingFactionString);
+        winningFaction.setText(winningFactionString);
+        victoryType.setText(victoryTypeString);
+        turnCount.setText(turnCountString);
+
+    }
+
+    public void resultViewButtonOnClick(View view) {
+
+        Button buttonChosen = (Button) view;
+
+        if (buttonChosen.equals(this.returnMainMenuButton)) {
+
+            clearSaveOfGameNamed(this.game.getName());
+            Intent intent = new Intent(this, WelcomeActivity.class);
+            startActivity(intent);
+        } else if (buttonChosen.equals(this.startNewGameButton)) {
+
+            activeGameLayout.bringToFront();
+            activeGameLayout.setAlpha(1);
+            finishedGameLayout.setAlpha(0);
+
+            startGame();
+        } else if (buttonChosen.equals(this.reviewGameButton)){
+            // TODO code for being able to review finished game, after rewind feature is implemented.
         }
     }
 }

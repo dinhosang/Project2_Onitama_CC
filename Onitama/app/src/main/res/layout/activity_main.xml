@@ -1,232 +1,355 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainActivityGameView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/board_image_small_small"
     tools:context="com.codeclan.example.myapplication.MainActivity">
 
-    <ImageView
-        android:id="@+id/redCardOne"
-        android:layout_width="136dp"
-        android:layout_height="77dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        android:onClick="toggleCardSelectionOnClick"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_launcher_background"
-        android:tag="@string/red_one"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/redCardTwo"
-        android:layout_width="136dp"
-        android:layout_height="77dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:onClick="toggleCardSelectionOnClick"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_launcher_background"
-        android:tag="@string/red_two"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/resultView"
-        android:layout_width="295dp"
-        android:layout_height="300dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:alpha="0"
-        android:background="@drawable/onitama_square"
+        android:id="@+id/activeGameLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:alpha="1"
+        android:background="@drawable/board_image_small_small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.497">
+        app:layout_constraintTop_toTopOf="parent">
 
-
-        <TextView
-            android:id="@+id/resultViewTitle"
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
-            android:text="@string/result_view_title"
-            android:textAlignment="center"
-            android:textSize="24sp"
-            android:textStyle="bold"
+        <ImageView
+            android:id="@+id/redCardOne"
+            android:layout_width="136dp"
+            android:layout_height="77dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:onClick="toggleCardSelectionOnClick"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_launcher_background"
+            android:tag="@string/red_one"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/redCardTwo"
+            android:layout_width="136dp"
+            android:layout_height="77dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:onClick="toggleCardSelectionOnClick"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_launcher_background"
+            android:tag="@string/red_two"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="190dp"
-            android:layout_height="wrap_content"
+        <GridView
+            android:id="@+id/boardGridView"
+            android:layout_width="355dp"
+            android:layout_height="327dp"
+            android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
-            android:text="@string/result_view_starting_faction_button"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.494"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/resultViewTitle" />
-
-        <TextView
-            android:id="@+id/resultViewWinningFactionDisplay"
-            android:layout_width="190dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="12dp"
-            android:text="@string/winning_faction_colour"
-            android:textAlignment="textStart"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.494"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView5" />
-
-        <TextView
-            android:id="@+id/resultViewVictoryConditionDisplay"
-            android:layout_width="190dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="12dp"
-            android:text="@string/victory_condition_achieved"
-            android:textAlignment="textStart"
-            android:textSize="18sp"
+            android:layout_marginTop="8dp"
+            android:numColumns="5"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/resultViewWinningFactionDisplay" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.56" />
 
-        <TextView
-            android:id="@+id/resultViewTurnCount"
-            android:layout_width="190dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="12dp"
-            android:text="@string/turn_count_result_view"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/resultViewVictoryConditionDisplay" />
-
-        <Button
-            android:id="@+id/resultViewMainMenuButton"
-            android:layout_width="85dp"
-            android:layout_height="55dp"
+        <ImageView
+            android:id="@+id/blueCardOne"
+            android:layout_width="0dp"
+            android:layout_height="77dp"
             android:layout_marginBottom="16dp"
             android:layout_marginStart="8dp"
-            android:text="@string/result_view_return_main_menu_button"
+            android:onClick="toggleCardSelectionOnClick"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_launcher_background"
+            android:tag="@string/blue_one"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/redCardTwo"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/redCardTwo" />
+
+        <ImageView
+            android:id="@+id/blueCardTwo"
+            android:layout_width="0dp"
+            android:layout_height="77dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="8dp"
+            android:onClick="toggleCardSelectionOnClick"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_launcher_background"
+            android:tag="@string/blue_two"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/redCardOne"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/redCardOne" />
+
+        <ImageView
+            android:id="@+id/redFloatingCard"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="108dp"
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.032"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/blueFloatingCard"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="104dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.98"
             app:layout_constraintStart_toStartOf="parent" />
-
-        <Button
-            android:id="@+id/resultViewNewGameButton"
-            android:layout_width="85dp"
-            android:layout_height="55dp"
-            android:layout_marginBottom="16dp"
-            android:layout_marginStart="12dp"
-            android:text="@string/result_view_new_game_button"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/resultViewMainMenuButton" />
-
-        <Button
-            android:id="@+id/resultViewReviewGameButton"
-            android:layout_width="85dp"
-            android:layout_height="55dp"
-            android:layout_marginBottom="16dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:text="@string/result_view_review_game_button"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/resultViewNewGameButton" />
-
 
     </android.support.constraint.ConstraintLayout>
 
-
-    <GridView
-        android:id="@+id/boardGridView"
-        android:layout_width="355dp"
-        android:layout_height="327dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:numColumns="5"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/finishedGameLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:alpha="0"
+        android:background="@drawable/board_image_small_small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.56" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/blueCardOne"
-        android:layout_width="0dp"
-        android:layout_height="77dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginStart="8dp"
-        android:onClick="toggleCardSelectionOnClick"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_launcher_background"
-        android:tag="@string/blue_one"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/redCardTwo"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/redCardTwo" />
+        <ImageView
+            android:id="@+id/reviewRedCardOne"
+            android:layout_width="136dp"
+            android:layout_height="77dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_launcher_background"
+            android:tag="@string/red_one"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/blueCardTwo"
-        android:layout_width="0dp"
-        android:layout_height="77dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginStart="8dp"
-        android:onClick="toggleCardSelectionOnClick"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_launcher_background"
-        android:tag="@string/blue_two"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/redCardOne"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/redCardOne" />
+        <ImageView
+            android:id="@+id/reviewRedCardTwo"
+            android:layout_width="136dp"
+            android:layout_height="77dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_launcher_background"
+            android:tag="@string/red_two"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/redFloatingCard"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="108dp"
-        android:scaleType="fitXY"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.032"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <GridView
+            android:id="@+id/reviewBoardGridView"
+            android:layout_width="355dp"
+            android:layout_height="327dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:numColumns="5"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.56" />
 
-    <ImageView
-        android:id="@+id/blueFloatingCard"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="104dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.98"
-        app:layout_constraintStart_toStartOf="parent" />
+        <ImageView
+            android:id="@+id/reviewBlueCardOne"
+            android:layout_width="0dp"
+            android:layout_height="77dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="8dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_launcher_background"
+            android:tag="@string/blue_one"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/reviewRedCardTwo"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/reviewRedCardTwo" />
+
+        <ImageView
+            android:id="@+id/reviewBlueCardTwo"
+            android:layout_width="0dp"
+            android:layout_height="77dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="8dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_launcher_background"
+            android:tag="@string/blue_two"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/reviewRedCardOne"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/reviewRedCardOne" />
+
+        <ImageView
+            android:id="@+id/reviewRedFloatingCard"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="108dp"
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.032"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/reviewBlueFloatingCard"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="104dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.98"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/resultView"
+            android:layout_width="295dp"
+            android:layout_height="300dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/onitama_square"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.497">
+
+
+            <TextView
+                android:id="@+id/resultViewTitle"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/result_view_title"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/resultViewStartingFactionTextView"
+                android:layout_width="190dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/result_view_starting_faction_text"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.494"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/resultViewWinningFactionTextView" />
+
+            <TextView
+                android:id="@+id/resultViewWinningFactionTextView"
+                android:layout_width="190dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/result_view_winning_faction_colour"
+                android:textAlignment="textStart"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.494"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/resultViewTitle" />
+
+            <TextView
+                android:id="@+id/resultViewVictoryConditionTextView"
+                android:layout_width="190dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="12dp"
+                android:text="@string/result_view_victory_condition_achieved"
+                android:textAlignment="textStart"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/resultViewStartingFactionTextView" />
+
+            <TextView
+                android:id="@+id/resultViewTurnCountTextView"
+                android:layout_width="190dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="12dp"
+                android:text="@string/result_view_turn_count"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/resultViewVictoryConditionTextView" />
+
+            <Button
+                android:id="@+id/resultViewMainMenuButton"
+                android:layout_width="85dp"
+                android:layout_height="55dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginStart="8dp"
+                android:onClick="resultViewButtonOnClick"
+                android:text="@string/result_view_return_main_menu_button"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Button
+                android:id="@+id/resultViewNewGameButton"
+                android:layout_width="85dp"
+                android:layout_height="55dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginStart="12dp"
+                android:onClick="resultViewButtonOnClick"
+                android:text="@string/result_view_new_game_button"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/resultViewMainMenuButton" />
+
+            <Button
+                android:id="@+id/resultViewReviewGameButton"
+                android:layout_width="85dp"
+                android:layout_height="55dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:onClick="resultViewButtonOnClick"
+                android:text="@string/result_view_review_game_button"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/resultViewNewGameButton" />
+
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.constraint.ConstraintLayout>
 
 
 </android.support.constraint.ConstraintLayout>

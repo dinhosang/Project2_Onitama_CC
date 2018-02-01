@@ -24,10 +24,10 @@
                                     This temporary save will be lost if a new game is started
                                     before a name is given.</string>
     <string name="result_view_title"><u>Game Result</u></string>
-    <string name="result_view_starting_faction_button">Starting Faction:  </string>
-    <string name="winning_faction_colour">Winning Faction:   </string>
-    <string name="victory_condition_achieved">Victory Type:      </string>
-    <string name="turn_count_result_view">Turn Count:        </string>
+    <string name="result_view_starting_faction_text">Starting Faction:  </string>
+    <string name="result_view_winning_faction_colour">Winning Faction:   </string>
+    <string name="result_view_victory_condition_achieved">Victory Type:      </string>
+    <string name="result_view_turn_count">Turn Count:        </string>
     <string name="result_view_return_main_menu_button">Main Menu</string>
     <string name="result_view_new_game_button">New Game</string>
     <string name="result_view_review_game_button">Review Game</string>
