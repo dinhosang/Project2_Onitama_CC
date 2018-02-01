@@ -9,7 +9,7 @@
         <TextView
             android:id="@+id/saveGameListItemNameText"
             android:layout_width="250dp"
-            android:layout_height="38dp"
+            android:layout_height="wrap_content"
             android:textAlignment="viewStart"
             android:textSize="18sp"
             android:textStyle="bold"

@@ -1,7 +1,6 @@
 package com.codeclan.example.myapplication.models.squares;
 
 import com.codeclan.example.myapplication.constants.FactionColour;
-import com.codeclan.example.myapplication.constants.PieceType;
 import com.codeclan.example.myapplication.models.Coordinate;
 import com.codeclan.example.myapplication.models.pieces.Piece;
 
@@ -16,12 +15,16 @@ public class Square extends Coordinate {
 
 
     public Square(int x, int y){
+
         super(x, y);
+
         this.piece = null;
     }
 
     public boolean containsPiece() {
+
         if (this.piece == null){
+
             return false;
         }
 
@@ -29,15 +32,19 @@ public class Square extends Coordinate {
     }
 
     public void addPiece(Piece piece) {
+
         this.piece = piece;
     }
 
     public boolean containsRedPiece() {
+
         if (!containsPiece()){
+
             return false;
         }
 
         if (this.piece.getPieceColour().equals(FactionColour.RED)){
+
             return true;
         }
 
@@ -45,11 +52,14 @@ public class Square extends Coordinate {
     }
 
     public boolean containsBluePiece() {
+
         if (!containsPiece()){
+
             return false;
         }
 
         if (this.piece.getPieceColour().equals(FactionColour.BLUE)){
+
             return true;
         }
 
@@ -57,33 +67,26 @@ public class Square extends Coordinate {
     }
 
     public Piece removePiece() {
+
         Piece piece = this.piece;
+
         this.piece = null;
+
         return piece;
     }
 
-    public boolean containsSensei(){
-        if (!containsPiece()){
-            return false;
-        }
-
-        if (this.piece.getType().equals(PieceType.SENSEI)){
-            return true;
-        }
-
-        return false;
-    }
-
     public int getPieceImage(){
+
         return this.piece.getImageInt();
     }
 
     public int getPieceActiveImage(){
+
         return this.piece.getActiveImageInt();
     }
 
     public Piece getPiece(){
+
         return this.piece;
     }
-
 }

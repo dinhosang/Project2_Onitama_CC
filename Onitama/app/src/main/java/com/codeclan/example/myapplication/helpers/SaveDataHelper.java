@@ -43,19 +43,20 @@ public abstract class SaveDataHelper {
 
     }
 
-
     public static ArrayList<Game> getAllSavedGamesExceptRecent(Context context){
 
         initSharedPref(context);
 
+        // sharedPred.getAll() returns an object of type Map<String, ?>
+        // cannot user HashMap instead of ? at least at first glance as it returns an error
+        // stating string cannot be cast to HashMap (or Map) if converting ? to one of those types.
         Map<String, ?>  allEntries;
         allEntries = sharedPref.getAll();
 
         String gameName;
-        String currentGameSavaDataString;
+        String currentGameSaveDataString;
 
         Game currentSavedGameAtLatestTurn;
-        HashMap<Integer, Game> currentSaveGameData;
 
         ArrayList<Game> savedGames = new ArrayList<>();
 
@@ -66,11 +67,11 @@ public abstract class SaveDataHelper {
                 gameName = entry.getKey();
                 if (!gameName.equals("recent game")) {
 
-                    currentGameSavaDataString       = entry.getValue().toString();
+                    currentGameSaveDataString       = entry.getValue().toString();
 
-                    currentSaveGameData             = gson.fromJson(currentGameSavaDataString,
+                    gameSaveMap                     = gson.fromJson(currentGameSaveDataString,
                                                                     gameSaveGsonToken.getType());
-                    currentSavedGameAtLatestTurn    = currentSaveGameData.get(0);
+                    currentSavedGameAtLatestTurn    = gameSaveMap.get(0);
 
                     savedGames.add(currentSavedGameAtLatestTurn);
                 }
@@ -80,7 +81,6 @@ public abstract class SaveDataHelper {
         return savedGames;
     }
 
-
     public static boolean recentGameExists(Context context){
 
         initSharedPref(context);
@@ -89,12 +89,13 @@ public abstract class SaveDataHelper {
         String mostRecentGame       = sharedPref.getString("recent game", emptyGameString);
 
         if (mostRecentGame.equals(emptyGameString)){
+
             return false;
         } else {
+
             return true;
         }
     }
-
 
     public static void saveGame(Game gameToSave, Context context){
 
@@ -114,11 +115,9 @@ public abstract class SaveDataHelper {
         if (gameSaveDataString.equals("no save")){
 
             gameSaveMap = new HashMap<>();
-
         } else {
 
             gameSaveMap = gson.fromJson(gameSaveDataString, gameSaveGsonToken.getType());
-
         }
 
         gameSaveMap.put(0, gameToSave);
@@ -145,6 +144,7 @@ public abstract class SaveDataHelper {
             String currentGameName  = currentGame.getName();
 
             if (!currentGameName.equals(newName)){
+
                 entry.getValue().setName(newName);
             }
 
@@ -173,7 +173,6 @@ public abstract class SaveDataHelper {
 
         editor.remove(gameNameToClearSaveOf);
         editor.apply();
-
     }
 
     public static void clearLaterSavesOfGameNamed(String gameNameToClearSaveOf, Context context,
@@ -186,12 +185,12 @@ public abstract class SaveDataHelper {
         gameSaveDataString  = sharedPref.getString(gameNameToClearSaveOf, "no save");
         gameSaveMap         = gson.fromJson(gameSaveDataString, gameSaveGsonToken.getType());
 
-        for (int index = turnToClearFrom; index < (turnToClearTo + 1); index += 1) {
+        for (int index = turnToClearFrom; index <= turnToClearTo; index += 1) {
+
             gameSaveMap.remove(index);
         }
 
         editor.putString(gameNameToClearSaveOf, gson.toJson(gameSaveMap));
         editor.apply();
     }
-
 }

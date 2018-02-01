@@ -7,5 +7,19 @@ package com.codeclan.example.myapplication.constants;
 public enum CardName {
 
     FROG,
-    COBRA, ROOSTER, MANTIS, HORSE, ELEPHANT, BOAR, DRAGON, TIGER, CRAB, OX, EEL, CRANE, GOOSE, RABBIT, MONKEY,
+    COBRA,
+    ROOSTER,
+    MANTIS,
+    HORSE,
+    ELEPHANT,
+    BOAR,
+    DRAGON,
+    TIGER,
+    CRAB,
+    OX,
+    EEL,
+    CRANE,
+    GOOSE,
+    RABBIT,
+    MONKEY
 }

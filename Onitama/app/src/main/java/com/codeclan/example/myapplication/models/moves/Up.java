@@ -8,10 +8,8 @@ import com.codeclan.example.myapplication.models.Coordinate;
 
 public class Up extends Coordinate {
 
-
     public Up() {
+
         super(0, 1);
     }
-
-
 }

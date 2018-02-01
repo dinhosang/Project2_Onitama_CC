@@ -8,9 +8,8 @@ import com.codeclan.example.myapplication.models.Coordinate;
 
 public class Left extends Coordinate {
 
-
     public Left() {
+
         super(-1, 0);
     }
-
 }

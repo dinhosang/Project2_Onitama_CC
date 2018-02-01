@@ -23,6 +23,8 @@ import com.codeclan.example.myapplication.models.Game;
 import com.codeclan.example.myapplication.models.cards.Card;
 import com.codeclan.example.myapplication.models.squares.Square;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Locale;
 
 
@@ -61,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
 
     int                 maxTurn;
 
+    ArrayList<ImageView> hands;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,25 +72,30 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        activeGameLayout        = findViewById(R.id.activeGameLayout);
-        changeTurnLayout        = findViewById(R.id.changeTurnLayout);
-        resultView              = findViewById(R.id.resultView);
+        this.activeGameLayout        = findViewById(R.id.activeGameLayout);
+        this.changeTurnLayout        = findViewById(R.id.changeTurnLayout);
+        this.resultView              = findViewById(R.id.resultView);
 
-        blueCardOne = findViewById(R.id.blueCardOne);
-        blueCardTwo = findViewById(R.id.blueCardTwo);
+        this.blueCardOne = findViewById(R.id.blueCardOne);
+        this.blueCardTwo = findViewById(R.id.blueCardTwo);
 
-        redCardOne  = findViewById(R.id.redCardOne);
-        redCardTwo  = findViewById(R.id.redCardTwo);
+        this.redCardOne  = findViewById(R.id.redCardOne);
+        this.redCardTwo  = findViewById(R.id.redCardTwo);
 
-        blueFloatingCard    = findViewById(R.id.blueFloatingCard);
-        redFloatingCard     = findViewById(R.id.redFloatingCard);
+        this.hands       = new ArrayList<>(Arrays.asList(this.blueCardOne, this.blueCardTwo,
+                                                    this.redCardOne, this.redCardTwo));
 
-        returnMainMenuButton    = findViewById(R.id.resultViewMainMenuButton);
-        startNewGameButton      = findViewById(R.id.resultViewNewGameButton);
-        reviewGameButton        = findViewById(R.id.resultViewReviewGameButton);
+        this.blueFloatingCard    = findViewById(R.id.blueFloatingCard);
+        this.redFloatingCard     = findViewById(R.id.redFloatingCard);
 
-        gameWon = false;
-        reviewingGame = false;
+        this.returnMainMenuButton    = findViewById(R.id.resultViewMainMenuButton);
+        this.startNewGameButton      = findViewById(R.id.resultViewNewGameButton);
+        this.reviewGameButton        = findViewById(R.id.resultViewReviewGameButton);
+
+
+
+        this.gameWon         = false;
+        this.reviewingGame   = false;
 
         prepareResultDisplayView();
 
@@ -95,14 +104,9 @@ public class MainActivity extends AppCompatActivity {
 
             String gameName = intent.getStringExtra("load");
             loadGame(gameName, 0);
-
         } else {
 
-            // onCreate runs again from after the if after reaching end of a method with no other path forward!
-            // if below is not in else but just free standing code it then tries to run, and sets game to null
-            // as nothing is in the intent under the chosen name if the game was loaded.
             this.game = (Game) intent.getSerializableExtra("game");
-
             saveGame();
         }
     }
@@ -122,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
 
         this.turnCount       = findViewById(R.id.resultViewTurnCountTextView);
         this.victoryType     = findViewById(R.id.resultViewVictoryConditionTextView);
+
         this.winningFaction  = findViewById(R.id.resultViewWinningFactionTextView);
         this.startingFaction = findViewById(R.id.resultViewStartingFactionTextView);
     }
@@ -130,13 +135,13 @@ public class MainActivity extends AppCompatActivity {
 
         this.game = SaveDataHelper.loadGame(gameName, this,turnToLoad);
 
-        if (!reviewingGame) {
+        if (!this.reviewingGame) {
 
             determineBoardState();
         } else {
 
-            currentTurnDisplay.setText(String.format(Locale.UK, "%d/%d",
-                    this.game.getTurnCount(), maxTurn));
+            this.currentTurnDisplay.setText(String.format(Locale.UK, "%d/%d",
+                                                            this.game.getTurnCount(), maxTurn));
             displayGame();
         }
     }
@@ -146,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
         clearSaveOfGameNamed(this.game.getName());
 
         this.game   = new Game();
-        gameWon     = false;
+        this.gameWon     = false;
 
         changeGameViewBackToInteractiveMode();
 
@@ -164,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (this.game.getWinningFaction() != null) {
 
-            gameWon = true;
+            this.gameWon = true;
 
             changeGameViewToNonInteractiveMode();
 
@@ -189,47 +194,54 @@ public class MainActivity extends AppCompatActivity {
 
             Card floatingCardForBlue = this.game.getFloatingCardForBlue();
 
-            blueFloatingCard.setImageResource(floatingCardForBlue.getImageBlueViewInt());
-            redFloatingCard.setImageResource(0);
+            this.blueFloatingCard.setImageResource(floatingCardForBlue.getImageBlueViewInt());
+            this.redFloatingCard.setImageResource(0);
         } else {
 
             Card floatingCardForRed = this.game.getFloatingCardForRed();
 
-            redFloatingCard.setImageResource(floatingCardForRed.getImageRedViewInt());
-            blueFloatingCard.setImageResource(0);
+            this.redFloatingCard.setImageResource(floatingCardForRed.getImageRedViewInt());
+            this.blueFloatingCard.setImageResource(0);
         }
 
-        blueCardOne.setImageResource(firstBlueCard.getImageBlueViewInt());
-        blueCardTwo.setImageResource(secondBlueCard.getImageBlueViewInt());
+        this.blueCardOne.setImageResource(firstBlueCard.getImageBlueViewInt());
+        this.blueCardTwo.setImageResource(secondBlueCard.getImageBlueViewInt());
 
-        redCardOne.setImageResource(firstRedCard.getImageRedViewInt());
-        redCardTwo.setImageResource(secondRedCard.getImageRedViewInt());
+        this.redCardOne.setImageResource(firstRedCard.getImageRedViewInt());
+        this.redCardTwo.setImageResource(secondRedCard.getImageRedViewInt());
 
         Card activeCard = this.game.getActiveCard();
         int activeCardBorder = R.drawable.active_card_player_hand_border;
         int nonActiveCardBorder = R.drawable.non_active_card_player_hand_border;
 
-        blueCardOne.setBackgroundResource(nonActiveCardBorder);
-        blueCardTwo.setBackgroundResource(nonActiveCardBorder);
+        this.blueCardOne.setBackgroundResource(nonActiveCardBorder);
+        this.blueCardTwo.setBackgroundResource(nonActiveCardBorder);
 
-        redCardOne.setBackgroundResource(nonActiveCardBorder);
-        redCardTwo.setBackgroundResource(nonActiveCardBorder);
+        this.redCardOne.setBackgroundResource(nonActiveCardBorder);
+        this.redCardTwo.setBackgroundResource(nonActiveCardBorder);
 
         if (activeCard != null) {
+
             if (activeCard.equals(firstBlueCard)) {
-                blueCardOne.setBackgroundResource(activeCardBorder);
+
+                this.blueCardOne.setBackgroundResource(activeCardBorder);
             } else if (activeCard.equals(secondBlueCard)) {
-                blueCardTwo.setBackgroundResource(activeCardBorder);
+
+                this.blueCardTwo.setBackgroundResource(activeCardBorder);
             } else if (activeCard.equals(firstRedCard)) {
-                redCardOne.setBackgroundResource(activeCardBorder);
+
+                this.redCardOne.setBackgroundResource(activeCardBorder);
             } else {
-                redCardTwo.setBackgroundResource(activeCardBorder);
+
+                this.redCardTwo.setBackgroundResource(activeCardBorder);
             }
         }
 
-        boardGridAdapter = new BoardGridAdapter(this, this.game.getBoard().getCompleteBoard(), this.game.getActiveSquare());
-        gridView = findViewById(R.id.boardGridView);
-        gridView.setAdapter(boardGridAdapter);
+        this.boardGridAdapter = new BoardGridAdapter(this, this.game.getBoard().getCompleteBoard(), this.game.getActiveSquare());
+
+        this.gridView = findViewById(R.id.boardGridView);
+
+        this.gridView.setAdapter(boardGridAdapter);
     }
 
     private void clearSaveOfGameNamed(String gameNameToClearSaveOf){
@@ -238,21 +250,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void toggleCardSelectionOnClick(View view) {
+
         String buttonClicked = view.getTag().toString();
 
         Card card;
 
         if (buttonClicked.equals("blue one")) {
-            card    = game.getBlueHand().get(0);
+
+            card    = this.game.getBlueHand().get(0);
         } else if (buttonClicked.equals("blue two")) {
-            card    = game.getBlueHand().get(1);
+
+            card    = this.game.getBlueHand().get(1);
         } else if (buttonClicked.equals("red one")) {
-            card    = game.getRedHand().get(0);
+
+            card    = this.game.getRedHand().get(0);
         } else {
-            card    = game.getRedHand().get(1);
+
+            card    = this.game.getRedHand().get(1);
         }
 
-        game.toggleActiveCardSelection(card);
+        this.game.toggleActiveCardSelection(card);
 
         determineBoardState();
     }
@@ -261,12 +278,13 @@ public class MainActivity extends AppCompatActivity {
 
         Square clickedSquare = (Square) view.getTag();
 
-        game.toggleSquareSelection(clickedSquare);
+        this.game.toggleSquareSelection(clickedSquare);
 
         saveGame();
     }
 
     public void onMenuItemClick(MenuItem item) {
+
         if (item.getItemId() == R.id.action_save_game) {
 
             final String        originalGameName;
@@ -348,7 +366,7 @@ public class MainActivity extends AppCompatActivity {
             });
         } else if (item.getItemId() == R.id.action_rewind_game){
 
-            maxTurn     = this.game.getTurnCount();
+            this.maxTurn = this.game.getTurnCount();
 
             changeRewindReviewFunctionalityToInteractiveMode();
             displayGame();
@@ -358,8 +376,9 @@ public class MainActivity extends AppCompatActivity {
     private void resultViewDisplay(){
 
         displayGame();
-        resultView.setAlpha(1);
-        resultView.bringToFront();
+
+        this.resultView.setAlpha(1);
+        this.resultView.bringToFront();
 
         String startingFactionHeader    = getString(R.string.result_view_starting_faction_text);
         String startingFactionString    = String.format("%s %s", startingFactionHeader,
@@ -377,10 +396,11 @@ public class MainActivity extends AppCompatActivity {
         String turnCountString          = String.format(Locale.UK, "%s   %d", turnCountHeader,
                 this.game.getTurnCount());
 
-        startingFaction.setText(startingFactionString);
-        winningFaction.setText(winningFactionString);
-        victoryType.setText(victoryTypeString);
-        turnCount.setText(turnCountString);
+        this.startingFaction.setText(startingFactionString);
+        this.winningFaction.setText(winningFactionString);
+
+        this.victoryType.setText(victoryTypeString);
+        this.turnCount.setText(turnCountString);
     }
 
     public void resultViewButtonOnClick(View view) {
@@ -392,17 +412,17 @@ public class MainActivity extends AppCompatActivity {
             returnToMainMenu();
         } else if (buttonChosen.equals(this.startNewGameButton)) {
 
-            resultView.setAlpha(0);
+            this.resultView.setAlpha(0);
 
-            activeGameLayout.bringToFront();
+            this.activeGameLayout.bringToFront();
             changeGameViewBackToInteractiveMode();
 
             startNewGame();
         } else if (buttonChosen.equals(this.reviewGameButton)){
 
-            activeGameLayout.bringToFront();
+            this.activeGameLayout.bringToFront();
 
-            maxTurn     = this.game.getTurnCount();
+            this.maxTurn = this.game.getTurnCount();
 
             changeRewindReviewFunctionalityToInteractiveMode();
             displayGame();
@@ -429,28 +449,34 @@ public class MainActivity extends AppCompatActivity {
             clearLaterSavesOfGameNamed(gameName, currentTurn + 1, maxTurn);
             saveGame();
 
-            changeTurnLayout.setAlpha(0);
+            this.changeTurnLayout.setAlpha(0);
 
             changeRewindReviewFunctionalityBackToNonInteractiveMode();
             displayGame();
         } else if (buttonId == R.id.acceptTurnButton && gameWon) {
 
             returnToMainMenu();
+
         } else if (buttonId == R.id.startTurnButton && currentTurn != 1) {
 
             loadGame(gameName, 1);
+
         } else if (buttonId == R.id.backThreeButton && (currentTurn - 3) > 0) {
 
             loadGame(gameName, currentTurn - 3);
+
         } else if (buttonId == R.id.backOneButton && (currentTurn - 1) > 0) {
 
             loadGame(gameName, currentTurn - 1);
+
         } else if (buttonId == R.id.forwardOneButton && (maxTurn - currentTurn) > 0) {
 
             loadGame(gameName, currentTurn + 1);
+
         } else if (buttonId == R.id.forwardThreeButton  && (maxTurn - currentTurn) > 2) {
 
             loadGame(gameName, currentTurn + 3);
+
         } else if (buttonId == R.id.latestTurnButton && (currentTurn != maxTurn)) {
 
             loadGame(gameName, maxTurn);
@@ -466,75 +492,30 @@ public class MainActivity extends AppCompatActivity {
 
     private void changeGameViewToNonInteractiveMode(){
 
-        this.blueCardOne.setOnClickListener(new View.OnClickListener() {
+        for (ImageView card: this.hands){
 
-            @Override
-            public void onClick(View v) {
+            card.setOnClickListener(new View.OnClickListener() {
 
-            }
-        });
+                @Override
+                public void onClick(View view) {
 
-        blueCardTwo.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        redCardOne.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        redCardTwo.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
+                }
+            });
+        }
     }
 
     private void changeGameViewBackToInteractiveMode(){
 
-        this.blueCardOne.setOnClickListener(new View.OnClickListener() {
+        for (ImageView card: this.hands){
 
-            @Override
-            public void onClick(View v) {
-                toggleCardSelectionOnClick(v);
-            }
-        });
+            card.setOnClickListener(new View.OnClickListener() {
 
-        blueCardTwo.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                toggleCardSelectionOnClick(v);
-            }
-        });
-
-        redCardOne.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                toggleCardSelectionOnClick(v);
-            }
-        });
-
-        redCardTwo.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                toggleCardSelectionOnClick(v);
-            }
-        });
-
-
+                @Override
+                public void onClick(View view) {
+                    toggleCardSelectionOnClick(view);
+                }
+            });
+        }
     }
 
     private void changeRewindReviewFunctionalityToInteractiveMode(){
@@ -543,34 +524,40 @@ public class MainActivity extends AppCompatActivity {
 
         finaliseRewindReview = findViewById(R.id.acceptTurnButton);
 
-        reviewRewindMessage = findViewById(R.id.changeTurnWarningMessageTextView);
-        currentTurnDisplay  = findViewById(R.id.reviewCurrentTurnDisplay);
+        this.reviewRewindMessage = findViewById(R.id.changeTurnWarningMessageTextView);
+        this.currentTurnDisplay  = findViewById(R.id.reviewCurrentTurnDisplay);
 
-        reviewingGame = true;
+        this.reviewingGame = true;
 
         if (gameWon) {
-            reviewRewindMessage.setText(getString(R.string.review_game_message));
+
+            this.reviewRewindMessage.setText(getString(R.string.review_game_message));
+
             finaliseRewindReview.setText(getString(R.string.finish_review));
         } else {
-            reviewRewindMessage.setText(getString(R.string.change_turn_warning_message));
+
+            this.reviewRewindMessage.setText(getString(R.string.change_turn_warning_message));
+
             finaliseRewindReview.setText(getString(R.string.accept_turn_change));
         }
 
-        currentTurnDisplay.setText(String.format(Locale.UK, "%d/%d",
+        this.currentTurnDisplay.setText(String.format(Locale.UK, "%d/%d",
                                                 this.game.getTurnCount(), maxTurn));
 
         changeGameViewToNonInteractiveMode();
-        changeTurnLayout.setAlpha(1);
-        changeTurnLayout.bringToFront();
+
+        this.changeTurnLayout.setAlpha(1);
+        this.changeTurnLayout.bringToFront();
     }
 
     private void changeRewindReviewFunctionalityBackToNonInteractiveMode(){
 
-        reviewingGame = false;
+        this.reviewingGame = false;
 
         changeGameViewBackToInteractiveMode();
-        changeTurnLayout.setAlpha(0);
-        activeGameLayout.bringToFront();
+
+        this.changeTurnLayout.setAlpha(0);
+        this.activeGameLayout.bringToFront();
     }
 
     private void returnToMainMenu(){

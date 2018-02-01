@@ -11,7 +11,6 @@ import java.io.Serializable;
 
 public class Piece implements Serializable {
 
-
     protected int           imageInt;
     protected int           activeImageInt;
     protected PieceType     type;
@@ -24,23 +23,26 @@ public class Piece implements Serializable {
         this.type           = type;
         this.imageInt       = imageInt;
         this.activeImageInt = activeImageInt;
-
     }
 
 
     public FactionColour getPieceColour() {
+
         return colour;
     }
 
     public PieceType getType() {
+
         return type;
     }
 
     public int getImageInt() {
+
         return imageInt;
     }
 
     public int getActiveImageInt(){
+
         return activeImageInt;
     }
 }

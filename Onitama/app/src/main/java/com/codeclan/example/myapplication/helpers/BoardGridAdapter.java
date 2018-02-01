@@ -30,7 +30,9 @@ public class BoardGridAdapter extends ArrayAdapter<Square> {
 
     @Override
     public View getView(int position, View squareView, ViewGroup parent){
-        if (squareView == null){
+
+        if (squareView == null) {
+
             squareView = LayoutInflater.from(getContext()).inflate(R.layout.square_item_view, parent, false);
         }
 
@@ -40,12 +42,15 @@ public class BoardGridAdapter extends ArrayAdapter<Square> {
         Square currentSquare = getItem(position);
 
 
-        if (currentSquare.containsPiece()){
+        if (currentSquare.containsPiece()) {
+
             squareImage.setImageResource(currentSquare.getPieceImage());
         }
 
-        if (this.activeSquare != null){
-            if (currentSquare.equals(activeSquare)){
+        if (this.activeSquare != null) {
+
+            if (currentSquare.equals(activeSquare)) {
+
                 squareImage.setImageResource(currentSquare.getPieceActiveImage());
             }
         }
@@ -53,6 +58,5 @@ public class BoardGridAdapter extends ArrayAdapter<Square> {
         squareView.setTag(currentSquare);
 
         return squareView;
-
     }
 }

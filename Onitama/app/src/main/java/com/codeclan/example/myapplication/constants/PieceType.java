@@ -7,6 +7,6 @@ package com.codeclan.example.myapplication.constants;
 public enum PieceType {
 
     STUDENT,
-    SENSEI;
+    SENSEI
 
 }

@@ -11,7 +11,7 @@ import com.codeclan.example.myapplication.constants.PieceType;
 public class BlueSensei extends Piece {
 
     public BlueSensei() {
+
         super(FactionColour.BLUE, PieceType.SENSEI, R.drawable.blue_sensei_body_small_square, R.drawable.blue_sensei_body_small_active_square);
     }
-
 }

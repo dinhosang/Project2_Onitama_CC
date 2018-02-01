@@ -329,18 +329,15 @@
 
         <GridView
             android:id="@+id/boardGridView"
-            android:layout_width="355dp"
-            android:layout_height="327dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_width="365dp"
+            android:layout_height="280dp"
+            android:layout_marginBottom="160dp"
+            android:layout_marginStart="26dp"
+            android:horizontalSpacing="-15dip"
             android:numColumns="5"
+            android:verticalSpacing="-3dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.56" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <ImageView
             android:id="@+id/blueCardOne"

@@ -17,14 +17,15 @@ public class Coordinate implements Serializable {
 
         this.xCoord = xCoord;
         this.yCoord = yCoord;
-
     }
 
     public int getXCoord() {
+
         return xCoord;
     }
 
     public int getYCoord() {
+
         return yCoord;
     }
 

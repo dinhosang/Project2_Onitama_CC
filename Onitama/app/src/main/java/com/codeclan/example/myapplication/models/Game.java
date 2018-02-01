@@ -1,7 +1,5 @@
 package com.codeclan.example.myapplication.models;
 
-import android.provider.MediaStore;
-
 import com.codeclan.example.myapplication.constants.FactionColour;
 import com.codeclan.example.myapplication.constants.PieceType;
 import com.codeclan.example.myapplication.constants.VictoryType;
@@ -62,7 +60,7 @@ public class Game implements Serializable {
         this.floatingCardForRed     = null;
         this.floatingCardForBlue    = null;
         this.activeCard             = null;
-        this.winningFaction             = null;
+        this.winningFaction         = null;
 
         this.capturedBluePieces     = new ArrayList<>();
         this.capturedRedPieces      = new ArrayList<>();
@@ -70,7 +68,6 @@ public class Game implements Serializable {
         this.activeSquare = null;
 
         setupCards();
-        
     }
 
     private void setupCards() {
@@ -87,81 +84,102 @@ public class Game implements Serializable {
         this.activeFaction = cardToDetermineStartPlayer.getCardColour();
 
         if (this.activeFaction.equals(FactionColour.RED)){
+
             this.floatingCardForRed = floatingCard;
         } else {
+
             this.floatingCardForBlue = floatingCard;
         }
 
         this.startingFaction = cardToDetermineStartPlayer.getCardColour();
-
     }
 
 
     public String getName() {
+
         return name;
     }
 
     public void setName(String name) {
+
         this.name = name;
     }
 
     public Date getDateSaved() {
+
         return this.dateSaved;
     }
 
     public void setDateSaved(Date newSaveDate) {
+
         this.dateSaved = newSaveDate;
     }
 
     public int getTurnCount(){
+
         return this.turnCount;
     }
 
     public String getVictoryType(){
+
         return this.victoryType.getVictoryValue();
     }
 
     public String getStartingFaction(){
+
         return this.startingFaction.getColourValue();
     }
 
     public ArrayList<Card> getRedHand() {
+
         ArrayList<Card> copyRedHand = new ArrayList<>(this.redHand);
+
         return copyRedHand;
     }
 
     public ArrayList<Card> getBlueHand() {
+
         ArrayList<Card> copyBlueHand = new ArrayList<>(this.blueHand);
+
         return copyBlueHand;
     }
 
     public FactionColour getActiveFaction() {
+
         return activeFaction;
     }
 
     public Card getFloatingCardForRed() {
+
         return floatingCardForRed;
     }
 
     public Card getFloatingCardForBlue() {
+
         return floatingCardForBlue;
     }
 
     public Board getBoard() {
+
         return board;
     }
 
     public ArrayList<Piece> getCapturedBluePieces() {
+
         ArrayList<Piece> copyCapturedBluePieces = new ArrayList<>(this.capturedBluePieces);
+
         return copyCapturedBluePieces;
     }
 
     public ArrayList<Piece> getCapturedRedPieces() {
+
         ArrayList<Piece> copyCapturedRedPieces = new ArrayList<>(this.capturedRedPieces);
+
         return copyCapturedRedPieces;
     }
 
     public FactionColour getWinningFaction() {
+
         return winningFaction;
     }
     
@@ -170,41 +188,45 @@ public class Game implements Serializable {
         if (this.activeFaction.equals(FactionColour.BLUE)){
 
             if (!this.blueHand.contains(potentialActiveCard)){
+
                 return;
             }
-
         } else {
 
             if (!this.redHand.contains(potentialActiveCard)){
+
                 return;
             }
-
         }
 
         if (this.activeCard == null) {
+
             this.activeCard = potentialActiveCard;
+
             return;
         }
 
         if (this.activeCard.equals(potentialActiveCard)){
+
             this.activeCard = null;
         } else {
-            this.activeCard = potentialActiveCard;
 
+            this.activeCard = potentialActiveCard;
         }
 
         this.activeSquare = null;
     }
     
     public Card getActiveCard(){
+
         return this.activeCard;
     }
     
     
     public void toggleSquareSelection(Square selectedSquare){
-        
-        
+
         if (this.activeCard == null) {
+
             return;
         }
 
@@ -212,52 +234,60 @@ public class Game implements Serializable {
         if (this.activeSquare != null) {
             
             if (this.activeSquare.equals(selectedSquare)){
+
                 this.activeSquare = null;
+
                 return;
             }
             
-            if (selectedSquare.containsPiece()) {
-                if (this.activeFaction.equals(selectedSquare.getPiece().getPieceColour())) {
-//                    return;
+            if (selectedSquare.containsPiece()
+                    && (this.activeFaction.equals(selectedSquare.getPiece().getPieceColour()))) {
+
                     this.activeSquare = selectedSquare;
-                }
             }
+
             movePiece(this.activeSquare, this.activeCard, selectedSquare);
-        }
-        
-        if (selectedSquare.containsPiece()){
-            if (this.activeFaction.equals(selectedSquare.getPiece().getPieceColour())){
+        } else if (selectedSquare.containsPiece()
+                        && (this.activeFaction.equals(selectedSquare.getPiece().getPieceColour()))){
+
                 this.activeSquare = selectedSquare;
-            }
         }
-        
     }
     
     public Square getActiveSquare(){
+
         return this.activeSquare;
     }
     
-
+    // this was mainly for the highlighting of pieces once a card was selected
+    // also has unnecessary weight of checking if there is a winning faction etc.
     private boolean checkMovesExistWhichKeepActiveFactionsPieceOnBoard(Square square, Card card) {
 
         if (this.winningFaction != null){
+
             return false;
         }
 
         if (!square.containsPiece()){
+
             return false;
         }
 
         if (!cardInActivePlayersHand(card)){
+
             return false;
         }
 
         if (this.activeFaction.equals(FactionColour.RED)){
+
             if (square.containsRedPiece()){
+
                return checkMovesExistWhichKeepActiveFactionsPieceOnBoardRed(square, card);
             }
         } else {
+
             if (square.containsBluePiece()){
+
                return checkMovesExistWhichKeepActiveFactionsPieceOnBoardBlue(square, card);
             }
         }
@@ -266,42 +296,53 @@ public class Game implements Serializable {
     }
 
     private boolean checkPieceMayMoveToSquare(Square startSquare, Card card, Square endSquare) {
+
         if (!checkMovesExistWhichKeepActiveFactionsPieceOnBoard(startSquare, card)){
+
             return false;
         }
 
         if (endSquare.containsPiece()) {
+
             if (startSquare.containsBluePiece() && endSquare.containsBluePiece()) {
+
                 return false;
             } else if (startSquare.containsRedPiece() && endSquare.containsRedPiece()){
+
                 return false;
             }
         }
 
         if (activeFaction.equals(FactionColour.BLUE)){
+
             return checkPieceCanReachSquareBlue(startSquare, card, endSquare);
         } else {
+
             return checkPieceCanReachSquareRed(startSquare, card, endSquare);
         }
     }
 
     private void movePiece(Square startSquare, Card card, Square endSquare) {
+
         if (checkPieceMayMoveToSquare(startSquare, card, endSquare)){
+
             Piece movingPiece = startSquare.removePiece();
 
-
             if (endSquare.containsPiece()){
+
                 Piece removedPiece = endSquare.removePiece();
                 capturePiece(removedPiece);
             }
 
             endSquare.addPiece(movingPiece);
+
             if(movingPiece.getType().equals(PieceType.SENSEI)) {
+
                 setWinnerIfEndSquareIsOpposingGate(endSquare);
             }
+
             endOfTurnProcedure(card);
         }
-
     }
 
 
@@ -316,6 +357,7 @@ public class Game implements Serializable {
         int numberOfMoves = card.getMoveset().keySet().size();
 
         for (int index = 1; index <= numberOfMoves; ++index){
+
             ArrayList<Coordinate> currentMovesFromSet = card.getMoveset().get(index);
 
             startSquareXCoord = startSquare.getXCoord();
@@ -325,13 +367,12 @@ public class Game implements Serializable {
 
                 startSquareXCoord += move.getXCoord();
                 startSquareYCoord += move.getYCoord();
-
             }
 
             if (startSquareXCoord == endSquareXCoord && startSquareYCoord == endSquareYCoord){
+
                 return true;
             }
-
         }
 
         return false;
@@ -348,6 +389,7 @@ public class Game implements Serializable {
         int numberOfMoves = card.getMoveset().keySet().size();
 
         for (int index = 1; index <= numberOfMoves; ++index){
+
             ArrayList<Coordinate> currentMovesFromSet = card.getMoveset().get(index);
 
             startSquareXCoord = startSquare.getXCoord();
@@ -357,17 +399,15 @@ public class Game implements Serializable {
 
                 startSquareXCoord += (move.getXCoord() * -1);
                 startSquareYCoord += (move.getYCoord() * -1);
-
             }
 
             if (startSquareXCoord == endSquareXCoord && startSquareYCoord == endSquareYCoord){
+
                 return true;
             }
-
         }
 
         return false;
-
     }
 
     private boolean checkMovesExistWhichKeepActiveFactionsPieceOnBoardBlue(Square square, Card card) {
@@ -378,6 +418,7 @@ public class Game implements Serializable {
         int numberOfMoves = card.getMoveset().keySet().size();
 
         for (int index = 1; index <= numberOfMoves; ++index){
+
             ArrayList<Coordinate> currentMovesFromSet = card.getMoveset().get(index);
 
             squareXCoord = square.getXCoord();
@@ -387,13 +428,12 @@ public class Game implements Serializable {
 
                 squareXCoord += move.getXCoord();
                 squareYCoord += move.getYCoord();
-
             }
 
             if (squareXCoord <= 4 && squareXCoord >= 0 && squareYCoord <= 4 && squareYCoord >= 0){
+
                 return true;
             }
-
         }
 
         return false;
@@ -407,6 +447,7 @@ public class Game implements Serializable {
         int numberOfMoves = card.getMoveset().keySet().size();
 
         for (int index = 1; index <= numberOfMoves; ++index){
+
             ArrayList<Coordinate> currentMovesFromSet = card.getMoveset().get(index);
 
             squareXCoord = square.getXCoord();
@@ -416,13 +457,12 @@ public class Game implements Serializable {
 
                 squareXCoord += (move.getXCoord() * -1);
                 squareYCoord += (move.getYCoord() * -1);
-
             }
 
             if (squareXCoord <= 4 && squareXCoord >= 0 && squareYCoord <= 4 && squareYCoord >= 0){
+
                 return true;
             }
-
         }
 
         return false;
@@ -434,32 +474,40 @@ public class Game implements Serializable {
         int squareYCoord = square.getYCoord();
 
         if (this.activeFaction.equals(FactionColour.BLUE) && squareXCoord == 2 && squareYCoord == 4){
-            this.winningFaction     = this.activeFaction;
+
+            this.winningFaction = this.activeFaction;
             this.victoryType    = VictoryType.GATE;
         } else if (this.activeFaction.equals(FactionColour.RED) && squareXCoord == 2 && squareYCoord == 0) {
-            this.winningFaction     = this.activeFaction;
+
+            this.winningFaction = this.activeFaction;
             this.victoryType    = VictoryType.GATE;
         }
-
     }
 
     private void capturePiece(Piece piece) {
+
         if (piece.getPieceColour().equals(FactionColour.BLUE)){
+
             this.capturedBluePieces.add(piece);
         } else {
+
             this.capturedRedPieces.add(piece);
         }
 
         if (piece.getType().equals(PieceType.SENSEI)){
+
             this.winningFaction     = this.activeFaction;
             this.victoryType        = VictoryType.SENSEI;
         }
     }
 
     private boolean cardInActivePlayersHand(Card card) {
+
         if (this.activeFaction.equals(FactionColour.BLUE)){
+
             return this.blueHand.contains(card);
         } else {
+
             return this.redHand.contains(card);
         }
     }
@@ -488,16 +536,19 @@ public class Game implements Serializable {
         if(this.winningFaction == null){
 
             this.turnCount += 1;
+
             changeActiveFaction();
         }
     }
 
     private void changeActiveFaction() {
+
         if (this.activeFaction.equals(FactionColour.BLUE)){
+
             this.activeFaction = FactionColour.RED;
         } else {
+
             this.activeFaction = FactionColour.BLUE;
         }
     }
-
 }

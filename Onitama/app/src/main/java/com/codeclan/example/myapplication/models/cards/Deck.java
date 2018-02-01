@@ -42,26 +42,31 @@ public class Deck implements Serializable {
 
         createDeck();
         shuffleCards();
-
     }
 
 
     public Collection getCards() {
+
         ArrayList<Card> copyCards = new ArrayList<>(this.cards);
+
         return copyCards;
     }
 
     public Card removeTopCard() {
+
         return cards.remove(0);
     }
 
     public void resetDeck() {
+
         cards.clear();
+
         createDeck();
     }
 
 
     private void createDeck() {
+
         createFrog();
         createCobra();
         createRooster();
@@ -86,10 +91,10 @@ public class Deck implements Serializable {
         Card card = new Card(cardname, factionColour, cardBlueView, cardRedView, movesets);
         
         cards.add(card);
-        
     }
 
     private void createMonkey() {
+
         ArrayList<Coordinate> move1 = new ArrayList<>(Arrays.asList(right, down));
         ArrayList<Coordinate> move2 = new ArrayList<>(Arrays.asList(left, down));
         ArrayList<Coordinate> move3 = new ArrayList<>(Arrays.asList(left, up));
@@ -106,6 +111,7 @@ public class Deck implements Serializable {
     }
 
     private void createRabbit() {
+
         ArrayList<Coordinate> move1 = new ArrayList<Coordinate>(Arrays.asList(right, right));
         ArrayList<Coordinate> move2 = new ArrayList<>(Arrays.asList(right, up));
         ArrayList<Coordinate> move3 = new ArrayList<>(Arrays.asList(left, down));
@@ -120,6 +126,7 @@ public class Deck implements Serializable {
     }
 
     private void createGoose() {
+
         ArrayList<Coordinate> move1 = new ArrayList<Coordinate>(Arrays.asList(right));
         ArrayList<Coordinate> move2 = new ArrayList<Coordinate>(Arrays.asList(left));
         ArrayList<Coordinate> move3 = new ArrayList<>(Arrays.asList(left, up));
@@ -136,6 +143,7 @@ public class Deck implements Serializable {
     }
 
     private void createCrane() {
+
         ArrayList<Coordinate> move1 = new ArrayList<>(Arrays.asList(right, down));
         ArrayList<Coordinate> move2 = new ArrayList<>(Arrays.asList(left, down));
         ArrayList<Coordinate> move3 = new ArrayList<Coordinate>(Arrays.asList(up));
@@ -150,6 +158,7 @@ public class Deck implements Serializable {
     }
 
     private void createEel() {
+
         ArrayList<Coordinate> move1 = new ArrayList<Coordinate>(Arrays.asList(right));
         ArrayList<Coordinate> move2 = new ArrayList<>(Arrays.asList(left, down));
         ArrayList<Coordinate> move3 = new ArrayList<>(Arrays.asList(left, up));
@@ -164,6 +173,7 @@ public class Deck implements Serializable {
     }
 
     private void createOx() {
+
         ArrayList<Coordinate> move1 = new ArrayList<Coordinate>(Arrays.asList(right));
         ArrayList<Coordinate> move2 = new ArrayList<Coordinate>(Arrays.asList(down));
         ArrayList<Coordinate> move3 = new ArrayList<Coordinate>(Arrays.asList(up));
@@ -178,6 +188,7 @@ public class Deck implements Serializable {
     }
 
     private void createCrab() {
+
         ArrayList<Coordinate> move1 = new ArrayList<Coordinate>(Arrays.asList(right, right));
         ArrayList<Coordinate> move2 = new ArrayList<Coordinate>(Arrays.asList(left, left));
         ArrayList<Coordinate> move3 = new ArrayList<Coordinate>(Arrays.asList(up));
@@ -192,6 +203,7 @@ public class Deck implements Serializable {
     }
 
     private void createTiger() {
+
         ArrayList<Coordinate> move1 = new ArrayList<Coordinate>(Arrays.asList(up, up));
         ArrayList<Coordinate> move2 = new ArrayList<Coordinate>(Arrays.asList(down));
 
@@ -204,6 +216,7 @@ public class Deck implements Serializable {
     }
 
     private void createDragon() {
+
         ArrayList<Coordinate> move1 = new ArrayList<>(Arrays.asList(right, right, up));
         ArrayList<Coordinate> move2 = new ArrayList<>(Arrays.asList(left, left, up));
         ArrayList<Coordinate> move3 = new ArrayList<>(Arrays.asList(right, down));
@@ -220,6 +233,7 @@ public class Deck implements Serializable {
     }
 
     private void createBoar() {
+
         ArrayList<Coordinate> move1 = new ArrayList<Coordinate>(Arrays.asList(right));
         ArrayList<Coordinate> move2 = new ArrayList<Coordinate>(Arrays.asList(left));
         ArrayList<Coordinate> move3 = new ArrayList<Coordinate>(Arrays.asList(up));
@@ -234,6 +248,7 @@ public class Deck implements Serializable {
     }
 
     private void createElephant() {
+
         ArrayList<Coordinate> move1 = new ArrayList<Coordinate>(Arrays.asList(right));
         ArrayList<Coordinate> move2 = new ArrayList<Coordinate>(Arrays.asList(left));
         ArrayList<Coordinate> move3 = new ArrayList<>(Arrays.asList(right, up));
@@ -250,6 +265,7 @@ public class Deck implements Serializable {
     }
 
     private void createHorse() {
+
         ArrayList<Coordinate> move1 = new ArrayList<Coordinate>(Arrays.asList(up));
         ArrayList<Coordinate> move2 = new ArrayList<Coordinate>(Arrays.asList(left));
         ArrayList<Coordinate> move3 = new ArrayList<Coordinate>(Arrays.asList(down));
@@ -264,6 +280,7 @@ public class Deck implements Serializable {
     }
 
     private void createMantis() {
+
         ArrayList<Coordinate> move1 = new ArrayList<Coordinate>(Arrays.asList(down));
         ArrayList<Coordinate> move2 = new ArrayList<>(Arrays.asList(right, up));
         ArrayList<Coordinate> move3 = new ArrayList<>(Arrays.asList(left, up));
@@ -278,6 +295,7 @@ public class Deck implements Serializable {
     }
 
     private void createRooster() {
+
         ArrayList<Coordinate> move1 = new ArrayList<Coordinate>(Arrays.asList(right));
         ArrayList<Coordinate> move2 = new ArrayList<Coordinate>(Arrays.asList(left));
         ArrayList<Coordinate> move3 = new ArrayList<>(Arrays.asList(right, up));
@@ -294,6 +312,7 @@ public class Deck implements Serializable {
     }
 
     private void createCobra() {
+
         ArrayList<Coordinate> move1 = new ArrayList<>(Arrays.asList(right, down));
         ArrayList<Coordinate> move2 = new ArrayList<Coordinate>(Arrays.asList(left));
         ArrayList<Coordinate> move3 = new ArrayList<>(Arrays.asList(right, up));
@@ -308,6 +327,7 @@ public class Deck implements Serializable {
     }
 
     private void createFrog() {
+
         ArrayList<Coordinate> move1 = new ArrayList<>(Arrays.asList(right, down));
         ArrayList<Coordinate> move2 = new ArrayList<Coordinate>(Arrays.asList(left, left));
         ArrayList<Coordinate> move3 = new ArrayList<>(Arrays.asList(left, up));
@@ -322,7 +342,7 @@ public class Deck implements Serializable {
     }
 
     private void shuffleCards(){
+
         Collections.shuffle(cards);
     }
-
 }

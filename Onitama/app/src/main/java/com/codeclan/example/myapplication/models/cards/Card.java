@@ -7,7 +7,7 @@ import com.codeclan.example.myapplication.models.Coordinate;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
+
 
 /**
  * Created by user on 23/01/2018.
@@ -30,26 +30,30 @@ public class Card implements Serializable {
         this.imageBlueViewInt   = imageBlueViewInt;
         this.imageRedViewInt    = imageRedViewInt;
         this.moveset            = moveset;
-
     }
 
     public CardName getName() {
+
         return name;
     }
 
     public FactionColour getCardColour() {
+
         return this.colour;
     }
 
     public int getImageBlueViewInt(){
+
         return this.imageBlueViewInt;
     }
 
     public int getImageRedViewInt(){
+
         return this.imageRedViewInt;
     }
 
     public HashMap<Integer, ArrayList<Coordinate>> getMoveset() {
+
         HashMap<Integer, ArrayList<Coordinate>> copyMoveset = new HashMap<>();
         copyMoveset.putAll(this.moveset);
 
