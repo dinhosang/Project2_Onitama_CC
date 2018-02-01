@@ -128,6 +128,32 @@ public abstract class SaveDataHelper {
         editor.apply();
     }
 
+    public static void convertOriginalSaveToNewSave(String originalName, String newName, Context context){
+
+        initSharedPref(context);
+        String gameSaveDataString;
+
+        HashMap<Integer, Game> intermediateSaveMap = new HashMap<>();
+
+        gameSaveDataString  = sharedPref.getString(originalName, "no save");
+        gameSaveMap         = gson.fromJson(gameSaveDataString, gameSaveGsonToken.getType());
+
+        for (Map.Entry<Integer, Game> entry : gameSaveMap.entrySet()) {
+
+            Game currentGame        = entry.getValue();
+            Integer currentTurn     = entry.getKey();
+            String currentGameName  = currentGame.getName();
+
+            if (!currentGameName.equals(newName)){
+                entry.getValue().setName(newName);
+            }
+
+            intermediateSaveMap.put(currentTurn, currentGame);
+        }
+
+        editor.putString(newName, gson.toJson(intermediateSaveMap));
+        editor.apply();
+    }
 
     public static Game loadGame(String gameName, Context context, int turnToLoadOn) {
 
@@ -160,7 +186,7 @@ public abstract class SaveDataHelper {
         gameSaveDataString  = sharedPref.getString(gameNameToClearSaveOf, "no save");
         gameSaveMap         = gson.fromJson(gameSaveDataString, gameSaveGsonToken.getType());
 
-        for (int index = turnToClearFrom; index <= turnToClearTo; ++index) {
+        for (int index = turnToClearFrom; index < (turnToClearTo + 1); index += 1) {
             gameSaveMap.remove(index);
         }
 

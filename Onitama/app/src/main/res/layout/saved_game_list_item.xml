@@ -3,42 +3,53 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:onClick="savedGameItemOnClick">
+    android:onClick="savedGameItemOnClick"
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/saveGameListItemNameText"
-        android:layout_width="276dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:textAlignment="viewStart"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/saveGameListItemNameText"
+            android:layout_width="250dp"
+            android:layout_height="38dp"
+            android:textAlignment="viewStart"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/savedGameListItemTurnView"
-        android:layout_width="80dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="44dp"
-        android:textAlignment="viewStart"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/saveGameListItemNameText"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/savedGameListItemTurnView"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:textAlignment="viewStart"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/saveGameListItemNameText"
+            app:layout_constraintTop_toBottomOf="@+id/saveGameListItemNameText" />
 
-    <TextView
-        android:id="@+id/savedGameListItemTimeTextView"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="44dp"
-        android:textAlignment="viewStart"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/saveGameListItemNameText"
-        app:layout_constraintHorizontal_bias="0.02"
-        app:layout_constraintStart_toEndOf="@+id/savedGameListItemTurnView"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/savedGameListItemTimeTextView"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:textAlignment="viewStart"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/saveGameListItemNameText"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/savedGameListItemTurnView"
+            app:layout_constraintTop_toBottomOf="@+id/saveGameListItemNameText" />
+
+        <!--<Button-->
+            <!--android:id="@+id/deleteGameFromLoadScreenButton"-->
+            <!--android:layout_width="50dp"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:layout_marginBottom="16dp"-->
+            <!--android:layout_marginTop="16dp"-->
+            <!--android:background="@android:drawable/ic_menu_delete"-->
+            <!--android:backgroundTint="@android:color/holo_red_dark"-->
+            <!--android:onClick="queryDeleteSaveOnClick"-->
+            <!--app:layout_constraintBottom_toBottomOf="@+id/constraintLayout2"-->
+            <!--app:layout_constraintStart_toEndOf="@+id/constraintLayout2"-->
+            <!--app:layout_constraintTop_toTopOf="@+id/constraintLayout2" />-->
+
+
 </android.support.constraint.ConstraintLayout>

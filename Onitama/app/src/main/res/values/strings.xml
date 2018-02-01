@@ -37,4 +37,10 @@
     <string name="change_turn_warning_message">If the game is rewound to an earlier turn,
                                     and the change is accepted, all later turns will be lost.</string>
     <string name="review_game_message">Click the \'Finish Review\' button to return to the main menu.</string>
+    <string name="delete_game_query_text">Are you certain you wish to delete the following game?</string>
+    <string name="delete_game_name_textview">Game Name:</string>
+    <string name="delete_game_turn_count_textview">Turn Count:</string>
+    <string name="delete_game_time_saved_textview">Time Saved:</string>
+    <string name="delete_game_confirm_deletion">DELETE</string>
+    <string name="delete_game_cancel_deletion">CANCEL</string>
 </resources>

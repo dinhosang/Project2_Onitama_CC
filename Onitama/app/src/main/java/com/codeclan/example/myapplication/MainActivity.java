@@ -23,8 +23,6 @@ import com.codeclan.example.myapplication.models.Game;
 import com.codeclan.example.myapplication.models.cards.Card;
 import com.codeclan.example.myapplication.models.squares.Square;
 
-import org.w3c.dom.Text;
-
 import java.util.Locale;
 
 
@@ -120,7 +118,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     public void prepareResultDisplayView(){
 
         this.turnCount       = findViewById(R.id.resultViewTurnCountTextView);
@@ -131,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadGame(String gameName, int turnToLoad) {
 
-        this.game = SaveDataHelper.loadGame(gameName, this.getApplicationContext(),turnToLoad);
+        this.game = SaveDataHelper.loadGame(gameName, this,turnToLoad);
 
         if (!reviewingGame) {
 
@@ -283,7 +280,7 @@ public class MainActivity extends AppCompatActivity {
             Button              saveButton;
 
             View saveGameView   = getLayoutInflater().inflate(R.layout.save_game_view, null);
-            dialogBuilder       = new AlertDialog.Builder(MainActivity.this);
+            dialogBuilder       = new AlertDialog.Builder(this);
 
 
             saveGameNameField   = saveGameView.findViewById(R.id.saveGameViewEnterSaveNameEditText);
@@ -332,9 +329,11 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "Reserved name, please enter another", Toast.LENGTH_LONG).show();
                     } else {
 
-                        MainActivity.this.game.setName(nameChosen);
+                        Game gameToSave = MainActivity.this.game;
 
-                        saveGame();
+                        SaveDataHelper.convertOriginalSaveToNewSave(originalGameName, nameChosen, MainActivity.this);
+
+                        gameToSave.setName(nameChosen);
 
                         if (originalGameName.equals("recent game")) {
                             clearSaveOfGameNamed(originalGameName);
@@ -428,24 +427,12 @@ public class MainActivity extends AppCompatActivity {
         if (buttonId == R.id.acceptTurnButton && !gameWon){
 
             clearLaterSavesOfGameNamed(gameName, currentTurn + 1, maxTurn);
-
+            saveGame();
 
             changeTurnLayout.setAlpha(0);
-            changeGameViewBackToInteractiveMode();
+
             changeRewindReviewFunctionalityBackToNonInteractiveMode();
             displayGame();
-//        } else if (buttonId == R.id.goToTurnButton && (turnChosen > 0) && (turnChosen < maxTurn)) {
-//
-//            loadGame(gameName, turnChosen);
-//        } else if (buttonId == R.id.goToTurnButton && (turnChosen < 1)) {
-//
-//            Toast.makeText(this, "Please enter a number greater than 0", Toast.LENGTH_LONG).show();
-//        } else if (buttonId == R.id.goToTurnButton && (turnChosen > maxTurn)) {
-//
-//            int maxTurnPlusOne = maxTurn + 1;
-//            String messageToToast = "Please enter a number lower than " + maxTurnPlusOne;
-//
-//            Toast.makeText(this, messageToToast, Toast.LENGTH_LONG).show();
         } else if (buttonId == R.id.acceptTurnButton && gameWon) {
 
             returnToMainMenu();
@@ -572,6 +559,7 @@ public class MainActivity extends AppCompatActivity {
         currentTurnDisplay.setText(String.format(Locale.UK, "%d/%d",
                                                 this.game.getTurnCount(), maxTurn));
 
+        changeGameViewToNonInteractiveMode();
         changeTurnLayout.setAlpha(1);
         changeTurnLayout.bringToFront();
     }
@@ -580,6 +568,7 @@ public class MainActivity extends AppCompatActivity {
 
         reviewingGame = false;
 
+        changeGameViewBackToInteractiveMode();
         changeTurnLayout.setAlpha(0);
         activeGameLayout.bringToFront();
     }

@@ -2,6 +2,7 @@ package com.codeclan.example.myapplication;
 
 import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.codeclan.example.myapplication.constants.FactionColour;
 import com.codeclan.example.myapplication.helpers.BoardGridAdapter;
@@ -17,6 +19,8 @@ import com.codeclan.example.myapplication.helpers.SaveDataHelper;
 import com.codeclan.example.myapplication.helpers.SaveGamesListViewAdapter;
 import com.codeclan.example.myapplication.models.Game;
 import com.codeclan.example.myapplication.models.cards.Card;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -32,6 +36,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
@@ -45,7 +50,6 @@ public class WelcomeActivity extends AppCompatActivity {
         this.welcomeMenu.bringToFront();
 
         showWelcomeScreen(this.newGame);
-
     }
 
     private void showWelcomeScreen(Game game){
@@ -103,21 +107,29 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     public void welcomeScreenButtonOnClick(View view) {
+
         Button chosenButton = (Button) view;
-        String textOnView = chosenButton.getText().toString();
+        String textOnView   = chosenButton.getText().toString();
 
         if (textOnView.equals(getString(R.string.new_game))){
+
             startNewGame();
         } else if (textOnView.equals(getString(R.string.load_game))){
+
             loadMenu();
+        } else {
+
+            Toast.makeText(this, "Not yet accessible", Toast.LENGTH_SHORT).show();
         }
 
     }
 
 
     private void startNewGame() {
+
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("game", this.newGame);
+
         startActivity(intent);
     }
 
@@ -137,6 +149,7 @@ public class WelcomeActivity extends AppCompatActivity {
         ArrayList<Game> savedGames = getAllSavedGamesExceptRecent();
 
         if (!savedGames.isEmpty()){
+
             SaveGamesListViewAdapter savedGameAdapter = new SaveGamesListViewAdapter(this, savedGames);
             saveGamesListView.setAdapter(savedGameAdapter);
         }
@@ -182,25 +195,97 @@ public class WelcomeActivity extends AppCompatActivity {
         String textOnView = chosenButton.getText().toString();
 
         if (textOnView.equals(getString(R.string.return_to_welcome))){
+
             this.welcomeMenu.setAlpha(1);
             this.loadMenu.setAlpha(0);
             this.welcomeMenu.bringToFront();
+
             showWelcomeScreen(this.newGame);
         } else if (textOnView.equals(getString(R.string.last_unsaved_game))){
+
             loadGame();
         }
 
     }
 
     public void savedGameItemOnClick(View view){
+
         Game gameToLoad = (Game) view.getTag();
+
         this.loadedGame = gameToLoad;
+
         loadGame();
     }
 
+//    public void queryDeleteSaveOnClick(View view) {
+//
+//        Game gameSaveToDelete = (Game) view.getTag();
+//
+//        Button      cancelButton;
+//        Button      confirmDeleteButton;
+//        TextView    gameToDeleteNameDisplay;
+//        TextView    gameToDeleteTurnCountDisplay;
+//        TextView    gameToDeleteTimeSavedDisplay;
+//
+//        final String nameOfGameToDelete;
+//        String turnCountOfGameToDelete;
+//        String timeSavedOfGameToDelete;
+//
+//        View queryDeleteGameView;
+//
+//        AlertDialog.Builder dialogBuilder;
+//
+//
+//        dialogBuilder       = new AlertDialog.Builder(this);
+//        nameOfGameToDelete  = gameSaveToDelete.getName();
+//        turnCountOfGameToDelete = Integer.toString(gameSaveToDelete.getTurnCount());
+//        timeSavedOfGameToDelete = gameSaveToDelete.getDateSaved().toString();
+//
+//        cancelButton        = findViewById(R.id.deleteGameCancelDeletionButton);
+//        confirmDeleteButton = findViewById(R.id.deleteGameConfirmDeletionButton);
+//
+//        gameToDeleteNameDisplay         = findViewById(R.id.deleteGameNameDisplay);
+//        gameToDeleteTurnCountDisplay    = findViewById(R.id.deleteGameTurnCountDisplay);
+//        gameToDeleteTimeSavedDisplay    = findViewById(R.id.deleteGameTimeSavedDisplay);
+//
+//
+//        gameToDeleteNameDisplay.setText(nameOfGameToDelete);
+//        gameToDeleteTurnCountDisplay.setText(turnCountOfGameToDelete);
+//        gameToDeleteTimeSavedDisplay.setText(timeSavedOfGameToDelete);
+//
+//
+//        queryDeleteGameView = getLayoutInflater().inflate(R.layout.query_delete_game_view, null);
+//
+//
+//        dialogBuilder.setView(queryDeleteGameView);
+//        final AlertDialog dialog = dialogBuilder.create();
+//
+//        dialog.show();
+//
+//        cancelButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(WelcomeActivity.this, "Deletion Cancelled", Toast.LENGTH_LONG).show();
+//                dialog.cancel();
+//            }
+//        });
+//
+//        confirmDeleteButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                SaveDataHelper.clearSaveOfGameNamed(nameOfGameToDelete, WelcomeActivity.this);
+//                Toast.makeText(WelcomeActivity.this, "Game successfully deleted", Toast.LENGTH_LONG).show();
+//                dialog.cancel();
+//            }
+//        });
+//    }
+
     private void loadGame() {
+
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("game", this.loadedGame);
+
         startActivity(intent);
     }
 

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/deleteGameQueryText"
+        android:layout_width="234dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/delete_game_query_text"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/deleteGameNameCategoryTextView"
+        android:layout_width="117dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:text="@string/delete_game_name_textview"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/deleteGameQueryText"
+        app:layout_constraintTop_toBottomOf="@+id/deleteGameQueryText" />
+
+    <TextView
+        android:id="@+id/deleteGameNameDisplay"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:textAlignment="textStart"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/deleteGameNameCategoryTextView"
+        app:layout_constraintEnd_toEndOf="@+id/deleteGameQueryText"
+        app:layout_constraintStart_toEndOf="@+id/deleteGameNameCategoryTextView"
+        app:layout_constraintTop_toTopOf="@+id/deleteGameNameCategoryTextView" />
+
+    <TextView
+        android:id="@+id/deleteGameTurnCountCategoryTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/delete_game_turn_count_textview"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/deleteGameNameDisplay"
+        app:layout_constraintStart_toStartOf="@+id/deleteGameNameCategoryTextView"
+        app:layout_constraintTop_toBottomOf="@+id/deleteGameNameCategoryTextView" />
+
+    <TextView
+        android:id="@+id/deleteGameTurnCountDisplay"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/deleteGameTurnCountCategoryTextView"
+        app:layout_constraintEnd_toEndOf="@+id/deleteGameNameDisplay"
+        app:layout_constraintStart_toEndOf="@+id/deleteGameTurnCountCategoryTextView"
+        app:layout_constraintTop_toTopOf="@+id/deleteGameTurnCountCategoryTextView" />
+
+    <TextView
+        android:id="@+id/deleteGameTimeSavedCategoryTextView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="@string/delete_game_time_saved_textview"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/deleteGameTimeSavedDisplay"
+        app:layout_constraintEnd_toStartOf="@+id/deleteGameTurnCountDisplay"
+        app:layout_constraintStart_toStartOf="@+id/deleteGameTurnCountCategoryTextView"
+        app:layout_constraintTop_toTopOf="@+id/deleteGameTimeSavedDisplay" />
+
+    <TextView
+        android:id="@+id/deleteGameTimeSavedDisplay"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/deleteGameTurnCountDisplay"
+        app:layout_constraintStart_toEndOf="@+id/deleteGameTimeSavedCategoryTextView"
+        app:layout_constraintTop_toBottomOf="@+id/deleteGameTurnCountDisplay" />
+
+    <Button
+        android:id="@+id/deleteGameConfirmDeletionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="280dp"
+        android:text="@string/delete_game_confirm_deletion"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/deleteGameCancelDeletionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="280dp"
+        android:text="@string/delete_game_cancel_deletion"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</android.support.constraint.ConstraintLayout>
