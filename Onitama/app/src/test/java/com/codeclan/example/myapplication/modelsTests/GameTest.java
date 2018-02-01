@@ -145,7 +145,7 @@ public class GameTest {
 
     @Test
     public void checkWinnerHasBeenDeterminedStartsEmpty(){
-        assertEquals(null, game.getGameWinner());
+        assertEquals(null, game.getWinningFaction());
     }
 
     @Test
@@ -155,7 +155,7 @@ public class GameTest {
     }
 
 
-//    Below tests do not work as long as code starting at line 134
+//    Below tests do not work as long as code starting at line 170 ( in toggleActiveCardSelection() )
 //    in the Game.java file is left uncommented.
 //
 //    The check is to see if the card being played is part of players hand.
@@ -163,7 +163,7 @@ public class GameTest {
 //    As a card is chosen specifically for the test this part of the check stops the test from
 //    passing.
 //
-//    Comment out the if statement [if (!cardInActivePlayersHand(card))] to see the tests run.
+//    Comment out the if statements check [if (!cardInActivePlayersHand(card))] to see the tests run.
 
 
 //    @Test
