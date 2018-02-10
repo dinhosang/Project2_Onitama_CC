@@ -27,7 +27,12 @@ The topic of the app itself was something that interested me, and something I ha
 * Z-levels in Android - use of bringToFront() and setAlpha to control what layouts are visible and interactive
 * Use of gridView to display an interactive board, ensuring it is of the correct size and with the correct amount of space between columns.
 * Use of menu and onClickListeners to give users access to features in-game, and prevent unwanted interactions.
+* Use of alertDialogs to detail information and request user input
+* Use of Toasts for confirmation and updating user
 
 ## Thoughts for the future
 
-* Converting data storage from SharedPreferences to @Room
+* Converting data storage from using SharedPreferences to using Room (an abstraction over SqLite) - see https://github.com/dinhosang/practice_room_database_Android for a practice example I wrote with a colleague.
+* Looking into gridView animation while moving pieces - https://developer.android.com/reference/android/view/animation/GridLayoutAnimationController.html
+* Reading up on Fragments to replace the use of layout hardcoding, allowing for more abstraction and flexibility, and hopefully better performance as not all layouts need to be present, just those who need to be viewed at that time.
+* Particularly if moving to Room/SqLite, would require looking into multi-threading. Had issues due to amount of layouts and size of images, but reduced frame skips due to cleaning up the Activities and the logic contained within, reducing number of times a view is interacted with and changed, reducing number of layouts needing to be drawn and keep in memory at one time, and moving as much logic as possible into the Game class. Having calls to a database would likely cause too many issues without the use of the likes of AsyncTask or Threading.
