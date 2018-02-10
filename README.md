@@ -4,7 +4,9 @@ An application based on the Onitama board game (https://boardgamegeek.com/boardg
 
 A fuller description may be found through the above link, but to describe it quickly it is a chess-like game where each piece has access to the same moves, and the moves available to a player's pieces are randomly determined each game, and change with each turn.
 
-## Reason for selection
+We were given a week (Friday to following Friday) to plan and code the project. I chose to offer my own brief for consideration by the instructors. Due to my concerns that a mobile phone screen may not be large enough to display the game well and have it be easy to interact with from a user perspective, I spent a couple of hours on Thursday evening making a mock-up of the app in Android to be able to show to both myself and to the instructors that it would be viable. Location of mock-up: https://github.com/dinhosang/Project2_MockUp_Android_Onitama
+
+## Reason for selecting this project
 
 Android was something we only had four days of lessons on so I wished to practice it further to solidify my understanding.
 
