@@ -6,4 +6,15 @@ A fuller description may be found through the above link, but to describe it qui
 
 ## Reason for selection
 
-Android was something we only had four days of lessons on so I wished to practice it further to solidify my understanding. The topic of the app itself is something that interests me and something I have played very often in real life, meaning I would not have to spend too much time learning how the game works, and could instead spend as much time as possible trying to put it into practice in an Android app.
+Android was something we only had four days of lessons on so I wished to practice it further to solidify my understanding.
+
+The topic of the app itself was something that interested me, and something I had played very often in real life. This meant I would not have to spend time learning how the game works, and could instead concentrate trying to put it into practice in an Android app.
+
+## Tools used
+
+* Java for game logic
+* Android for UI
+* Shared preferences for data storage
+
+* Camera for taking game images
+* GIMP image editor for re-working game images
